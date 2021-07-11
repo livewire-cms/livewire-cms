@@ -1,0 +1,20 @@
+# ===================================
+# Filter Scope Definitions
+# ===================================
+
+scopes:
+
+    sex:
+        label: id
+        type: group
+        conditions: id in (:filtered)
+        options:
+
+            1: 1
+            2: 2
+    name:
+        label: 标题
+        type: text
+        conditions: name = :value
+        size: 2
+

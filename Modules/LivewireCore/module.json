@@ -1,0 +1,13 @@
+{
+    "name": "LivewireCore",
+    "alias": "livewirecore",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\LivewireCore\\Providers\\LivewireCoreServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

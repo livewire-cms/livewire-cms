@@ -1,0 +1,13 @@
+{
+    "name": "Backend",
+    "alias": "backend",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Backend\\Providers\\BackendServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

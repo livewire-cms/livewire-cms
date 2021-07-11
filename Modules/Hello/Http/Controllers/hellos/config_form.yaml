@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: 创建
+form: ~/Modules/Hello/Models/hello/fields.yaml
+modelClass: Modules\Hello\Models\Hello
+defaultRedirect: hello/hellos
+
+create:
+    redirect: hello/hellos/update/:id
+    redirectClose: hello/hellos
+
+update:
+    redirect: hello/hellos
+    redirectClose: hello/hellos

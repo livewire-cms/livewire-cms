@@ -1,0 +1,70 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    # id:
+    #     label: ID
+    #     disabled: true
+    name:
+        label: abc::dad
+        span: auto
+        type: hello-name
+
+    avatar:
+        label: backend::lang.user.avatar
+        type: fileupload
+        mode: image
+        imageHeight: 250
+        imageWidth: 250
+
+tabs:
+    fields:
+        worlds:
+          lable: world
+          type: relation
+          tab: world
+        content:
+            label: 内容
+            tab: tabs
+            span: auto
+
+
+        excerpt:
+          tab: tab1
+          cssClass: field-slim blog-post-preview
+          stretch: true
+          label: 简介
+          span: auto
+        categories:
+          # span: auto
+
+          tab: rainlab.blog::lang.post.tab_categories
+          type: relation
+          commentAbove: rainlab.blog::lang.post.categories_comment
+          placeholder: rainlab.blog::lang.post.categories_placeholder
+        category:
+          # span: auto
+          label: 分类
+          tab: rainlab.blog::lang.post.tab_categories
+          type: relation
+          span: auto
+          commentAbove: rainlab.blog::lang.post.categories_comment
+          placeholder: rainlab.blog::lang.post.categories_placeholder
+
+
+secondaryTabs:
+    stretch: true
+    fields:
+        content:
+              label: 内容
+              tab: tabs
+              span: auto
+        excerpt:
+            tab: tab1
+            cssClass: field-slim blog-post-preview
+            stretch: true
+            label: 简介
+            span: auto
+
+

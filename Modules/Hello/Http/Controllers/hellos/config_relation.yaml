@@ -1,0 +1,22 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+worlds:
+    label: 世界
+    list: ~/Modules/Hello/Models/world/columns.yaml
+    form: ~/Modules/Hello/Models/world/fields.yaml
+    readOnly: true
+    view:
+      showSearch: true
+    manage:
+        context: relation
+categories:
+    label: 分类
+    list: ~/Modules/Hello/Models/category/columns.yaml
+    form: ~/Modules/Hello/Models/category/fields.yaml
+    readOnly: true
+    view:
+      showSearch: true
+    manage:
+        context: relation
