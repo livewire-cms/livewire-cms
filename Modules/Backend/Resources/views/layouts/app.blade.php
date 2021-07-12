@@ -1,54 +1,86 @@
+
+
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    {{-- CSRF Token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <style>
-            [x-cloak] {
-			    display: none;
-		    }
-        </style>
-        @livewireStyles
-        @stack('styles')
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
-    </head>
-    <body class="font-sans antialiased">
+    <title>{{ config('app.name', 'Windmill Dashboard') }} | @yield('title', 'Windmill')</title>
 
-        <div class="min-h-screen bg-gray-100">
-            {{-- @livewire('navigation-menu') --}}
-            @livewire('backend.widgets.mainmenu')
-            @livewire('backend.widgets.sidemenu')
+    {{-- Fonts --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" /> --}}
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+    {{-- Styles --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+    @livewireStyles
+    @stack('styles')
+    {{-- Scripts --}}
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <script src="{{ asset('js/init-alpine.js') }}"></script>
+</head>
+
+<body>
+    @if (session('status') || request()->query('verified'))
+        <div x-data="{alert: true}" x-show="alert" class="fixed z-30 top-5 left-5">
+            <div x-show="alert" @click.away="alert = false"
+                class="border-green-600 bg-green-200  border-t-4 text-green-600 rounded px-4 py-3 shadow-md"
+                role="alert" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0">
+                <div class="flex">
+                    <div>
+                        <p class="font-bold">{{ __('Alert') }}</p>
+                        <p class="text-sm">
+                            {{ request()->query('verified') ? __('Email verified') : session('status') }}
+                        </p>
                     </div>
-                </header>
-            @endif
+                    <button @click="alert = false" class="flex items-start focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
 
-            <!-- Page Content -->
-            <main>
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
 
-                {{ $slot }}
+        @include('partials.sidebar.main-sidebar')
+
+        <div class="flex flex-col flex-1 w-full">
+
+            @include('partials.navbar.main-navbar')
+
+            <main class="h-full overflow-y-auto">
+                <div class="container px-6 mx-auto grid">
+
+                    @yield('content')
+                    {{$slot}}
+
+                </div>
             </main>
         </div>
+    </div>
+    @stack('modals')
 
-        @stack('modals')
+    @livewireScripts
+    @stack('scripts')
+</body>
 
-        @livewireScripts
-        @stack('scripts')
-
-    </body>
 </html>

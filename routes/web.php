@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::view('home', 'home')
 	->name('home')
 	->middleware(['auth']);
-Route::view('home', 'home')
+Route::view('dashboard', 'home')
 	->name('dashboard')
 	->middleware(['auth']);
 
