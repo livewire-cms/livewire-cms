@@ -261,7 +261,7 @@ class Form extends Component
             request()->files->set('file_data', $uplodaFiles);
             request()->setConvertedFiles(request()->files->all());
             $file = $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
-
+            $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
             array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
 
             // dd(request()->hasFile('file_data'),3213);

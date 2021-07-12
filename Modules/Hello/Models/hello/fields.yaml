@@ -55,6 +55,10 @@ tabs:
           span: auto
           commentAbove: rainlab.blog::lang.post.categories_comment
           placeholder: rainlab.blog::lang.post.categories_placeholder
+        relation_worlds:
+          label: 世界
+          type: partial
+
 
 
 secondaryTabs:

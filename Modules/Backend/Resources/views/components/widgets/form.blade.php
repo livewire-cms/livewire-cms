@@ -16,22 +16,24 @@
         'widget' =>$widget,
         'loadRelations' => $loadRelations,
     ])
+
+
     @livewire('backend.widgets.relation_form')
 
     @foreach ($loadRelations as $loadRelation)
 
-    @php
+        @php
 
-        if(is_object($cc)){
-            $cc->relationRender($loadRelation);
-            // dd($cc);
-        }
+            if(is_object($cc)){
+                $relationController = $cc->relationRender($loadRelation);
+                // dd($relationController);
+            }
 
-    @endphp
-    @livewire('backend.widgets.relation_lists',[
-        'widget' =>$widget,
-        'prefix' => $loadRelation
-    ])
+        @endphp
+        @livewire('backend.widgets.relation_lists',[
+            'widget' =>$widget,
+            'prefix' => $loadRelation
+        ])
     @endforeach
 
 

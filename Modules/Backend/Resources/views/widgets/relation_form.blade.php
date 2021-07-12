@@ -6,43 +6,35 @@
 //todo if $field['type']=='widget' todo form makeFormFieldWidget
 // dd($fields,$tabs,$secondTabs);
 @endphp
-<div>
+<x-jet-dialog-modal wire:model="relationFormModal">
+    <x-slot name="title">
+        {{ __($context) }} {{__($relation_field)}}
+    </x-slot>
 
-@if (!empty($fields)||!empty($tabs)||!empty($secondTabs))
+    <x-slot name="content">
+        <div class="container grid p-6 mx-auto">
 
-    <form wire:submit.prevent="save" >
-        <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="flex flex-wrap justify-between ">
-            <x-back-form-fields :fields="$fields"></x-back-form-fields>
-            <x-back-form-tabs :tabs="$tabs" tab_name="tab"></x-back-form-tabs>
-            <x-back-form-tabs :tabs="$secondTabs" tab_name="secondTab"></x-back-form-tabs>
+            @if (!empty($fields)||!empty($tabs)||!empty($secondTabs))
 
+                <form wire:submit.prevent="save" >
+                    <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="">
+                        <x-back-form-fields :fields="$fields"></x-back-form-fields>
+                        <x-back-form-tabs :tabs="$tabs" tab_name="tab"></x-back-form-tabs>
+                        <x-back-form-tabs :tabs="$secondTabs" tab_name="secondTab"></x-back-form-tabs>
+                    </div>
+                </form>
+            @endif
+            </div>
 
+    </x-slot>
 
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$toggle('relationFormModal')" wire:loading.attr="disabled">
+            {{ __('Cancel') }}
+        </x-jet-secondary-button>
 
-                <div class=" my-4">
-                    <button
-                    class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
-                    >保存</button>
-                </div>
-
-
-
-
-
-
-
-        </div>
-    </form>
-
-
-
-
-
-
-
-
-
-
-@endif
-
-</div>
+        <x-jet-danger-button class="ml-2" wire:click="save" wire:loading.attr="disabled">
+            {{ __('Save') }}
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-dialog-modal>

@@ -13,12 +13,12 @@
     id="{{$field['id']}}"
     wire:model="{{$field['modelName']}}"
     type="file">
-   
+
         @foreach ($form['fileList'][$field['arrayName']][$field['fieldName']] as $v)
 
          <img src="{{$v['path']}}" style="{{$field['vars']['cssDimensions']}}">
-         <button wire:click.stop.prevent="onRemoveAttachment('{{$field['modelName']}}','{{$v['id']}}')">删除</button>  
-        
+         <button wire:click.stop.prevent="onRemoveAttachment('{{$field['modelName']}}','{{$v['id']}}')">删除</button>
+
         @endforeach
 
 
@@ -30,12 +30,12 @@
     type="file" image-multi>
         @foreach ($form['fileList'][$field['arrayName']][$field['fieldName']] as $v)
 
-         <img src="{{$v['path']}}" style="{{$field['vars']['cssDimensions']}}"> 
-         
-         <button wire:click.prevent.stop="onRemoveAttachment('{{$field['modelName']}}','{{$v['id']}}')">删除</button>  
+         <img src="{{$v['path']}}" style="{{$field['vars']['cssDimensions']}}">
+
+         <button wire:click.prevent.stop="onRemoveAttachment('{{$field['modelName']}}','{{$v['id']}}')">删除</button>
 
         @endforeach
-            
+
 
     @endif
 

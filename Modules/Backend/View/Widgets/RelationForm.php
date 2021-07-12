@@ -26,6 +26,10 @@ class RelationForm extends Component
     public $sessionKey;
 
     public $update;
+
+
+    public $relationFormModal;
+
     protected $listeners = ['onRelationButtonCreate','onRelationClickViewList'];
 
 
@@ -33,6 +37,8 @@ class RelationForm extends Component
     {
         // dd($data);
         $this->resetData();
+        $this->relationFormModal=true;
+
         $this->update = !$this->update;
         $this->relation_field = $data['_relation_field'];
         $this->context = 'create';
@@ -68,6 +74,7 @@ class RelationForm extends Component
 
     public function onRelationClickViewList($data)
     {
+        $this->relationFormModal=true;
 
         $this->relation_field = $data['_relation_field'];
         $this->context = 'update';
@@ -265,6 +272,14 @@ class RelationForm extends Component
 
     }
 
+    public function updatedRelationFormModal($value)
+    {
+        if(!$value){
+            $this->resetData();
+        }
+
+    }
+
     public function resetData()
     {
         $this->fields = [];
@@ -277,6 +292,8 @@ class RelationForm extends Component
         $this->manageId = null;
         $this->parentSessionKey = null;
         $this->sessionKey = null;
+        $this->relationFormModal = false;
+
 
     }
 

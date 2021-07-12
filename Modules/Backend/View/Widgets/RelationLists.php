@@ -41,6 +41,7 @@ class RelationLists extends Component
 
     public function search($data)
     {
+
         $this->update =!$this->update;
 
         $pre = 'relation'.ucfirst(\Str::camel($this->prefix));
@@ -99,8 +100,15 @@ class RelationLists extends Component
     }
 
 
-    public function onRelationClickViewList()
+    public function onRelationClickViewList($manageId)
     {
+        $this->emitTo('backend.widgets.relation_form','onRelationClickViewList',[
+            '_relation_field' => $this->prefix,
+            'modelId' => $this->modelId,
+            'manage_id' => $manageId,
+            'context' => $this->context,
+            '_relation_session_key' => $this->sessionKey,
+        ]);
 
     }
 

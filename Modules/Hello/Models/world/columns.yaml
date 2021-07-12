@@ -9,3 +9,5 @@ columns:
     name:
         label: 名称
         searchable: true
+    desc:
+        label: 描述
