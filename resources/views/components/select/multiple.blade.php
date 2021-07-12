@@ -32,8 +32,9 @@
 
     <form>
       <input name="values" type="hidden" x-bind:value="selectedValues()">
-      <div class="inline-block relative w-64">
-          <div class="flex flex-col  relative">
+      {{-- w-64 --}}
+      <div class="w-full inline-block relative ">
+          <div class="w-full flex flex-col  relative">
               <div x-on:click="open" class="w-full  svelte-1l8159u">
                   <div class="my-2 p-1 flex border border-gray-200 bg-white rounded svelte-1l8159u">
                       <div class="flex flex-auto flex-wrap">
@@ -91,7 +92,7 @@
               <div class="w-full px-4">
                   <div x-show.transition.origin.top="isOpen()"
                       class="absolute shadow top-100 bg-white z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj"
-                      x-on:click.away="close">
+                      x-on:click.away="close" style="z-index:1">
                       <div class="flex flex-col w-full">
                           <template x-for="(option,index) in options" :key="option">
                               <div x-show="filterOptions(option)">

@@ -12,6 +12,7 @@ class Lists extends Component
     public $update;
 
 
+
     protected $listeners = ['search','filter'];
 
 
@@ -30,7 +31,7 @@ class Lists extends Component
 
         $c = find_controller_by_url(request()->input('fingerprint.path'));
 
-        if(!$c){
+        if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
 
@@ -50,6 +51,28 @@ class Lists extends Component
     }
 
 
+    public function onPaginate($page)
+    {
+        request()->merge(['page' => $page]);
+        $this->update = !$this->update;
+
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+
+
+
+        $c->asExtension('ListController')->index();
+        //$widget = 执行->asExtension('ListController')->index()
+
+        $c->widget->{$this->prefix}->onPaginate();
+        // 看下 lists onRefresh许更改
+        // dd($this->search);
+        // dd(request()->all());
+        $this->widget = $c->widget;
+    }
 
     public function filter($data)
     {
@@ -59,14 +82,13 @@ class Lists extends Component
         request()->merge($data);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
 
-        if(!$c){
+        if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
         $c->asExtension('ListController')->index();
         //$widget = 执行->asExtension('ListController')->index()
         $c->widget->{$this->prefix.'Filter'}->onFilterUpdate();
         $this->widget = $c->widget;
-
     }
 
 

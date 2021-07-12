@@ -15,6 +15,8 @@ fields:
         label: backend::lang.user.avatar
         type: fileupload
         mode: image
+        span: auto
+
         imageHeight: 250
         imageWidth: 250
 
@@ -24,6 +26,8 @@ tabs:
           lable: world
           type: relation
           tab: world
+          span: auto
+
         content:
             label: 内容
             tab: tabs
@@ -37,8 +41,8 @@ tabs:
           label: 简介
           span: auto
         categories:
-          # span: auto
-
+          span: auto
+          label: 分类
           tab: rainlab.blog::lang.post.tab_categories
           type: relation
           commentAbove: rainlab.blog::lang.post.categories_comment

@@ -68,12 +68,13 @@
             @include('partials.navbar.main-navbar')
 
             <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid">
+                {{$slot}}
 
-                    @yield('content')
-                    {{$slot}}
+                {{-- <div class="container px-6 mx-auto grid">
 
-                </div>
+
+
+                </div> --}}
             </main>
         </div>
     </div>

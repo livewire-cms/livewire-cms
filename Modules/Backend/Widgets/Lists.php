@@ -315,7 +315,7 @@ class Lists extends WidgetBase
      */
     public function onRefresh()
     {
-        // $this->prepareVars();
+        // return $this->prepareVars();
         // return ['#'.$this->getId() => $this->makePartial('list')];
     }
 
@@ -324,7 +324,7 @@ class Lists extends WidgetBase
      */
     public function onPaginate()
     {
-        $this->currentPageNumber = post('page');
+        $this->currentPageNumber = request('page');
         // return $this->onRefresh();
     }
 
@@ -625,6 +625,7 @@ class Lists extends WidgetBase
             $records = $query->getNested();
         }
         elseif ($this->showPagination) {
+
             $method            = $this->showPageNumbers ? 'paginate' : 'simplePaginate';
             $currentPageNumber = $this->getCurrentPageNumber($query);
             $records = $query->{$method}($this->recordsPerPage, $currentPageNumber);

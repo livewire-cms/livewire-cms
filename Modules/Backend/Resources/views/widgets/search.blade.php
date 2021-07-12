@@ -3,8 +3,8 @@
 
 
 
-<div class="flex-1 pr-4">
-    <div class="relative md:w-1/3">
+<div class="pr-4">
+    <div class="relative">
         <input type="search" wire:model="search"
             class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium"
             placeholder="Search...">
