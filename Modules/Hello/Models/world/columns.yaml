@@ -11,3 +11,4 @@ columns:
         searchable: true
     desc:
         label: 描述
+        searchable: true
