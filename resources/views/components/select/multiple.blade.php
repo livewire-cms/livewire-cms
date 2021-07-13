@@ -60,10 +60,7 @@
                               <input placeholder="Select a option"
                                   class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
                                   x-model="search1"
-
                               >
-                              <div x-text="search1"></div>
-                              <div x-text="value"></div>
                           </div>
                       </div>
                       <div

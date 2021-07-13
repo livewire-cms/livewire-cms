@@ -22,11 +22,11 @@ fields:
 
 tabs:
     fields:
-        worlds:
-          lable: world
-          type: relation
-          tab: world
-          span: auto
+        # worlds:
+        #   lable: world
+        #   type: relation
+        #   tab: world
+        #   span: auto
 
         content:
             label: 内容

@@ -265,10 +265,11 @@ class RelationForm extends Component
         $this->form['_relation_field'] = $this->relation_field;
         $this->form['_relation_mode'] = 'form';
         $this->form['manage_id'] = $this->manageId;
-        $this->form['_session_key'] = $this->sessionKey;
-        $this->form['_relation_session_key'] = $this->parentSessionKey;
+        $this->form['_session_key'] = $this->sessionKey;//自己的图片延迟绑定
+        $this->form['_relation_session_key'] = $this->parentSessionKey;//延迟绑定到父类
 
         // dd($this->modelId);
+        // dd($this->form);
 
 
         if($this->context=='update'){

@@ -84,9 +84,9 @@ class Plugin extends PluginBase
         // dd(232);
         return [
             'hello' => [
-                'label' => '导航1',
+                'label' => 'hello',
                 'description' => 'rainlab.blog::lang.blog.settings_description',
-                'category' => '分类1',
+                'category' => 'playground',
                 'icon' => 'icon-pencil',
                 'url'         => Backend::url('hello/hellos'),
                 'order' => 500,
