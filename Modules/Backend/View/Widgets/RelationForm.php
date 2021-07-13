@@ -433,7 +433,9 @@ class RelationForm extends Component
             throw new \RuntimeException('Could not find controller');
         }
         request()->merge([
-            '_relation_field' => $this->relation_field
+            '_relation_field' => $this->relation_field,
+            '_session_key' => $this->form['_session_key']??'',
+
         ]);
 
         $c->asExtension('FormController')->create();

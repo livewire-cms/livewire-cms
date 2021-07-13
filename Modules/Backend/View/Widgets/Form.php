@@ -290,11 +290,14 @@ class Form extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
+        request()->merge([
+            'file_id' => $id,
+            '_session_key' => $this->form['_session_key']??'',
+        ]);
         $c->asExtension('FormController')->update($this->modelId);
 
-        request()->merge([
-            'file_id' => $id
-        ]);
+        // dd($this->form);
+
 
        $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onRemoveAttachment();
         $files = $this->form['fileList'][$arrayName[0]][$arrayName[1]];

@@ -45,12 +45,12 @@
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
-            <tr class="dark:text-gray-400">
+            <tr class="flex items-center  dark:text-gray-400">
                 @if (isset($listFilter))
 
 
                     @foreach ($listFilter->vars['scopes'] as $k=>$scope)
-                        <td class="px-2">
+                        <td class="px-2 max-w-xs">
                             @if ($scope->type=='group')
                                 {{__($scope->label)}}
                             @livewire('backend.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
