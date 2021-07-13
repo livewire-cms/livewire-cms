@@ -25,32 +25,7 @@ class Plugin extends PluginBase
 
         return [
 
-            'users' => [
-                'label'       => '用户列表',
-                'url'         => Backend::url('backend/users'),
-                'icon'        => 'icon-leaf',
-                'permissions' => [],
-                'order'       => 800,
 
-
-                'sideMenu' => [
-                    'new_hello' => [
-                        'label'       => '创建路线',
-                        'icon'        => 'icon-plus',
-                        'url'         => Backend::url('backend/hello/hellos/create'),
-                        'permissions' => [],
-                        'category'    => '分类1',
-
-                    ],
-                    'hellos' => [
-                        'label'       => '路线',
-                        'icon'        => 'icon-list-ul',
-                        'url'         => Backend::url('backend/hello/hellos'),
-                        'permissions' => [],
-                    ],
-
-                ]
-            ],
 
         ];
     }
@@ -79,13 +54,13 @@ class Plugin extends PluginBase
         // dd(232);
         return [
             'users' => [
-                'label' => '用户列表',
+                'label' => '后台用户列表',
                 'description' => 'rainlab.blog::lang.blog.settings_description',
-                'category' => '分类2',
+                'category' => '后台用户设置',
                 'icon' => 'icon-pencil',
                 'url'         => Backend::url('backend/users'),
                 'order' => 800,
-                'context'=>['modules.backend','modules.hello'],//对应模块1的标识符
+                'context'=>['modules.system'],//对应模块1的标识符
                 'keywords' => 'blog post category',
                 'permissions' => [],
             ],

@@ -1,9 +1,3 @@
-@extends('system::layouts.master')
+<x-back-container>
 
-@section('content')
-    <h1>Hello World</h1>
-
-    <p>
-        This view is loaded from module: {!! config('system.name') !!}
-    </p>
-@endsection
+</x-back-container>

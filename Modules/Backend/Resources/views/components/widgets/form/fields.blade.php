@@ -68,7 +68,7 @@ $widget = $attributes->get('widget',null);
     <div class="{{$w }}  h-auto p-2">
 
         <div class="">
-            <label for="{{$field['id']}}" class="block font-medium tracking-tight">
+            <label for="{{$field['id']}}" class="block font-medium tracking-tight dark:text-gray-400">
                 @if ($field['label'])
                     {{__($field['label'])}}
                 @endif

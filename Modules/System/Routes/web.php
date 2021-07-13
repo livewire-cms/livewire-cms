@@ -14,3 +14,17 @@
 // Route::prefix('system')->group(function() {
 //     Route::get('/', 'SystemController@index');
 // });
+Route::group([
+    // 'domain' => config('jetstream.domain', null),
+    'prefix' => 'backend/system',
+    'middleware' => 'web',
+    'as'=> 'backend.system.',
+], function () {
+    Route::group([
+        'prefix'=>'system',
+        'as' =>'system.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('', 'SystemController@index')->name('');
+    });
+});

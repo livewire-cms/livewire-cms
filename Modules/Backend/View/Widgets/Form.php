@@ -180,14 +180,14 @@ class Form extends Component
         }
     }
 
-    public function save()
+    public function save($data)
     {
 
         // dd(request());
         // dd($this->form['User']['avatar']);
 
         // dd($this->form);
-        request()->merge($this->form);
+        request()->merge($data)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
@@ -198,6 +198,8 @@ class Form extends Component
             // dd($this->form);
             $c->asExtension('FormController')->update_onSave($this->modelId);
         }
+
+        $this->emit('saved');
     }
 
 

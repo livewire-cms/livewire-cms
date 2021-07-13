@@ -22,7 +22,7 @@
     @endphp
 
 <ul class="mt-6">
-    <li class="relative px-6 py-3">
+    {{-- <li class="relative px-6 py-3">
         @if (request()->routeIs('profile.edit'))
             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                 aria-hidden="true">
@@ -37,9 +37,19 @@
             </svg>
             <span class="ml-4">{{ __('Profile') }}</span>
         </a>
-    </li>
+    </li> --}}
             @foreach ($listItems as $category=>$listItem)
-            <li class="relative px-6 py-3" x-data="{open:false}">
+            @foreach ($listItem as $item)
+                    @php
+                        $groupActive = 0;
+                       if((strtolower($item->owner)==$context->owner)&&(strtolower($item->code)==$context->itemCode)){
+                        $groupActive = 1;
+                       }
+
+
+                    @endphp
+            @endforeach
+            <li class="relative px-6 py-3" x-data="{open:{{$groupActive}}}">
                 <button
                   class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   @click="open=!open"
@@ -92,10 +102,21 @@
                        if((strtolower($item->owner)==$context->owner)&&(strtolower($item->code)==$context->itemCode)){
                         $active = 'outline-none text-gray-200 bg-gray-700 border-blue-500';
                        }
+                    //    dd($item->owner,$context->owner);
+
+
+                        // dd($item->owner);
+
                     @endphp
                     <li
-                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 "
                   >
+
+                  <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true">
+                  </span>
+
+
                     <a class="w-full" href="{{$item->url}}">{{__($item->label)}}</a>
                   </li>
                     @endforeach

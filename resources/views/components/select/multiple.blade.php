@@ -31,7 +31,7 @@
     </select>
 
     <form>
-      <input name="values" type="hidden" x-bind:value="selectedValues()">
+      {{-- <input name="values" type="hidden" x-bind:value="selectedValues()"> --}}
       {{-- w-64 --}}
       <div class="w-full inline-block relative ">
           <div class="w-full flex flex-col  relative">
@@ -59,10 +59,11 @@
                           <div class="flex-1">
                               <input placeholder="Select a option"
                                   class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
-                                  {{-- x-bind:value="selectedValues()" --}}
-                                  x-model="search"
+                                  x-model="search1"
 
                               >
+                              <div x-text="search1"></div>
+                              <div x-text="value"></div>
                           </div>
                       </div>
                       <div
@@ -95,7 +96,7 @@
                       x-on:click.away="close" style="z-index:1">
                       <div class="flex flex-col w-full">
                           <template x-for="(option,index) in options" :key="option">
-                              <div x-show="filterOptions(option)">
+                              <div x-show="filterOptions(option)" wire:ignore>
                                   <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100"
                                       @click="select(index,$event)">
                                       <div x-bind:class="option.selected ? 'bg-green-400' : ''"
@@ -124,12 +125,13 @@
                 selected: [],
                 value:@entangle($attributes->wire('model')),
                 show: false,
-                search:'',
+                search1:'',
                 open() { this.show = true },
                 close() { this.show = false },
                 isOpen() { return this.show === true },
                 select(index, event) {
 
+                    console.log(11)
                     if (!this.options[index].selected) {
 
                         this.options[index].selected = true;
@@ -155,9 +157,10 @@
                 },
                 filterOptions(option){
 
-                    return option.text.includes(this.search)
+                    return option.text.includes(this.search1)
                 },
                 remove(index, option) {
+
                     this.options[option].selected = false;
                     this.selected.splice(index, 1);
 

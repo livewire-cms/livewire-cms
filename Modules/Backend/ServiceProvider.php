@@ -97,24 +97,24 @@ class ServiceProvider extends BaseServiceProvider
         //todo后台管理基础页面
         BackendMenu::registerCallback(function ($manager) {
             $manager->registerMenuItems('Winter.Backend', [
-                'dashboard' => [
-                    'label'       => 'backend::lang.dashboard.menu_label',
-                    'icon'        => 'icon-dashboard',
-                    'iconSvg'     => 'modules/backend/assets/images/dashboard-icon.svg',
-                    'url'         => Backend::url('backend'),
-                    'permissions' => ['backend.access_dashboard'],
-                    'order'       => 10
-                ],
-                'media' => [
-                    'label'       => 'backend::lang.media.menu_label',
-                    'icon'        => 'icon-folder',
-                    'iconSvg'     => 'modules/backend/assets/images/media-icon.svg',
-                    'url'         => Backend::url('backend/media'),
-                    'permissions' => ['media.*'],
-                    'order'       => 200
-                ]
+                // 'dashboard' => [
+                //     'label'       => 'backend::lang.dashboard.menu_label',
+                //     'icon'        => 'icon-dashboard',
+                //     'iconSvg'     => 'modules/backend/assets/images/dashboard-icon.svg',
+                //     'url'         => Backend::url('backend'),
+                //     'permissions' => ['backend.access_dashboard'],
+                //     'order'       => 10
+                // ],
+                // 'media' => [
+                //     'label'       => 'backend::lang.media.menu_label',
+                //     'icon'        => 'icon-folder',
+                //     'iconSvg'     => 'modules/backend/assets/images/media-icon.svg',
+                //     'url'         => Backend::url('backend/media'),
+                //     'permissions' => ['media.*'],
+                //     'order'       => 200
+                // ]
             ]);
-            $manager->registerOwnerAlias('Winter.Backend', 'October.Backend');
+            // $manager->registerOwnerAlias('Winter.Backend', 'October.Backend');
         });
     }
 

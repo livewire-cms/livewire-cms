@@ -48,12 +48,12 @@ class ServiceProvider extends BaseServiceProvider
                     'label'       => 'system::lang.settings.menu_label',
                     'icon'        => 'icon-cog',
                     'iconSvg'     => 'modules/system/assets/images/cog-icon.svg',
-                    'url'         => Backend::url('system/settings'),
+                    'url'         => Backend::url('system/system'),
                     'permissions' => [],
                     'order'       => 1000
                 ]
             ]);
-            $manager->registerOwnerAlias('Winter.System', 'October.System');
+            // $manager->registerOwnerAlias('Winter.System', 'October.System');
         });
 
 

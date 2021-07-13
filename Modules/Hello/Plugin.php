@@ -90,7 +90,7 @@ class Plugin extends PluginBase
                 'icon' => 'icon-pencil',
                 'url'         => Backend::url('hello/hellos'),
                 'order' => 500,
-                'context'=>'modules.hello',//对应模块1的标识符
+                'context'=>['modules.hello','modules.system'],//对应模块1的标识符
                 'keywords' => 'blog post category',
                 'permissions' => [],
             ],
@@ -107,17 +107,6 @@ class Plugin extends PluginBase
             //     'keywords' => 'blog post category',
             //     'permissions' => []
             // ],
-            'hello2' => [
-                'label' => '导航3',
-                'description' => 'rainlab.blog::lang.blog.settings_description',
-                'category' => '分类3',
-                'icon' => 'icon-pencil',
-                'url'         => Backend::url('october/hello/worlds'),
-                'order' => 500,
-                'context'=>'modules.blog',
-                'keywords' => 'blog post category',
-                'permissions' => ['rainlab.blog.manage_settings']
-            ],
         ];
     }
 

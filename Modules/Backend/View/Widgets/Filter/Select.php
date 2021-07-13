@@ -29,6 +29,8 @@ class Select extends Component
         $this->scopeName = $scopeName;
         $this->options = $options;
 
+
+
         $this->value = $value? array_map(function($v){
             return (string)$v;
         },array_keys($value)):[];
@@ -39,6 +41,11 @@ class Select extends Component
     {
         // dd($value);
         // dd($this->options);
+
+        if(is_string($value)){
+            return ;
+        }
+
         $options = [];
         foreach ($this->options as $id=>$name){
             if(in_array($id,$value)){

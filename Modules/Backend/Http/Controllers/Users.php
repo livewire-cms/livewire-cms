@@ -25,7 +25,7 @@ class Users extends Controller
     public function __construct()
     {
         parent::__construct();
-        BackendMenu::setContext('Modules.Backend', 'users');
+        BackendMenu::setContext('Modules.system', 'system');
         SideNavManager::setContext('Modules.Backend', 'users');//选中侧边拦
 
         // BackendMenu::setContext('Modules.Hello', 'hellos');
