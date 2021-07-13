@@ -219,6 +219,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('action-message');
             $this->registerFormComponent('fileupload');
+            $this->registerFormComponent('relation_lists');
         });
     }
 

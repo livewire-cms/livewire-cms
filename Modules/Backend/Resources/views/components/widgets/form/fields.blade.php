@@ -2,6 +2,8 @@
 @php
 $fields = $attributes->get('fields',[]);
 $form = $attributes->get('form',[]);
+$widget = $attributes->get('widget',null);
+// dd($widget);
 @endphp
 
 <div class="flex flex-wrap">
@@ -105,6 +107,16 @@ $form = $attributes->get('form',[]);
                 class="w-full border border-gray-400 text-gray-800 placeholder-gray-400 rounded focus:border-transparent focus:outline-none focus:shadow-outline px-3 py-2"
                 placeholder="{{$field['placeholder']}}"
                 />
+
+            @elseif (\Str::startsWith($field['type'], 'relation_'))
+               <div wire:ignore>
+
+
+
+                   @isset($widget)
+                    <x-back-form-relation_lists :field="$field" :widget="$widget" :form="$form"></x-back-form-relation_lists>
+                   @endisset
+               </div>
             @else
 
                 <input
@@ -122,9 +134,7 @@ $form = $attributes->get('form',[]);
 
 
     </div>
-    @if ($field['span']=='left')
-        {{-- <div></div> --}}
-    @endif
+
     @php
         $preField = $field;
 

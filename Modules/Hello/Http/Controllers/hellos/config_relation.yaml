@@ -4,12 +4,14 @@
 
 worlds:
     label: 世界
-    list: ~/Modules/Hello/Models/world/columns.yaml
-    form: ~/Modules/Hello/Models/world/fields.yaml
     readOnly: true
     view:
+      list: ~/Modules/Hello/Models/world/columns.yaml
       showSearch: true
+      # recordsPerPage: 5
+
     manage:
+        form: ~/Modules/Hello/Models/world/fields.yaml
         context: relation
 categories:
     label: 分类
@@ -18,5 +20,7 @@ categories:
     readOnly: true
     view:
       showSearch: true
+      recordsPerPage: 5
+
     manage:
         context: relation

@@ -1,7 +1,9 @@
 
 @php
 
-
+if(!isset($widget)){
+        $widget = null;
+    }
 
 //todo if $field['type']=='widget' todo form makeFormFieldWidget
 // dd($fields,$tabs,$secondTabs);
@@ -18,9 +20,9 @@
 
                 <form wire:submit.prevent="save" >
                     <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="">
-                        <x-back-form-fields :fields="$fields"></x-back-form-fields>
-                        <x-back-form-tabs :tabs="$tabs" tab_name="tab"></x-back-form-tabs>
-                        <x-back-form-tabs :tabs="$secondTabs" tab_name="secondTab"></x-back-form-tabs>
+                        <x-back-form-fields :fields="$fields" :form="$form" :widget="$widget"></x-back-form-fields>
+                        <x-back-form-tabs :tabs="$tabs" tab_name="tab" :form="$form" :widget="$widget"></x-back-form-tabs>
+                        <x-back-form-tabs :tabs="$secondTabs" tab_name="secondTab" :form="$form" :widget="$widget"></x-back-form-tabs>
                     </div>
                 </form>
             @endif

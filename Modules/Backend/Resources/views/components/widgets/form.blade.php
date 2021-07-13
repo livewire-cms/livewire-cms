@@ -18,23 +18,9 @@
     ])
 
 
-    @livewire('backend.widgets.relation_form')
+    @livewire('backend.widgets.relation_form',['parentSessionKey'=>$widget->form->getSessionKey()])
 
-    @foreach ($loadRelations as $loadRelation)
 
-        @php
-
-            if(is_object($cc)){
-                $relationController = $cc->relationRender($loadRelation);
-                // dd($relationController);
-            }
-
-        @endphp
-        @livewire('backend.widgets.relation_lists',[
-            'widget' =>$widget,
-            'prefix' => $loadRelation
-        ])
-    @endforeach
 
 
 

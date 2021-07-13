@@ -17,6 +17,7 @@ class RelationLists extends Component
     public $context;//create or update
     public $modelId;//update/:id
 
+    public $parentSessionKey;
     public $sessionKey;
 
     public $update;
@@ -31,6 +32,7 @@ class RelationLists extends Component
         $this->context = $widget->form->context;
         $this->modelId = $widget->form->model->getKey();
         $this->sessionKey = $widget->form->getSessionKey();
+        $this->parentSessionKey = $widget->form->getSessionKey();
 
 
         // dd($widget, $prefix);
@@ -42,11 +44,15 @@ class RelationLists extends Component
     public function search($data)
     {
 
+
         $this->update =!$this->update;
 
         $pre = 'relation'.ucfirst(\Str::camel($this->prefix));
 
         request()->merge($data);
+        request()->merge([
+            '_session_key' => $this->parentSessionKey
+        ]);
 
         //todo 找到控制器((
         $c = find_controller_by_url(request()->input('fingerprint.path'));
@@ -74,7 +80,33 @@ class RelationLists extends Component
         // dd(request()->all());
         $this->widget = $c->widget;
     }
+    public function onPaginate($page)
+    {
+        request()->merge([
+            'page' => $page,
+            '_session_key' => $this->parentSessionKey
 
+        ]);
+        $this->update = !$this->update;
+
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+
+        $pre = 'relation'.ucfirst(\Str::camel($this->prefix));
+
+
+        $c->asExtension('FormController')->update($this->modelId);
+
+        //$widget = 执行->asExtension('ListController')->index()
+        $c->relationRender($this->prefix);
+
+        $c->widget->{$pre.'ViewList'}->onPaginate();
+
+        $this->widget = $c->widget;
+    }
 
 
     public function filter($data)

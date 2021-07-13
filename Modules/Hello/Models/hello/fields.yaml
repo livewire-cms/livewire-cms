@@ -57,7 +57,12 @@ tabs:
           placeholder: rainlab.blog::lang.post.categories_placeholder
         relation_worlds:
           label: 世界
-          type: partial
+          tab: 关联关系
+          type: relation_worlds
+        relation_categories:
+          label: 分类
+          tab: 关联关系
+          type: relation_categories
 
 
 

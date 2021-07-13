@@ -25,6 +25,7 @@ trait FormModelWidget
      */
     public function resolveModelAttribute($attribute)
     {
+
         try {
             return $this->formField->resolveModelAttribute($this->model, $attribute);
         }

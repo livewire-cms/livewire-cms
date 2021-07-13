@@ -12,7 +12,14 @@ fields:
     desc:
         label: 描述
         span: left
+    avatar:
+        label: backend::lang.user.avatar
+        type: fileupload
+        mode: image
+        span: auto
 
+        imageHeight: 250
+        imageWidth: 250
 
 
 

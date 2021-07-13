@@ -1,15 +1,7 @@
 
 
 
-
-    {{-- @livewire('backend.widgets.search',['widget'=>$widget->{$prefix.'ToolbarSearch'},'prefix'=>$prefix])
-
-
-
-    @livewire('backend.widgets.items',['widget'=>$widget->{$prefix},'prefix'=>$prefix]) --}}
-
-
-    @php
+@php
     $pre = 'relation'.ucfirst(\Str::camel($prefix));
     $list= $widget->{$pre.'ViewList'}->prepareVars();
     // dd($pre);
@@ -31,33 +23,24 @@
 @endphp
 
 <div class="container grid px-6 mx-auto">
-
-    <!-- With actions -->
-
-        @if (isset($listToolbar))
-            <div class="grid p-2">
-                {!! $listToolbar->vars['controlPanel'] !!}
-            </div>
-        @endif
-        @if (isset($listToolbarSearch))
-            <div class="grid grid-cols-3">
-                <div></div>
-                <div></div>
-                @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
-            </div>
-        @endif
-
-
-
-
+    @if (isset($listToolbar))
+        <div class="grid p-2">
+            {!! $listToolbar->vars['controlPanel'] !!}
+        </div>
+    @endif
+    @if (isset($listToolbarSearch))
+        <div class="grid grid-cols-3">
+            <div></div>
+            <div></div>
+            @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+        </div>
+    @endif
     <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
             <tr>
                 @if (isset($listFilter))
-
-
                     @foreach ($listFilter->vars['scopes'] as $k=>$scope)
                         <td class="px-2">
                             @if ($scope->type=='group')
@@ -82,7 +65,6 @@
                         <input wire:key="{{$id}}" type="checkbox" class="form-checkbox focus:outline-none focus:shadow-outline" x-on:click="selectAllCheckbox($event);">
                     </label>
                 </th>
-
                 @foreach ($list->vars['columns'] as $fie=>$column)
                     <th class="px-4 py-3 {{$fie}}{{$prefix}}" x-ref="{{$fie.$prefix}}" >
                         {{ __($column->label) }}
@@ -93,12 +75,9 @@
                 </th>
             </tr>
           </thead>
-          <tbody
-            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
-          >
-
+          <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @foreach ($list->vars['records'] as $record)
-                    <tr class="text-gray-700 dark:text-gray-400" wire:click.stop="$emitTo('backend.widgets.relation_form','onRelationClickViewList',{_relation_field:'{{$prefix}}',modelId:'{{$modelId}}',manage_id:'{{$record->getKey()}}',context:'{{$context}}','_relation_session_key':'{{$sessionKey}}'})">
+                    <tr class="text-gray-700 dark:text-gray-400" wire:click.stop="$emitTo('backend.widgets.relation_form','onRelationClickViewList',{_relation_field:'{{$prefix}}',modelId:'{{$modelId}}',manage_id:'{{$record->getKey()}}',context:'{{$context}}'})">
                         <td class="px-4 py-3">
                             <label
                                 class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
@@ -121,20 +100,16 @@
           </tbody>
         </table>
       </div>
-
-
-
-
       <div
         class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
         <span class="flex items-center col-span-3">
-
         </span>
         <span class="col-span-2"></span>
         <!-- Pagination -->
+        @if(method_exists($list->vars['records'],'render'))
+        {!! $list->vars['records']->render('vendor.pagination.tailwind-list') !!}
 
-        {{-- {!! $list->vars['records']->render('vendor.pagination.tailwind-list') !!} --}}
-
+        @endif
       </div>
     </div>
   </div>

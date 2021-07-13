@@ -462,6 +462,7 @@ class FileUpload extends FormWidgetBase
                 throw new ApplicationException('File missing from request');
             }
             $fileModel = $this->getRelationModel();
+
             $uploadedFile = request()->file('file_data');
             // dd($fileModel);
             $validationRules = ['max:'.$fileModel::getMaxFilesize()];
@@ -498,7 +499,6 @@ class FileUpload extends FormWidgetBase
             }
 
             $fileRelation = $this->getRelationObject();
-            // dd($fileModel,$fileRelation);
 
             $file = $fileModel;
             $file->data = $uploadedFile;
@@ -510,6 +510,8 @@ class FileUpload extends FormWidgetBase
              * else attach via deferred binding
              */
             $parent = $fileRelation->getParent();
+            // dd($fileModel,$file,$fileRelation,$parent,$this->formField);
+
             if ($this->attachOnUpload && $parent && $parent->exists) {
                 $fileRelation->add($file);
             }

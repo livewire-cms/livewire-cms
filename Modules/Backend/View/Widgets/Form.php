@@ -33,6 +33,9 @@ class Form extends Component
     public $update;
 
 
+    protected $widget;
+
+
 
     protected $listeners = ['upload:finished' => 'uploadFinished'];
 
@@ -41,11 +44,14 @@ class Form extends Component
 
         $widget->form->render();
 
+        $this->widget = $widget;
+
         $this->form['_session_key'] = $widget->form->getSessionKey();
 
 
         $this->context = $widget->form->context;
         $this->modelId = $widget->form->model->getKey();
+
 
 
         $outsideTabs = $widget->form->vars['outsideTabs'];
@@ -233,10 +239,11 @@ class Form extends Component
             throw new \RuntimeException('Could not find controller');
         }
 
+        $c->asExtension('FormController')->create();
+
         if($this->context=='create'){
 
             $c->asExtension('FormController')->create();
-
 
         }elseif($this->context=='update'){
             $c->asExtension('FormController')->update($this->modelId);
@@ -318,6 +325,6 @@ class Form extends Component
 
     public function render()
     {
-        return view('backend::widgets.form');
+        return view('backend::widgets.form',['widget'=>$this->widget]);
     }
 }
