@@ -55,7 +55,8 @@ class Name extends FormWidgetBase
 
         foreach ($names as &$name) {
             if (is_numeric($name)) {
-                $name = '['.$name.']';
+                // $name = '['.$name.']';
+                $name = ''.$name.'';
             }
         }
         return $this->formField->modelName = 'form.'.implode('.', $names);

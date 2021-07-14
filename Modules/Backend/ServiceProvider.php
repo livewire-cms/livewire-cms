@@ -26,6 +26,7 @@ use Modules\Backend\View\Widgets\SideMenu as WidgetSideMenu;
 use Modules\Backend\View\Widgets\Form as WidgetForm;
 use Modules\Backend\View\Widgets\RelationForm as WidgetRelationForm;
 use Modules\Backend\View\Widgets\Form\Fields as WidgetFormFields;
+use Modules\Backend\View\Widgets\Form\Field as WidgetFormField;
 use Modules\Backend\View\Widgets\Form\Text as WidgetFormText;
 
 use BackendMenu;
@@ -82,6 +83,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.widgets.form', WidgetForm::class);
                 Livewire::component('backend.widgets.relation_form', WidgetRelationForm::class);
                 Livewire::component('backend.widgets.form.fields', WidgetFormFields::class);
+                Livewire::component('backend.widgets.form.field', WidgetFormField::class);
                 Livewire::component('backend.widgets.form.text', WidgetFormText::class);
 
         });
@@ -147,6 +149,7 @@ class ServiceProvider extends BaseServiceProvider
         WidgetManager::instance()->registerFormWidgets(function ($manager) {
             $manager->registerFormWidget(\Modules\Backend\FormWidgets\Relation::class, 'relation');
             $manager->registerFormWidget(\Modules\Backend\FormWidgets\FileUpload::class, 'fileupload');
+            $manager->registerFormWidget(\Modules\Backend\FormWidgets\Repeater::class, 'repeater');
 
             // $manager->registerFormWidget('Backend\FormWidgets\CodeEditor', 'codeeditor');
             // $manager->registerFormWidget('Backend\FormWidgets\RichEditor', 'richeditor');

@@ -74,17 +74,25 @@ $widget = $attributes->get('widget',null);
                 @endif
             </label>
             @if ($field['type']=='widget')
+
                 @if(isset($field['component']))
                     <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
+                @elseif(isset($field['livewire_component']))
+                    <div wire:ignore>
+                        @isset($widget)
+                            @livewire($field['livewire_component'],['field'=>$field,'widget'=>$widget])
+                        @endisset
+                    </div>
+
                 @else
                 <x-back-form-widget>
-                    {!! $field['html'] !!}
+                    {!! $field['html']??'' !!}
                 </x-back-form-widget>
                 @endisset
 
             @elseif ($field['type']=='partial')
                 <x-back-form-widget>
-                    {!! $field['html'] !!}
+                    {!! $field['html']??'' !!}
                 </x-back-form-widget>
             @elseif ($field['type']=='checkboxlist')
 

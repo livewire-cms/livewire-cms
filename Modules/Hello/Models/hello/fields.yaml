@@ -6,11 +6,28 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
-    name:
-        label: abc::dad
-        span: auto
-        type: hello-name
 
+    extra:
+        type: repeater
+        titleFrom: title_when_collapsed
+        form:
+            fields:
+                name:
+                    label: Date added
+                    type: hello-name
+                added_at:
+                    label: Date added
+                    type: datepicker
+                details:
+                    label: Details
+                    type: textarea
+                title_when_collapsed:
+                    label: This field is the title when collapsed
+                    type: text
+    name:
+      label: abc::dad
+      span: auto
+      type: hello-name
     avatar:
         label: backend::lang.user.avatar
         type: fileupload

@@ -5,6 +5,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Closure;
 use Str;
 use BackendAuth;
+use Request;
 class Controller extends BaseController
 {
     use \Modules\LivewireCore\Extension\ExtendableTrait;
@@ -198,5 +199,18 @@ class Controller extends BaseController
     public function getFatalError()
     {
         return '';
+    }
+
+    public function getAjaxHandler()
+    {
+        if (!Request::ajax() || Request::method() != 'POST') {
+            return null;
+        }
+
+        if ($handler = Request::header('X_WINTER_REQUEST_HANDLER')) {
+            return trim($handler);
+        }
+
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Modules\LivewireCore\Filesystem\PathResolver;
-
+use Request;
 
 
 
@@ -20,7 +20,7 @@ if (!function_exists('plugins_path')) {
 
 
 if (!function_exists('find_controller_by_url')) {
-   
+
     function find_controller_by_url($path)
     {
         $routes = app('router')->getRoutes();
@@ -39,5 +39,27 @@ if (!function_exists('find_controller_by_url')) {
 
         }
         return false;
+    }
+}
+
+if (!function_exists('post')) {
+    /**
+     * Identical function to input(), however restricted to POST values.
+     */
+    function post($name = null, $default = null)
+    {
+        if ($name === null) {
+            return Request::post();
+        }
+
+        /*
+         * Array field name, eg: field[key][key2][key3]
+         */
+
+        if (class_exists('Modules\LivewireCore\Html\Helper')) {
+            $name = implode('.', Modules\LivewireCore\Html\Helper::nameToArray($name));
+        }
+
+        return \Arr::get(Request::post(), $name, $default);
     }
 }

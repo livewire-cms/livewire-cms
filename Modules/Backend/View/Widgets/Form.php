@@ -78,7 +78,7 @@ class Form extends Component
             }
         }
 
-        // dd($this->form,$this->tabs);
+        // dd($this->form,$this->fields);
         // dd($this->form,$this->fields,$this->tabs,$this->secondTabs);
     }
 
@@ -88,6 +88,8 @@ class Form extends Component
         // if($field->fieldName=='groups'){
         //     dd($field);
         // }
+
+
 
         //解析自定义widget
         if ($field->type =='widget') {
@@ -101,6 +103,8 @@ class Form extends Component
             // $primaryTabs[$tab][$tabField] = $primaryTabField;
             // dd($primaryTabField->getId());
         }
+
+
 
 
 
