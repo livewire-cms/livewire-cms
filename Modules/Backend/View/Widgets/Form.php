@@ -173,7 +173,7 @@ class Form extends Component
 
         foreach ($names as &$name) {
             if (is_numeric($name)) {
-                $name = '['.$name.']';
+                $name = ''.$name.'';
             }
         }
         $field->modelName = 'form.'.implode('.', $names);

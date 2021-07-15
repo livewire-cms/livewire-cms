@@ -8,10 +8,36 @@
 
 
 
-<div >
-    hello world livewire field
-    <x-back-form-fields :fields="$fields" :form="$form" :widget="$widget"></x-back-form-fields>
-    <x-back-form-tabs :tabs="$tabs" tab_name="tab" :form="$form" :widget="$widget"></x-back-form-tabs>
-    <x-back-form-tabs :tabs="$secondTabs" tab_name="secondTab" :form="$form" :widget="$widget"></x-back-form-tabs>
-    <p wire:click="onAddItem"> 添加</p>
+<div class="p-4  block">
+
+
+    @foreach ($allFields as $k=>$allfield)
+        <div class="float-right">
+            <button
+            class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+            wire:click.prevent="onRemoveItem('{{$k}}')"  >
+            <span aria-hidden="true">&times;</span>
+
+            </button>
+        </div>
+        <x-back-form-fields :fields="$allfield['fields']??[]" :form="$form" :widget="$widget"></x-back-form-fields>
+        <x-back-form-tabs :tabs="$allfield['tabs']??[]" tab_name="tab{{$k}}{{$field['alias']}}" :form="$form" :widget="$widget"></x-back-form-tabs>
+        <x-back-form-tabs :tabs="$allfield['secondTabs']??[]" tab_name="secondTab{{$k}}{{$field['alias']}}" :form="$form" :widget="$widget"></x-back-form-tabs>
+        <x-jet-section-border />
+
+
+    @endforeach
+
+    <div class="flex justify-center items-center">
+        <button
+        class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+        wire:click.prevent="onAddItem"  >
+        @isset($field['vars']['prompt'])
+            {{__($field['vars']['prompt'])}}
+        @else
+            {{dd($field)}}
+        @endisset
+         </button>
+    </div>
+
 </div>

@@ -193,6 +193,7 @@ class Repeater extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
+        // dd($this->processSaveValue($value),request()->all());
         return (array) $this->processSaveValue($value);
     }
 
@@ -203,6 +204,7 @@ class Repeater extends FormWidgetBase
      */
     protected function processSaveValue($value)
     {
+        // dd($value);
         if (!is_array($value) || !$value) {
             return $value;
         }
@@ -213,7 +215,9 @@ class Repeater extends FormWidgetBase
         if ($this->maxItems && count($value) > $this->maxItems) {
             throw new ApplicationException(Lang::get('backend::lang.repeater.max_items_failed', ['name' => $this->fieldName, 'max' => $this->maxItems, 'items' => count($value)]));
         }
-
+        // dd($this);
+        // dd($this->formWidgets[0]->getSaveData());
+        // dd($this->formWidgets[0],request()->all());
         /*
          * Give repeated form field widgets an opportunity to process the data.
          */
@@ -222,10 +226,14 @@ class Repeater extends FormWidgetBase
                 if ($this->useGroups) {
                     $value[$index] = array_merge($this->formWidgets[$index]->getSaveData(), ['_group' => $data['_group']]);
                 } else {
+
                     $value[$index] = $this->formWidgets[$index]->getSaveData();
                 }
             }
         }
+
+        // return [11];
+
 
         return array_values($value);
     }

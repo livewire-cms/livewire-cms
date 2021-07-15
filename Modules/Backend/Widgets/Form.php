@@ -407,7 +407,7 @@ class Form extends WidgetBase
         /*
          * If an array of fields is supplied, update specified fields individually.
          */
-        if (($updateFields = request('fields')) && is_array($updateFields)) {
+        if (($updateFields = post('fields')) && is_array($updateFields)) {
             foreach ($updateFields as $field) {
                 if (!isset($this->allFields[$field])) {
                     continue;
@@ -465,9 +465,9 @@ class Form extends WidgetBase
      */
     public function onLazyLoadTab()
     {
-        $target  = request('target');
-        $tabName = request('name');
-        $tabSection = request('section');
+        $target  = post('target');
+        $tabName = post('name');
+        $tabSection = post('section');
 
         $fields = \Arr::get(optional($this->getTab($tabSection))->fields, $tabName);
 
@@ -718,7 +718,7 @@ class Form extends WidgetBase
         foreach ($fields as $name => $config) {
             // Check if user has permissions to show this field
             $permissions = \Arr::get($config, 'permissions');
-            if (!empty($permissions) && !request()->user()->hasAccess($permissions, false)) {
+            if (!empty($permissions) && !post()->user()->hasAccess($permissions, false)) {
                 continue;
             }
 
@@ -1207,7 +1207,7 @@ class Form extends WidgetBase
         /*
          * Source data
          */
-        $data = $this->arrayName ? request($this->arrayName) : request();
+        $data = $this->arrayName ? post($this->arrayName) : post();
         if (!$data) {
             $data = [];
         }
@@ -1395,8 +1395,8 @@ class Form extends WidgetBase
             return $this->sessionKey;
         }
 
-        if (request('_session_key')) {
-            return $this->sessionKey = request('_session_key');
+        if (post('_session_key')) {
+            return $this->sessionKey = post('_session_key');
         }
 
         return $this->sessionKey = FormHelper::getSessionKey();

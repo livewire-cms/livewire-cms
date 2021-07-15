@@ -12,6 +12,8 @@ class Repeater extends Component
     public $tabs = [];
     public $secondTabs = [];
 
+    public $allFields = [];
+
 
     public $field; //字段对象
 
@@ -26,7 +28,7 @@ class Repeater extends Component
     protected $widget;
 
 
-    protected $listeners = ['setFormProperty'];
+
 
     public function mount()
     {
@@ -43,23 +45,22 @@ class Repeater extends Component
         // $ww = $widget->{$this->field['alias']};
         // // dd($widget,$ww,$ww->render());
         // }
-        $ww->render();
+        // $ww->render();
+        // dd($ww);
         $formWidgets = $ww->vars['formWidgets'];
         // dd($ww,$widget,$widget->formExtraForm0PointEvidence->render());
-        foreach ($formWidgets as $formWidget){
-            $this->init($formWidget);
+        foreach ($formWidgets as $indexValue=>$formWidget){
+            $this->init($formWidget,$indexValue);
         }
         // dd($this->field);
         // dd($args,$widget);
     }
 
-    public function init($form)
+    public function init($form,$indexValue)
     {
         $form->render();
-        // dd($form,$form->getFormWidgets()['point_evidence']->render(),$this->widget);
 
-        // dd($form);
-        // $this->widget = $widget;
+
 
         $this->form['_session_key'] = $form->getSessionKey();
 
@@ -75,12 +76,12 @@ class Repeater extends Component
 
         // dd($outsideTabs,$secondaryTabs);
         foreach ($outsideTabs as $field) {
-            $this->parseField($form, $field, 'fields');
+            $this->parseField($form, $field, 'fields','',$indexValue);
         }
 
         foreach ($primaryTabs as $tab=>$primaryTabFields) {
             foreach ($primaryTabFields as $primaryTabField) {
-                $this->parseField($form, $primaryTabField, 'tabs', $tab);
+                $this->parseField($form, $primaryTabField, 'tabs', $tab,$indexValue);
             }
         }
 
@@ -89,7 +90,7 @@ class Repeater extends Component
 
         foreach ($secondaryTabs as $secondaryTab=>$secondaryTabFields) {
             foreach ($secondaryTabFields as $secondaryTabField) {
-                $this->parseField($form, $secondaryTabField, 'secondTabs', $secondaryTab);
+                $this->parseField($form, $secondaryTabField, 'secondTabs', $secondaryTab,$indexValue);
             }
         }
 
@@ -135,12 +136,12 @@ class Repeater extends Component
 
         // dd($outsideTabs,$secondaryTabs);
         foreach ($outsideTabs as $field) {
-            $this->parseField($form, $field, 'fields');
+            $this->parseField($form, $field, 'fields','',$indexValue);
         }
 
         foreach ($primaryTabs as $tab=>$primaryTabFields) {
             foreach ($primaryTabFields as $primaryTabField) {
-                $this->parseField($form, $primaryTabField, 'tabs', $tab);
+                $this->parseField($form, $primaryTabField, 'tabs', $tab,$indexValue);
             }
         }
 
@@ -149,7 +150,7 @@ class Repeater extends Component
 
         foreach ($secondaryTabs as $secondaryTab=>$secondaryTabFields) {
             foreach ($secondaryTabFields as $secondaryTabField) {
-                $this->parseField($form, $secondaryTabField, 'secondTabs', $secondaryTab);
+                $this->parseField($form, $secondaryTabField, 'secondTabs', $secondaryTab,$indexValue);
             }
         }
 
@@ -159,8 +160,22 @@ class Repeater extends Component
         $this->widget = $c->widget;
         // dd($this->form);
 
-        $this->emitUp('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
 
+        $this->emit('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+
+    }
+
+    public function onRemoveItem($index)
+    {
+        $value = \Arr::get($this->form, $this->getKeyName());
+        if(!empty($value)){
+            unset($value[$index]);
+            $value = array_values($value);
+            \Arr::set($this->form, $this->getKeyName(), $value);
+        }
+        unset($this->allFields[$index]);
+        $this->allFields = array_values($this->allFields);
+        $this->emit('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
     }
 
 
@@ -174,7 +189,7 @@ class Repeater extends Component
         return  $keyName;
 
     }
-    protected function parseField($form, $field, $type, $tab='')
+    protected function parseField($form, $field, $type, $tab='',$indexValue)
     {
 
         // if($field->fieldName=='groups'){
@@ -279,33 +294,22 @@ class Repeater extends Component
 
 
         if ($tab) {
-            $this->{$type}[$tab][] = (array)$field;
+            $this->allFields[$indexValue][$type][$tab][] = (array)$field;
         } else {
-            $this->{$type}[] = (array)$field;
+            $this->allFields[$indexValue][$type][] = (array)$field;
         }
         // dd($field);
+
 
 
     }
 
     public function updated($name, $value)
     {
-        $this->emitUp('setFormProperty', ['name'=>$name,'value'=>$value]);
+        $this->emit('setFormProperty', ['name'=>$name,'value'=>$value]);
     }
 
-    public function setFormProperty($data)
-    {
-        $name = $data['name'];
-        $value = $data['value'];
 
-        if(\Str::startsWith($name, 'form.')){
-            $name = substr_replace($name,'',strpos($name,'form.'),strlen('form.'));
-        };
-
-        \Arr::set($this->form, $name,$value);
-
-        $this->emitUp('setFormProperty', $data);
-    }
 
 
 
