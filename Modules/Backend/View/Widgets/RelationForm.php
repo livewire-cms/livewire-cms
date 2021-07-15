@@ -32,10 +32,14 @@ class RelationForm extends Component
 
     public $relationFormModal;
 
+
+    protected $widget;
+
     protected $listeners = [
         'onRelationButtonCreate',
         'onRelationClickViewList',
-        'upload:finished' => 'uploadFinished'
+        'upload:finished' => 'uploadFinished',
+        'setRelationFormProperty'
     ];
 
 
@@ -76,6 +80,7 @@ class RelationForm extends Component
         // dd($c->widget);
 
         $this->prepareVars($c->widget, $pre);
+        $this->widget = $c->widget;
 
     }
 
@@ -110,6 +115,8 @@ class RelationForm extends Component
         $this->sessionKey = $c->widget->{$pre.'ManageForm'}->getSessionKey();
         $this->form['_session_key'] = $this->sessionKey;
         $this->prepareVars($c->widget, $pre);
+        $this->widget = $c->widget;
+
     }
 
 
@@ -204,14 +211,7 @@ class RelationForm extends Component
         }
 
 
-        //设置值
-        if ($field->type=='password') {
-            $this->form[$field->arrayName][$field->fieldName] = '';
-        }else if ($field->type=='checkboxlist') {
-            $this->form[$field->arrayName][$field->fieldName] = $field->value?:[];
-        } else {
-            $this->form[$field->arrayName][$field->fieldName] = $field->value;
-        }
+
 
         //设置上传文件
 
@@ -239,13 +239,25 @@ class RelationForm extends Component
 
         foreach ($names as &$name) {
             if (is_numeric($name)) {
-                $name = '['.$name.']';
+                $name = ''.$name.'';
             }
         }
         $field->modelName = 'form.'.implode('.', $names);
         $field->id = $field->getId();
+        $keyName  = implode('.', $names);
 
+        //设置值
+        if ($field->type=='password') {
+            \Arr::set($this->form, $keyName,'');
+            // $this->form[$field->arrayName][$field->fieldName] = '';
+        }else if ($field->type=='checkboxlist') {
+            \Arr::set($this->form, $keyName,$field->value?:[]);
 
+        } else {
+            \Arr::set($this->form, $keyName,$field->value);
+
+            // $this->form[$field->arrayName][$field->fieldName] = $field->value;
+        }
         if ($tab) {
             $this->{$type}[$tab][] = (array)$field;
         } else {
@@ -482,12 +494,23 @@ class RelationForm extends Component
 
 
 
+    public function setRelationFormProperty($data)
+    {
+        $name = $data['name'];
+        $value = $data['value'];
 
+        if(\Str::startsWith($name, 'form.')){
+            $name = substr_replace($name,'',strpos($name,'form.'),strlen('form.'));
+        };
+        \Arr::set($this->form, $name,$value);
+
+
+    }
 
 
     public function render()
     {
 
-        return view('backend::widgets.relation_form');
+        return view('backend::widgets.relation_form',['widget'=>$this->widget]);
     }
 }

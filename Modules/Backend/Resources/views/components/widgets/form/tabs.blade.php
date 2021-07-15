@@ -3,6 +3,8 @@
     $form = $attributes->get('form',[]);
     $tab_name = $attributes->get('tab_name');
     $widget = $attributes->get('widget',null);
+    $relation_field = $attributes->get('relation_field',null);
+
 
 @endphp
 
@@ -18,7 +20,7 @@
     <div class="w-full mx-auto border p-9">
         @foreach ($tabs as $tab=>$tabFields)
             <div x-show="{{$tab_name}}==='{{$tab}}'">
-                <x-back-form-fields :fields="$tabFields" :form="$form" :widget="$widget"></x-back-form-fields>
+                <x-back-form-fields :fields="$tabFields" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-fields>
             </div>
         @endforeach
 

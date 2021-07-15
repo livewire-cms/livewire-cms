@@ -36,6 +36,7 @@ class Hello extends Model
 
     protected $casts = [
         'extra' => 'json',
+        'mood' => 'json',
     ];
 
     // public function categories()

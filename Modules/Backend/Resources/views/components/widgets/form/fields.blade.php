@@ -3,6 +3,7 @@
 $fields = $attributes->get('fields',[]);
 $form = $attributes->get('form',[]);
 $widget = $attributes->get('widget',null);
+$relation_field = $attributes->get('relation_field',null);
 // dd($widget);
 @endphp
 
@@ -82,7 +83,7 @@ $widget = $attributes->get('widget',null);
                     {{-- {{dd($widget)}} --}}
                     <div wire:ignore>
                         @isset($widget)
-                            @livewire($field['livewire_component'],['field'=>$field,'widget'=>$widget,'form'=>$form])
+                            @livewire($field['livewire_component'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field])
                         @endisset
                     </div>
 

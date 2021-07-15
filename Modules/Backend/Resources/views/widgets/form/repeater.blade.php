@@ -20,9 +20,9 @@
 
             </button>
         </div>
-        <x-back-form-fields :fields="$allfield['fields']??[]" :form="$form" :widget="$widget"></x-back-form-fields>
-        <x-back-form-tabs :tabs="$allfield['tabs']??[]" tab_name="tab{{$k}}{{$field['alias']}}" :form="$form" :widget="$widget"></x-back-form-tabs>
-        <x-back-form-tabs :tabs="$allfield['secondTabs']??[]" tab_name="secondTab{{$k}}{{$field['alias']}}" :form="$form" :widget="$widget"></x-back-form-tabs>
+        <x-back-form-fields :fields="$allfield['fields']??[]" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-fields>
+        <x-back-form-tabs :tabs="$allfield['tabs']??[]" tab_name="tab{{$k}}{{$field['alias']}}" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-tabs>
+        <x-back-form-tabs :tabs="$allfield['secondTabs']??[]" tab_name="secondTab{{$k}}{{$field['alias']}}" :relation_field="$relation_field" :form="$form" :widget="$widget"></x-back-form-tabs>
         <x-jet-section-border />
 
 

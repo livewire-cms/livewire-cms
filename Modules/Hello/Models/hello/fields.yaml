@@ -6,7 +6,10 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
-
+    mood[feeling]:
+      label: Overall feeling
+      span: auto
+      tab: Mood
     extra:
         type: repeater
         titleFrom: title_when_collapsed
@@ -66,7 +69,15 @@ tabs:
             tab: tabs
             span: auto
 
-
+        mood[feeling]:
+          label: Overall feeling
+          span: auto
+          tab: Mood
+        mood[comment]:
+          label: Mood comment
+          span: auto
+          type: text
+          tab: Mood
         excerpt:
           tab: tab1
           cssClass: field-slim blog-post-preview

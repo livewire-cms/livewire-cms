@@ -8,5 +8,7 @@ class World extends Model
     public $attachOne = [
         'avatar' => \Modules\System\Models\File::class
     ];
-
+    protected $casts = [
+        'extra' => 'json',
+    ];
 }

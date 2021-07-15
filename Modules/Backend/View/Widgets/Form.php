@@ -140,14 +140,7 @@ class Form extends Component
         }
 
 
-        //设置值
-        if ($field->type=='password') {
-            $this->form[$field->arrayName][$field->fieldName] = '';
-        }else if ($field->type=='checkboxlist') {
-            $this->form[$field->arrayName][$field->fieldName] = $field->value?:[];
-        } else {
-            $this->form[$field->arrayName][$field->fieldName] = $field->value;
-        }
+
 
         //设置上传文件
 
@@ -176,9 +169,24 @@ class Form extends Component
                 $name = ''.$name.'';
             }
         }
+
+        $keyName  = implode('.', $names);
         $field->modelName = 'form.'.implode('.', $names);
         $field->id = $field->getId();
+        // dd($field);
 
+        //设置值
+        if ($field->type=='password') {
+            \Arr::set($this->form, $keyName,'');
+            // $this->form[$field->arrayName][$field->fieldName] = '';
+        }else if ($field->type=='checkboxlist') {
+            \Arr::set($this->form, $keyName,$field->value?:[]);
+
+        } else {
+            \Arr::set($this->form, $keyName,$field->value);
+
+            // $this->form[$field->arrayName][$field->fieldName] = $field->value;
+        }
 
         if ($tab) {
             $this->{$type}[$tab][] = (array)$field;

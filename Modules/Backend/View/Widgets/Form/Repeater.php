@@ -25,6 +25,8 @@ class Repeater extends Component
     public $modelId;
 
 
+    public $relation_field;
+
     protected $widget;
 
 
@@ -35,6 +37,8 @@ class Repeater extends Component
         $args = func_get_args();
         $widget = $args[1];
         $this->widget = $widget;
+        // dd($this->widget, $this->relation_field);
+        // $widget = $this->widget;
         $this->parentContext = $widget->form->getContext();
         $this->modelId = $widget->form->model->getKey();
         $this->form[$this->field['alias'].'_loaded'] = 1;
@@ -45,7 +49,8 @@ class Repeater extends Component
         // $ww = $widget->{$this->field['alias']};
         // // dd($widget,$ww,$ww->render());
         // }
-        // $ww->render();
+        // dd($widget,$this->field);
+        $ww->render();
         // dd($ww);
         $formWidgets = $ww->vars['formWidgets'];
         // dd($ww,$widget,$widget->formExtraForm0PointEvidence->render());
@@ -98,9 +103,10 @@ class Repeater extends Component
 
     public function onAddItem()
     {
-        request()->merge($this->form);
-        // dd($this->fields);
-        // dd($this->form);
+        request()->merge($this->form)->merge(['_relation_field'=>$this->relation_field]);
+        // dd(request()->all());
+//
+        // dd($this->form,$this->relation_field);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
@@ -111,10 +117,10 @@ class Repeater extends Component
             // dd($this->form);
             $c->asExtension('FormController')->update($this->modelId);
         }
+        // dd($c->widget,$this->relation_field);
 
         // dd($c->widget->{$this->field['alias']}->onAddItem());
         $vars = $c->widget->{$this->field['alias']}->onAddItem()->vars;
-        // dd($c->widget);
         $form = $vars['widget'];
         $form->render();
         // dd($form);
@@ -125,8 +131,8 @@ class Repeater extends Component
         $this->form['_session_key'] = $form->getSessionKey();
 
 
-        $this->context = $form->context;
-        $this->modelId = $form->model->getKey();
+        // $this->context = $form->context;
+        // $this->modelId = $form->model->getKey();
 
 
 
@@ -161,7 +167,12 @@ class Repeater extends Component
         // dd($this->form);
 
 
-        $this->emit('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+        if($this->relation_field){
+            $this->emit('setRelationFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+        }else{
+            $this->emit('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+
+        }
 
     }
 
@@ -175,7 +186,13 @@ class Repeater extends Component
         }
         unset($this->allFields[$index]);
         $this->allFields = array_values($this->allFields);
-        $this->emit('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+
+        if($this->relation_field){
+            $this->emit('setRelationFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+        }else{
+            $this->emit('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+
+        }
     }
 
 
@@ -248,17 +265,18 @@ class Repeater extends Component
         //设置值
         $names = HtmlHelper::nameToArray($field->arrayName);
 
-        if ($field->type=='password') {
-            // $this->form[$field->arrayName][$field->fieldName] = '';
-            $this->form[$names[0]][$names[1]][$names[2]][$field->fieldName] = $field->value;
 
-        }else if ($field->type=='checkboxlist') {
-            // $this->form[$field->arrayName][$field->fieldName] = $field->value?:[];
-            $this->form[$names[0]][$names[1]][$names[2]][$field->fieldName] = $field->value?:[];
-        } else {
-            // $this->form[$field->arrayName][$field->fieldName] = $field->value;
-            $this->form[$names[0]][$names[1]][$names[2]][$field->fieldName] = $field->value;
-        }
+        // if ($field->type=='password') {
+        //     // $this->form[$field->arrayName][$field->fieldName] = '';
+        //     $this->form[$names[0]][$names[1]][$names[2]][$field->fieldName] = $field->value;
+
+        // }else if ($field->type=='checkboxlist') {
+        //     // $this->form[$field->arrayName][$field->fieldName] = $field->value?:[];
+        //     $this->form[$names[0]][$names[1]][$names[2]][$field->fieldName] = $field->value?:[];
+        // } else {
+        //     // $this->form[$field->arrayName][$field->fieldName] = $field->value;
+        //     $this->form[$names[0]][$names[1]][$names[2]][$field->fieldName] = $field->value;
+        // }
 
         //设置上传文件
 
@@ -281,7 +299,7 @@ class Repeater extends Component
 
 
         $names = HtmlHelper::nameToArray($field->getName());
-
+        // dd($names);
 
         foreach ($names as &$name) {
             if (is_numeric($name)) {
@@ -292,7 +310,19 @@ class Repeater extends Component
         $field->modelName = str_replace(['.['], ['['], $field->modelName);
         $field->id = $field->getId();
 
+        $keyName = implode('.', $names);
+        //设置值
+        if ($field->type=='password') {
+            \Arr::set($this->form, $keyName,'');
+            // $this->form[$field->arrayName][$field->fieldName] = '';
+        }else if ($field->type=='checkboxlist') {
+            \Arr::set($this->form, $keyName,$field->value?:[]);
 
+        } else {
+            \Arr::set($this->form, $keyName,$field->value);
+
+            // $this->form[$field->arrayName][$field->fieldName] = $field->value;
+        }
         if ($tab) {
             $this->allFields[$indexValue][$type][$tab][] = (array)$field;
         } else {
@@ -306,7 +336,11 @@ class Repeater extends Component
 
     public function updated($name, $value)
     {
-        $this->emit('setFormProperty', ['name'=>$name,'value'=>$value]);
+        if($this->relation_field){
+            $this->emit('setRelationFormProperty', ['name'=>$name,'value'=>$value]);
+        }else{
+            $this->emit('setFormProperty', ['name'=>$name,'value'=>$value]);
+        }
     }
 
 

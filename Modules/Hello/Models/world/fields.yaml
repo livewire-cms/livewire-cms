@@ -6,8 +6,45 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
+    extra:
+      type: repeater
+      titleFrom: title_when_collapsed
+      form:
+          fields:
+              point_evidence:
+                        type: repeater
+                        prompt: Add evidence to the point
+                        form:
+                            fields:
+                                title:
+                                    placeholder: Provide evidence to support that point
+                                    label: Evidence
+                                    type: text
+              name:
+                  label: Date added
+                  type: hello-name
+                  span: auto
+              added_at:
+                  label: Date added
+                  type: datepicker
+                  span: auto
+
+              details:
+                  label: Details
+                  type: textarea
+                  span: auto
+
+              title_when_collapsed:
+                  label: This field is the title when collapsed
+                  type: text
+                  span: auto
+
+
+
+
+
     name:
-        label: 名称
+        label: 名称1
         span: auto
     desc:
         label: 描述
@@ -20,6 +57,3 @@ fields:
 
         imageHeight: 250
         imageWidth: 250
-
-
-
