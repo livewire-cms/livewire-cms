@@ -34,6 +34,10 @@ class Hello extends Model
         'avatar' => \Modules\System\Models\File::class
     ];
 
+    protected $casts = [
+        'extra' => 'json',
+    ];
+
     // public function categories()
     // {
     //     return $this->belongsToMany(Category::class, 'category_hellos', 'hello_id', 'category_id');

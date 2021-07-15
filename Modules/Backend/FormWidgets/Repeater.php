@@ -172,7 +172,7 @@ class Repeater extends FormWidgetBase
 
         $this->vars['useGroups'] = $this->useGroups;
         $this->vars['groupDefinitions'] = $this->groupDefinitions;
-        $this->formField->livewire_component = 'backend.widgets.form.field';
+        $this->formField->livewire_component = 'backend.widgets.form.repeater';
         $this->formField->vars = $this->vars;
         $this->formField->alias = $this->alias;
         $this->vars['field'] = $this->formField;
@@ -244,6 +244,8 @@ class Repeater extends FormWidgetBase
         // outside of the form element that contains all the repeater
         // fields that would normally be used to identify that case
         $handler = $this->controller->getAjaxHandler();
+        // dd($handler,$this->alias . 'Form');
+
         if (!$this->loaded && \Str::startsWith($handler, $this->alias . 'Form')) {
             // Attempt to get the index of the repeater
             $handler = \Str::after($handler, $this->alias . 'Form');
@@ -257,6 +259,7 @@ class Repeater extends FormWidgetBase
 
         // Ensure that the minimum number of items are preinitialized
         // ONLY DONE WHEN NOT IN GROUP MODE
+
         if (!$this->useGroups && $this->minItems > 0) {
             if (!is_array($currentValue)) {
                 $currentValue = [];
@@ -300,7 +303,7 @@ class Repeater extends FormWidgetBase
         $configDefinition = $this->useGroups
             ? $this->getGroupFormFieldConfig($groupCode)
             : $this->form;
-
+        // dd($configDefinition);
         $config = $this->makeConfig($configDefinition);
         $config->model = $this->model;
         $config->data = $this->getValueFromIndex($index);

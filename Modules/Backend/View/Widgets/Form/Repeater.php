@@ -6,7 +6,7 @@ use Livewire\Component;
 use Route;
 use Modules\LivewireCore\Html\Helper as HtmlHelper;
 
-class Field extends Component
+class Repeater extends Component
 {
     public $fields = [];
     public $tabs = [];
@@ -22,14 +22,77 @@ class Field extends Component
     public $context;
     public $modelId;
 
+
+    protected $widget;
+
+
+    protected $listeners = ['setFormProperty'];
+
     public function mount()
     {
         $args = func_get_args();
         $widget = $args[1];
+        $this->widget = $widget;
         $this->parentContext = $widget->form->getContext();
         $this->modelId = $widget->form->model->getKey();
         $this->form[$this->field['alias'].'_loaded'] = 1;
-        // dd($args,$this->field);
+        // $this->form['formExtraForm0PointEvidence'.'_loaded'] = 1;
+        $ww = $widget->{$this->field['alias']};
+        // dd($this->field);
+        // if($this->field['alias']=='formExtraForm0PointEvidence'){
+        // $ww = $widget->{$this->field['alias']};
+        // // dd($widget,$ww,$ww->render());
+        // }
+        $ww->render();
+        $formWidgets = $ww->vars['formWidgets'];
+        // dd($ww,$widget,$widget->formExtraForm0PointEvidence->render());
+        foreach ($formWidgets as $formWidget){
+            $this->init($formWidget);
+        }
+        // dd($this->field);
+        // dd($args,$widget);
+    }
+
+    public function init($form)
+    {
+        $form->render();
+        // dd($form,$form->getFormWidgets()['point_evidence']->render(),$this->widget);
+
+        // dd($form);
+        // $this->widget = $widget;
+
+        $this->form['_session_key'] = $form->getSessionKey();
+
+
+        $this->context = $form->context;
+        $this->modelId = $form->model->getKey();
+
+
+
+        $outsideTabs = $form->vars['outsideTabs'];
+        $primaryTabs = $form->vars['primaryTabs'];
+        $secondaryTabs = $form->vars['secondaryTabs'];
+
+        // dd($outsideTabs,$secondaryTabs);
+        foreach ($outsideTabs as $field) {
+            $this->parseField($form, $field, 'fields');
+        }
+
+        foreach ($primaryTabs as $tab=>$primaryTabFields) {
+            foreach ($primaryTabFields as $primaryTabField) {
+                $this->parseField($form, $primaryTabField, 'tabs', $tab);
+            }
+        }
+
+
+
+
+        foreach ($secondaryTabs as $secondaryTab=>$secondaryTabFields) {
+            foreach ($secondaryTabFields as $secondaryTabField) {
+                $this->parseField($form, $secondaryTabField, 'secondTabs', $secondaryTab);
+            }
+        }
+
     }
 
     public function onAddItem()
@@ -50,9 +113,10 @@ class Field extends Component
 
         // dd($c->widget->{$this->field['alias']}->onAddItem());
         $vars = $c->widget->{$this->field['alias']}->onAddItem()->vars;
-        // dd($vars);
+        // dd($c->widget);
         $form = $vars['widget'];
         $form->render();
+        // dd($form);
         $indexValue = $vars['indexValue'];
 
         // $this->widget = $widget;
@@ -89,6 +153,26 @@ class Field extends Component
             }
         }
 
+        // $widgetObj = new class(){};
+        // $widgetObj->form = $form;
+
+        $this->widget = $c->widget;
+        // dd($this->form);
+
+        $this->emitUp('setFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
+
+    }
+
+
+
+    public function getKeyName()
+    {
+        $keyName = $this->field['modelName'];
+        if(\Str::startsWith($keyName, 'form.')){
+            $keyName = substr_replace($keyName,'',strpos($keyName,'form.'),strlen('form.'));
+        };
+        return  $keyName;
+
     }
     protected function parseField($form, $field, $type, $tab='')
     {
@@ -107,7 +191,7 @@ class Field extends Component
             // dd($form->getFormWidgets()[$field->valueFrom]->render());
 
             $field = $form->getFormWidgets()[$field->valueFrom]->render()->vars['field'];
-
+            // dd($field);
             // dd($primaryTabField);
             // $primaryTabs[$tab][$tabField] = $primaryTabField;
             // dd($primaryTabField->getId());
@@ -201,11 +285,34 @@ class Field extends Component
         }
         // dd($field);
 
+
     }
+
+    public function updated($name, $value)
+    {
+        $this->emitUp('setFormProperty', ['name'=>$name,'value'=>$value]);
+    }
+
+    public function setFormProperty($data)
+    {
+        $name = $data['name'];
+        $value = $data['value'];
+
+        if(\Str::startsWith($name, 'form.')){
+            $name = substr_replace($name,'',strpos($name,'form.'),strlen('form.'));
+        };
+
+        \Arr::set($this->form, $name,$value);
+
+        $this->emitUp('setFormProperty', $data);
+    }
+
+
 
 
     public function render()
     {
-        return view('backend::widgets.form.field');
+        // dd($this->form);
+        return view('backend::widgets.form.repeater',['widget'=>$this->widget]);
     }
 }

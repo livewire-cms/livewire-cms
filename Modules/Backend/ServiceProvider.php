@@ -26,7 +26,7 @@ use Modules\Backend\View\Widgets\SideMenu as WidgetSideMenu;
 use Modules\Backend\View\Widgets\Form as WidgetForm;
 use Modules\Backend\View\Widgets\RelationForm as WidgetRelationForm;
 use Modules\Backend\View\Widgets\Form\Fields as WidgetFormFields;
-use Modules\Backend\View\Widgets\Form\Field as WidgetFormField;
+use Modules\Backend\View\Widgets\Form\Repeater as WidgetFormRepeater;
 use Modules\Backend\View\Widgets\Form\Text as WidgetFormText;
 
 use BackendMenu;
@@ -83,7 +83,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.widgets.form', WidgetForm::class);
                 Livewire::component('backend.widgets.relation_form', WidgetRelationForm::class);
                 Livewire::component('backend.widgets.form.fields', WidgetFormFields::class);
-                Livewire::component('backend.widgets.form.field', WidgetFormField::class);
+                Livewire::component('backend.widgets.form.repeater', WidgetFormRepeater::class);
                 Livewire::component('backend.widgets.form.text', WidgetFormText::class);
 
         });

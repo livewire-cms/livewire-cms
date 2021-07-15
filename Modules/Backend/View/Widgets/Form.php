@@ -37,7 +37,10 @@ class Form extends Component
 
 
 
-    protected $listeners = ['upload:finished' => 'uploadFinished'];
+    protected $listeners = ['upload:finished' => 'uploadFinished','setFormProperty'];
+
+
+
 
     public function mount($widget)
     {
@@ -328,12 +331,24 @@ class Form extends Component
         );
     }
 
+    public function setFormProperty($data)
+    {
+        $name = $data['name'];
+        $value = $data['value'];
 
+        if(\Str::startsWith($name, 'form.')){
+            $name = substr_replace($name,'',strpos($name,'form.'),strlen('form.'));
+        };
+        \Arr::set($this->form, $name,$value);
+
+
+    }
 
 
 
     public function render()
     {
+        // dd($this->form);
         return view('backend::widgets.form',['widget'=>$this->widget]);
     }
 }

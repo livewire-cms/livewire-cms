@@ -78,9 +78,11 @@ $widget = $attributes->get('widget',null);
                 @if(isset($field['component']))
                     <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
                 @elseif(isset($field['livewire_component']))
+
+                    {{-- {{dd($widget)}} --}}
                     <div wire:ignore>
                         @isset($widget)
-                            @livewire($field['livewire_component'],['field'=>$field,'widget'=>$widget])
+                            @livewire($field['livewire_component'],['field'=>$field,'widget'=>$widget,'form'=>$form])
                         @endisset
                     </div>
 
