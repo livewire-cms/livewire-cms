@@ -34,8 +34,8 @@ fields:
                     span: auto
 
                 details:
-                    label: Details
-                    type: textarea
+                    label: datetimepicker
+                    type: datetimepicker
                     span: auto
 
                 title_when_collapsed:

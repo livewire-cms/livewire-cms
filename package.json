@@ -24,5 +24,8 @@
         "tailwindcss": "^2.0.1",
         "tailwindcss-multi-theme": "^1.0.3",
         "vue-template-compiler": "^2.6.11"
+    },
+    "dependencies": {
+        "flatpickr": "^4.6.9"
     }
 }

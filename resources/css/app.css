@@ -3,3 +3,5 @@
 @import 'tailwindcss/components';
 
 @import 'tailwindcss/utilities';
+
+@import '../../node_modules/flatpickr/dist/flatpickr.min.css';

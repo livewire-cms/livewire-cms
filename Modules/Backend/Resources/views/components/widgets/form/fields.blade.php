@@ -109,6 +109,10 @@ $relation_field = $attributes->get('relation_field',null);
 
             @elseif ($field['type']=='dropdown')
                 <x-select.single wire:model.lazy="{{ $field['modelName']}}" :options="$field['options']" :prefix="str_replace('-','_',$field['id'])"></x-select.single>
+            @elseif ($field['type']=='datepicker')
+                <x-form.datepicker wire:model.lazy="{{ $field['modelName']}}" ></x-form.datepicker>
+            @elseif ($field['type']=='datetimepicker')
+                <x-form.datetimepicker wire:model.lazy="{{ $field['modelName']}}" ></x-form.datetimepicker>
             @elseif ($field['type']=='password')
 
                 <input
