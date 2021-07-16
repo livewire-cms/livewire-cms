@@ -27,6 +27,7 @@ use Modules\Backend\View\Widgets\Form as WidgetForm;
 use Modules\Backend\View\Widgets\RelationForm as WidgetRelationForm;
 use Modules\Backend\View\Widgets\Form\Fields as WidgetFormFields;
 use Modules\Backend\View\Widgets\Form\Repeater as WidgetFormRepeater;
+use Modules\Backend\View\Widgets\Form\EditorJS as WidgetFormEditorJS;
 use Modules\Backend\View\Widgets\Form\Text as WidgetFormText;
 
 use BackendMenu;
@@ -84,6 +85,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.widgets.relation_form', WidgetRelationForm::class);
                 Livewire::component('backend.widgets.form.fields', WidgetFormFields::class);
                 Livewire::component('backend.widgets.form.repeater', WidgetFormRepeater::class);
+                Livewire::component('backend.widgets.form.editorjs', WidgetFormEditorJS::class);
                 Livewire::component('backend.widgets.form.text', WidgetFormText::class);
 
         });
@@ -198,6 +200,13 @@ class ServiceProvider extends BaseServiceProvider
                 echo '<x-back-app-guest>'.{$expression}['html'].'</x-back-app-guest>';
                 ?>  <?php endif; ?>
             EOT;
+        });
+        Blade::directive('livewireEditorjsScripts', function () {
+            $scriptsUrl = asset('/vendor/livewire-editorjs/editorjs.js');
+
+            return <<<EOF
+                <script src="$scriptsUrl"></script>
+            EOF;
         });
     }
 

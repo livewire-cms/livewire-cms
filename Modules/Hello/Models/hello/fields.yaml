@@ -13,7 +13,20 @@ fields:
     extra:
         type: repeater
         titleFrom: title_when_collapsed
+        span: auto
         form:
+            tabs:
+                fields:
+                    # worlds:
+                    #   lable: world
+                    #   type: relation
+                    #   tab: world
+                    #   span: auto
+
+                    content:
+                        label: 内容
+                        tab: tabs
+                        span: auto
             fields:
                 point_evidence:
                           type: repeater
@@ -67,6 +80,7 @@ tabs:
         content:
             label: 内容
             tab: tabs
+            type: editor
             span: auto
 
         mood[feeling]:
@@ -83,6 +97,7 @@ tabs:
           cssClass: field-slim blog-post-preview
           stretch: true
           label: 简介
+          type: editorjs
           span: auto
         categories:
           span: auto
@@ -117,11 +132,11 @@ secondaryTabs:
               label: 内容
               tab: tabs
               span: auto
-        excerpt:
-            tab: tab1
-            cssClass: field-slim blog-post-preview
-            stretch: true
-            label: 简介
-            span: auto
+        # excerpt:
+        #     tab: tab1
+        #     cssClass: field-slim blog-post-preview
+        #     stretch: true
+        #     label: 简介
+        #     span: auto
 
 

@@ -41,6 +41,7 @@ class Repeater extends Component
         // $widget = $this->widget;
         $this->parentContext = $widget->form->getContext();
         $this->modelId = $widget->form->model->getKey();
+        // dd($this->modelId);
         $this->form[$this->field['alias'].'_loaded'] = 1;
         // $this->form['formExtraForm0PointEvidence'.'_loaded'] = 1;
         $ww = $widget->{$this->field['alias']};
@@ -50,7 +51,7 @@ class Repeater extends Component
         // // dd($widget,$ww,$ww->render());
         // }
         // dd($widget,$this->field);
-        $ww->render();
+        // $ww->render();
         // dd($ww);
         $formWidgets = $ww->vars['formWidgets'];
         // dd($ww,$widget,$widget->formExtraForm0PointEvidence->render());
@@ -103,6 +104,7 @@ class Repeater extends Component
 
     public function onAddItem()
     {
+        // dd($this->modelId);
         request()->merge($this->form)->merge(['_relation_field'=>$this->relation_field]);
         // dd(request()->all());
 //
@@ -111,12 +113,14 @@ class Repeater extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if ($this->parentContext=='create') {
-            $c->asExtension('FormController')->create();
-        } elseif ($this->parentContext=='update') {
-            // dd($this->form);
-            $c->asExtension('FormController')->update($this->modelId);
-        }
+        $c->asExtension('FormController')->create();//不需要父级id
+
+        // if ($this->parentContext=='create') {
+        //     $c->asExtension('FormController')->create();
+        // } elseif ($this->parentContext=='update') {
+        //     // dd($this->form);
+        //     $c->asExtension('FormController')->update($this->modelId);
+        // }
         // dd($c->widget,$this->relation_field);
 
         // dd($c->widget->{$this->field['alias']}->onAddItem());

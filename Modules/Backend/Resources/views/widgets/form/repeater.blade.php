@@ -8,22 +8,25 @@
 
 
 
-<div class="p-4  block">
+<div class="p-4  block" >
 
 
     @foreach ($allFields as $k=>$allfield)
-        <div class="float-right">
-            <button
-            class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
-            wire:click.prevent="onRemoveItem('{{$k}}')"  >
-            <span aria-hidden="true">&times;</span>
+        <div x-data="{tab:'{{key($allfield['tabs']??[])}}',secondTab:'{{key($allfield['secondTabs']??[])}}'}">
 
-            </button>
-        </div>
-        <x-back-form-fields :fields="$allfield['fields']??[]" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-fields>
-        <x-back-form-tabs :tabs="$allfield['tabs']??[]" tab_name="tab{{$k}}{{$field['alias']}}" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-tabs>
-        <x-back-form-tabs :tabs="$allfield['secondTabs']??[]" tab_name="secondTab{{$k}}{{$field['alias']}}" :relation_field="$relation_field" :form="$form" :widget="$widget"></x-back-form-tabs>
-        <x-jet-section-border />
+            <div class="float-right">
+                <button
+                class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+                wire:click.prevent="onRemoveItem('{{$k}}')"  >
+                <span aria-hidden="true">&times;</span>
+
+                </button>
+            </div>
+            <x-back-form-fields :fields="$allfield['fields']??[]" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-fields>
+            <x-back-form-tabs :tabs="$allfield['tabs']??[]" tab_name="tab" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-tabs>
+            <x-back-form-tabs :tabs="$allfield['secondTabs']??[]" tab_name="secondTab" :relation_field="$relation_field" :form="$form" :widget="$widget"></x-back-form-tabs>
+            <x-jet-section-border />
+         </div>
 
 
     @endforeach

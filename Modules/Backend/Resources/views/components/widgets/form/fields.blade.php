@@ -113,6 +113,21 @@ $relation_field = $attributes->get('relation_field',null);
                 <x-form.datepicker wire:model.lazy="{{ $field['modelName']}}" ></x-form.datepicker>
             @elseif ($field['type']=='datetimepicker')
                 <x-form.datetimepicker wire:model.lazy="{{ $field['modelName']}}" ></x-form.datetimepicker>
+            @elseif ($field['type']=='editor')
+                <x-form.editor wire:model.debounce.1000ms="{{ $field['modelName']}}"></x-form.editor>
+            @elseif ($field['type']=='editorjs')
+                @livewire('backend.widgets.form.editorjs', [
+                    'editorId' => $field["modelName"],
+                    'value' => $field['value'],
+                    'uploadDisk' => 'public',
+                    'downloadDisk' => 'public',
+                    'class' => '',
+                    'style' => '',
+                    'readOnly' => false,
+                    'placeholder' => $field['placeholder'],
+                    'relation_field'=>$relation_field
+                ])
+
             @elseif ($field['type']=='password')
 
                 <input
