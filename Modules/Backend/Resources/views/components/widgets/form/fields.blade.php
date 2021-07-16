@@ -118,7 +118,7 @@ $relation_field = $attributes->get('relation_field',null);
             @elseif ($field['type']=='wangeditor')
                 <x-form.wangeditor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']"></x-form.wangeditor>
            @elseif ($field['type']=='quilleditor')
-                <x-form.quill-editor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']" :config="$field['config']['config']"></x-form.quill-editor>
+                <x-form.quill-editor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']" :config="$field['config']['config']" :prefix="str_replace('-','_',$field['id'])"></x-form.quill-editor>
            @elseif ($field['type']=='editorjs')
                 @livewire('backend.widgets.form.editorjs', [
                     'editorId' => $field["modelName"],
