@@ -9,8 +9,14 @@ class Hello extends Model
 {
     // use \Modules\LivewireCore\Support\Traits\Emitter;
     // use \Modules\LivewireCore\Extension\ExtendableTrait;
+    use \Modules\LivewireCore\Database\Traits\Validation;
 
-
+    /**
+     * @var array Rules
+     */
+    public $rules = [
+        'name' => 'required',
+    ];
 
     public $belongsToMany = [
         'categories' => [
@@ -33,7 +39,9 @@ class Hello extends Model
     public $attachOne = [
         'avatar' => \Modules\System\Models\File::class
     ];
-
+    public $hasOne = [
+        'phone' => [Phone::class, 'key' => 'person_id', 'scope' => 'isActive'],
+    ];
     protected $casts = [
         'excerpt' => 'json',
         'extra' => 'json',

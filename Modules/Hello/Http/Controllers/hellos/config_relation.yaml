@@ -24,3 +24,7 @@ categories:
 
     manage:
         context: relation
+phone:
+    label: Phone
+    form: ~/Modules/Hello/Models/phone/fields.yaml
+    list: ~/Modules/Hello/Models/phone/columns.yaml

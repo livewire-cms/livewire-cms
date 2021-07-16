@@ -7,6 +7,8 @@ use Str;
 use BackendAuth;
 use BackendMenu;
 use Modules\System\Classes\SideNavManager;
+use Modules\Hello\Models\Phone;
+
 class Hellos extends Controller
 {
 
@@ -103,5 +105,19 @@ class Hellos extends Controller
 
 
         return view('hello::hellos.update', ['widget'=>$this->widget,'cc'=>$this]);
+    }
+
+    public function formExtendModel($model)
+    {
+        /*
+         * Init proxy field model if we are creating the model
+         * and the context is proxy fields.
+         */
+        if (!$model->phone) {
+            $model->phone = new Phone;
+        }
+
+
+        return $model;
     }
 }

@@ -6,9 +6,25 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
+    phone[name]:
+      label: 手机名称
+      # context: proxyfields
+
+    phone[number]:
+      label: 手机号
+      # context: proxyfields
+
     mood[feeling]:
       label: Overall feeling
       span: auto
+      tab: Mood
+    mood[quilleditor]:
+      label: quilleditor
+      type: quilleditor
+      config:
+        theme: snow
+        # debug: info
+      span: full
       tab: Mood
     mood[wangeditor]:
       label: wangeditor

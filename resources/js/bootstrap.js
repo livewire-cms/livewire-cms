@@ -1,8 +1,10 @@
 
 
-window.Flatpickr = require("flatpickr");//日期时间选择器
+require("flatpickr");//日期时间选择器
+window.Quill = require("Quill");//
 
 
+//todo 定制
 import { Editor } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Document from '@tiptap/extension-document'
@@ -25,7 +27,6 @@ window.setupEditor = function (content) {
         ],
         content: this.content,
         onUpdate: ({ editor }) => {
-            console.log(312,editor.getHTML())
           this.content = editor.getHTML()
         }
       })

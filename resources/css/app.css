@@ -5,3 +5,8 @@
 @import 'tailwindcss/utilities';
 
 @import '../../node_modules/flatpickr/dist/flatpickr.min.css';
+
+@import '../../node_modules/quill/dist/quill.snow.css';
+@import '../../node_modules/quill/dist/quill.bubble.css';
+
+@import '../../node_modules/quill/dist/quill.core.css';

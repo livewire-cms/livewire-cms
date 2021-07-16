@@ -3,7 +3,10 @@
 
 @php
     $pre = 'relation'.ucfirst(\Str::camel($prefix));
-    $list= $widget->{$pre.'ViewList'}->prepareVars();
+    if(isset($widget->{$pre.'ViewList'})){
+        $list= $widget->{$pre.'ViewList'}->prepareVars();
+
+    }
     // dd($pre);
 
     // dd($widget);
@@ -35,6 +38,8 @@
             @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
         </div>
     @endif
+    @isset($list)
+
     <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
@@ -112,6 +117,8 @@
         @endif
       </div>
     </div>
+    @endisset
+
   </div>
   @push('scripts')
   <script>

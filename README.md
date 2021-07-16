@@ -65,5 +65,11 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 editor
 
-* https://github.com/maxeckel/livewire-editorjs
-* 
+* https://github.com/maxeckel/livewire-editorjs (已适配)
+* https://github.com/wangeditor-team/wangEditor/（已适配）
+* https://www.tiptap.dev/introduction （自定义待研究）
+
+
+## todo
+
+* 深层验证问题

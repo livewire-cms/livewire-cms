@@ -117,6 +117,8 @@ $relation_field = $attributes->get('relation_field',null);
                 <x-form.editor wire:model.debounce.1000ms="{{ $field['modelName']}}"></x-form.editor>
             @elseif ($field['type']=='wangeditor')
                 <x-form.wangeditor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']"></x-form.wangeditor>
+           @elseif ($field['type']=='quilleditor')
+                <x-form.quill-editor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']" :config="$field['config']['config']"></x-form.quill-editor>
            @elseif ($field['type']=='editorjs')
                 @livewire('backend.widgets.form.editorjs', [
                     'editorId' => $field["modelName"],
@@ -159,6 +161,7 @@ $relation_field = $attributes->get('relation_field',null);
                 />
 
             @endif
+            {{-- {{dd($field)}} --}}
             @error($field['fieldName'])
                 <span class="text-xs text-red-500">{{$message}}</span>
             @enderror
