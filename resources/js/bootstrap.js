@@ -1,6 +1,6 @@
 
 
-window.Flatpickr = require("flatpickr");
+window.Flatpickr = require("flatpickr");//日期时间选择器
 
 
 import { Editor } from '@tiptap/core'
@@ -48,6 +48,10 @@ window.setupEditor = function (content) {
     }
   }
 }
+
+import E from "wangeditor";
+
+window.wangeditor = E
 
 window._ = require('lodash');
 

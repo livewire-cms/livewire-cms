@@ -35,6 +35,7 @@ class Hello extends Model
     ];
 
     protected $casts = [
+        'excerpt' => 'json',
         'extra' => 'json',
         'mood' => 'json',
     ];

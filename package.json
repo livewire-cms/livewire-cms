@@ -26,6 +26,9 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "flatpickr": "^4.6.9"
+        "@tiptap/core": "^2.0.0-beta.86",
+        "@tiptap/starter-kit": "^2.0.0-beta.82",
+        "flatpickr": "^4.6.9",
+        "wangeditor": "^4.7.5"
     }
 }

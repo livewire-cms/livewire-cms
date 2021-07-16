@@ -201,7 +201,7 @@ class Form extends Component
         // dd(request());
         // dd($this->form['User']['avatar']);
 
-        dd($this->form);
+        // dd($this->form);
         request()->merge($data)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {

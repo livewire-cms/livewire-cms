@@ -10,6 +10,11 @@ fields:
       label: Overall feeling
       span: auto
       tab: Mood
+    mood[wangeditor]:
+      label: wangeditor
+      span: full
+      type: wangeditor
+      tab: Mood
     extra:
         type: repeater
         titleFrom: title_when_collapsed
