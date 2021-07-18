@@ -98,6 +98,15 @@ tabs:
         #   tab: world
         #   span: auto
 
+        depend_name:
+            label: depend_name
+            tab: depend
+            span: auto
+        depend_name_test:
+            label: 依赖depend_name
+            tab: depend
+            span: auto
+            dependsOn: depend_name
         content:
             label: 内容
             tab: tabs

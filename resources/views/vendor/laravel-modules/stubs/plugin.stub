@@ -1,0 +1,77 @@
+<?php namespace Modules\$MODULE$;
+
+use Backend;
+use Modules\System\Classes\PluginBase;
+
+
+/**
+ * Test Plugin Information File
+ */
+class Plugin extends PluginBase
+{
+
+
+    public function registerPermissions()
+    {
+        return [
+            'backend.$LOWER_NAME$.index' => [
+                'label' => '$MODULE$',
+                'tab' => '$MODULE$'
+            ],
+        ];
+    }
+
+    //顶部菜单
+    public function registerNavigation()
+    {
+
+        return [
+
+            '$LOWER_NAME$' => [
+                'label'       => '$MODULE$',
+                'url'         => Backend::url('$LOWER_NAME$'),
+                'icon'        => 'icon-leaf',
+                'permissions' => [],
+                'order'       => 500,
+            ],
+        ];
+    }
+
+    public function registerFormWidgets()
+    {
+        return [
+
+        ];
+    }
+
+    public function register()
+    {
+
+
+
+    }
+
+    //侧边栏菜单
+    public function registerSideNavSettings()
+    {
+
+        return [
+            '$LOWER_NAME$' => [
+                'label' => '$MODULE$',
+                'description' => '',
+                'category' => '$MODULE$',//侧边栏分组
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('$LOWER_NAME$'),
+                'order' => 500,
+                'context'=>['modules.$LOWER_NAME$'],//对应模块1的标识符
+                'keywords' => '$LOWER_NAME$',
+                'permissions' => [],
+            ],
+        ];
+    }
+
+    public function boot()
+    {
+
+    }
+}

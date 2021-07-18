@@ -98,13 +98,13 @@ class Hellos extends Controller
         // dd($a->vars['relationViewWidget']->render());
         // dd($a->vars['']);
         // dd($a);
-        // dd($this->widget);
+        // dd($this->widget->form);
         // dd($this->widget,$this->widget->relationWorldsViewList->render(),$a);
 
         // dd($this);
 
 
-        return view('hello::hellos.update', ['widget'=>$this->widget,'cc'=>$this]);
+        return view('hello::hellos.update', ['widget'=>$this->widget]);
     }
 
     public function formExtendModel($model)

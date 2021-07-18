@@ -159,11 +159,19 @@ class Manager implements \Illuminate\Contracts\Auth\StatefulGuard
     public function getUser()
     {
 
-        return \Modules\Backend\Models\User::find(3);
+
+        // \Auth::logout();
+        // return $this->user;
+        // return \Modules\Backend\Models\User::find(3);
         if (is_null($this->user)) {
-            $this->check();
+           if(!\Auth::check()){
+                throw new AuthException('A user was not found with the given credentials.');
+           }else{
+               $this->user = \Auth::user();
+           }
         }
 
+        // dd($this->user);
         return $this->user;
     }
 

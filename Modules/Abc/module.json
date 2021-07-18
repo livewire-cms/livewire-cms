@@ -1,0 +1,13 @@
+{
+    "name": "Abc",
+    "alias": "abc",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Abc\\Providers\\AbcServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

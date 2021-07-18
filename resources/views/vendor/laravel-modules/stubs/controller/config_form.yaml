@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: $CLASSNOCONTROLLERU$
+form: ~/Modules/$NAME$/Models/$MODELNAMEL$/fields.yaml
+modelClass: Modules\$NAME$\Models\$MODELNAME$
+defaultRedirect: $NAMEL$/$CLASSNOCONTROLLERL$
+
+create:
+    redirect: $NAMEL$/$CLASSNOCONTROLLERL$/update/:id
+    redirectClose: $NAMEL$/$CLASSNOCONTROLLERL$
+
+update:
+    redirect: $NAMEL$/$CLASSNOCONTROLLERL$
+    redirectClose: $NAMEL$/$CLASSNOCONTROLLERL$

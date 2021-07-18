@@ -3,5 +3,7 @@
     "Hello": true,
     "Backend": true,
     "System": true,
-    "LivewireCore": true
+    "LivewireCore": true,
+    "Test": true,
+    "Abc": true
 }

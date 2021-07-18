@@ -1,0 +1,62 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+//use Illuminate\Routing\Controller;
+use Modules\Backend\Classes\Controller;
+use BackendMenu;
+use Modules\System\Classes\SideNavManager;
+ return (new Stub($this->getStubName(), [
+            'MODULENAME'        => $module->getStudlyName(),
+            'CONTROLLERNAME'    => $this->getControllerName(),
+            'NAMESPACE'         => $module->getStudlyName(),
+            'CLASS_NAMESPACE'   => $this->getClassNamespace($module),
+            'CLASS'             => $this->getControllerNameWithoutNamespace(),
+            'LOWER_NAME'        => $module->getLowerName(),
+            'MODULE'            => $this->getModuleName(),
+            'NAME'              => $this->getModuleName(),
+            'STUDLY_NAME'       => $module->getStudlyName(),
+            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
+        ]))->render();
+class $CLASS$ extends Controller
+{
+    public $implement = [
+        'Modules.Backend.Behaviors.ListController',
+        'Modules.Backend.Behaviors.FormController',
+        \Modules\Backend\Behaviors\RelationController::class,
+
+    ];
+    public $relationConfig = 'config_relation.yaml';
+    public $listConfig = [
+        'list'=>'config_list.yaml',
+    ]
+    public $formConfig = 'config_form.yaml';
+
+    public function __construct()
+    {
+        parent::__construct();
+        BackendMenu::setContext('Modules.$NAME$', '$LOWER_NAME$');
+        SideNavManager::setContext('Modules.$NAME$', strtolower(str_replace('Controller','','$CLASS$')));//选中侧边拦
+
+    }
+    public function index()
+    {
+        $this->asExtension('ListController')->index();
+        return view('hello::hellos.index',['widget'=>$this->widget]);
+
+    }
+    public function create()
+    {
+        $this->asExtension('FormController')->create();
+        return view('hello::hellos.create',['widget'=>$this->widget]);
+
+    }
+    public function update($id)
+    {
+        $this->asExtension('FormController')->update($id);
+        return view('hello::hellos.update', ['widget'=>$this->widget]);
+
+    }
+}

@@ -18,7 +18,7 @@
 Route::group([
     // 'domain' => config('jetstream.domain', null),
     'prefix' => 'backend/hello',
-    'middleware' => 'web',
+    'middleware' => ['web','auth'],
     'as'=> 'backend.hello.',
 ], function () {
     Route::group([

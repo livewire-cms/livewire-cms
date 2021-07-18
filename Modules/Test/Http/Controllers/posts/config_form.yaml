@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Posts
+form: ~/Modules/Test/Models/Post/fields.yaml
+modelClass: Modules\Test\Models\Post
+defaultRedirect: test/posts
+
+create:
+    redirect: test/posts/update/:id
+    redirectClose: test/posts
+
+update:
+    redirect: test/posts
+    redirectClose: test/posts
