@@ -8,3 +8,5 @@ columns:
         searchable: true
     name:
         label: Name
+        searchable: true
+
