@@ -28,12 +28,10 @@ class DbBackendUsers extends Migration
 
             $table->rememberToken();
             $table->text('two_factor_secret')
-                    ->after('password')
                     ->nullable();
             $table->string('name')->nullable();
 
             $table->text('two_factor_recovery_codes')
-                    ->after('two_factor_secret')
                     ->nullable();
             $table->timestamp('email_verified_at')->nullable();
 
