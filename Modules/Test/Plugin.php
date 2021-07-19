@@ -70,12 +70,23 @@ class Plugin extends PluginBase
             'foo' => [
                 'label' => '基础编辑',
                 'description' => '',
-                'category' => '基础编辑',//侧边栏分组
+                'category' => 'Test',//侧边栏分组
                 'icon' => 'icon-pencil',
                 'url'         => Backend::url('test/foo'),
                 'order' => 500,
                 'context'=>['modules.test'],//对应模块1的标识符
                 'keywords' => 'test foo',
+                'permissions' => [],
+            ],
+            'post' => [
+                'label' => '关联关系',
+                'description' => '',
+                'category' => 'Test',//侧边栏分组
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('test/post'),
+                'order' => 500,
+                'context'=>['modules.test'],//对应模块1的标识符
+                'keywords' => 'test post',
                 'permissions' => [],
             ],
         ];

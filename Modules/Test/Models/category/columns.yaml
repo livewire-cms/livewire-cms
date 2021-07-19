@@ -6,3 +6,9 @@ columns:
     id:
         label: ID
         searchable: true
+    name:
+        label: 名称
+        span: auto
+    desc:
+        label: 描述
+        span: auto

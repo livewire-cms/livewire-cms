@@ -2,3 +2,25 @@
 #  Relation Behavior Config
 # ===================================
 
+comments:
+    label: 评论
+    readOnly: true
+    view:
+      list: ~/Modules/Test/Models/comment/columns.yaml
+      showSearch: true
+      # recordsPerPage: 5
+
+    manage:
+        form: ~/Modules/Test/Models/comment/fields.yaml
+        context: relation
+categories:
+    label: 分类
+    list: ~/Modules/Test/Models/category/columns.yaml
+    form: ~/Modules/Test/Models/category/fields.yaml
+    readOnly: true
+    view:
+      showSearch: true
+      recordsPerPage: 5
+
+    manage:
+        context: relation

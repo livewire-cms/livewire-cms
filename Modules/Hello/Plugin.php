@@ -83,17 +83,17 @@ class Plugin extends PluginBase
     {
         // dd(232);
         return [
-            'hello' => [
-                'label' => 'hello',
-                'description' => 'rainlab.blog::lang.blog.settings_description',
-                'category' => 'playground',
-                'icon' => 'icon-pencil',
-                'url'         => Backend::url('hello/hellos'),
-                'order' => 500,
-                'context'=>['modules.hello','modules.system'],//对应模块1的标识符
-                'keywords' => 'blog post category',
-                'permissions' => [],
-            ],
+            // 'hello' => [
+            //     'label' => 'hello',
+            //     'description' => 'rainlab.blog::lang.blog.settings_description',
+            //     'category' => 'playground',
+            //     'icon' => 'icon-pencil',
+            //     'url'         => Backend::url('hello/hellos'),
+            //     'order' => 500,
+            //     'context'=>['modules.hello','modules.system'],//对应模块1的标识符
+            //     'keywords' => 'blog post category',
+            //     'permissions' => [],
+            // ],
             // 'users' => [
             //     'label' => '用户列表',
             //     'description' => 'rainlab.blog::lang.blog.settings_description',

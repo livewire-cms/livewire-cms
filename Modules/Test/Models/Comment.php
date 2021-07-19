@@ -70,6 +70,9 @@ class Comment extends Model
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
-    public $attachOne = [];
+    public $attachOne = [
+        'avatar' => \Modules\System\Models\File::class
+
+    ];
     public $attachMany = [];
 }

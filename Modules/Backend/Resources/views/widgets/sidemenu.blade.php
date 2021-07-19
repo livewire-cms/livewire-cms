@@ -39,17 +39,25 @@
         </a>
     </li> --}}
             @foreach ($listItems as $category=>$listItem)
-            @foreach ($listItem as $item)
+                @php
+                    $groupActive = 0;
+                @endphp
+                @foreach ($listItem as $item)
+
                     @php
-                        $groupActive = 0;
-                       if((strtolower($item->owner)==$context->owner)&&(strtolower($item->code)==$context->itemCode)){
+
+
+                    if((strtolower($item->owner)==$context->owner)&&(strtolower($item->code)==$context->itemCode)){
                         $groupActive = 1;
-                       }
+                    }
 
 
                     @endphp
-            @endforeach
+                @endforeach
             <li class="relative px-6 py-3" x-data="{open:{{$groupActive}}}">
+                <span x-show="open" class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                    aria-hidden="true">
+                    </span>
                 <button
                   class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   @click="open=!open"
@@ -108,14 +116,16 @@
                         // dd($item->owner);
 
                     @endphp
+
                     <li
-                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 "
+                    class="relative px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                   >
 
-                  <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                  @if ($active)
+                    <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true">
-                  </span>
-
+                    </span>
+                  @endif
 
                     <a class="w-full" href="{{$item->url}}">{{__($item->label)}}</a>
                   </li>

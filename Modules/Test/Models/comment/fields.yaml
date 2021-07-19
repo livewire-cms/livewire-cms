@@ -6,3 +6,24 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
+    name:
+        label: 名称
+        span: auto
+    desc:
+        label: 描述
+        span: auto
+        type: textarea
+tabs:
+    fields:
+        content:
+            label: 内容
+            tab: 内容
+            type: wangeditor
+        avatar:
+            label: 图片上传
+            tab: 图片
+            type: fileupload
+            mode: image
+            span: auto
+            imageHeight: 250
+            imageWidth: 250
