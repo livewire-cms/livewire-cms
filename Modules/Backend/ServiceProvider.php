@@ -69,7 +69,7 @@ class ServiceProvider extends BaseServiceProvider
             $this->registerBackendSettings();
         }
         $this->registerBladeDirectives();
-        $this->app->afterResolving(BladeCompiler::class, function () {
+        // $this->app->afterResolving(BladeCompiler::class, function () {
 
                 Livewire::component('backend.widgets.toolbar', WidgetToolbar::class);
                 Livewire::component('backend.widgets.search', WidgetSearch::class);
@@ -89,7 +89,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.widgets.form.editorjs', WidgetFormEditorJs::class);
                 Livewire::component('backend.widgets.form.text', WidgetFormText::class);
 
-        });
+        // });
     }
 
 
