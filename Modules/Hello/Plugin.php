@@ -26,6 +26,7 @@ class Plugin extends PluginBase
     public function registerNavigation()
     {
 
+        return [];
         return [
 
             'hellos' => [
