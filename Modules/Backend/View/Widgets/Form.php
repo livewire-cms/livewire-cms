@@ -314,7 +314,8 @@ class Form extends Component
             'file_id' => $id,
             '_session_key' => $this->form['_session_key']??'',
         ]);
-        $c->asExtension('FormController')->update($this->modelId);
+        $c->asExtension('FormController')->create();
+        // $c->asExtension('FormController')->update($this->modelId);
 
         // dd($this->form);
 
