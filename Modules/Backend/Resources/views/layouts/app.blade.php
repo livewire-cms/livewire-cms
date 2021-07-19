@@ -31,6 +31,16 @@
 
     <script src="{{ asset('js/init-alpine.js') }}"></script>
     @livewireEditorjsScripts
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?82143af04f2fe5478f69ce92966fcba2";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </head>
 
 <body>
