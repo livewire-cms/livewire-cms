@@ -26,7 +26,7 @@ if (!function_exists('find_controller_by_url')) {
     {
         $routes = app('router')->getRoutes();
         foreach($routes as $r){
-
+            dd($r);
             if((function($route,$path){
 
                 $route->prepareForSerialization(request());
