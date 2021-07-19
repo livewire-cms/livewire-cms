@@ -197,7 +197,7 @@ class ServiceProvider extends BaseServiceProvider
     {
 
         Blade::directive('livewireEditorjsScripts', function () {
-            $scriptsUrl = asset('/vendor/livewire-editorjs/editorjs.js');
+            $scriptsUrl = asset('/vendor/livewire-editorjs/editorjs.js',true);
 
             return <<<EOF
                 <script src="$scriptsUrl"></script>
