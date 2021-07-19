@@ -5,7 +5,7 @@
 
 @endphp
 <div >
-    <div x-data="{{$prefix}}quillEditor({})"
+    <div x-data="quillEditor({})"
     x-init="init()"
     {{$attributes->wire('model')}}
     wire:ignore
@@ -21,7 +21,7 @@
 @push('scripts')
     <script>
 
-function {{$prefix}}quillEditor(data) {
+function quillEditor(data) {
     return {
         instance: null,
         value: @entangle($attributes->wire('model')),
