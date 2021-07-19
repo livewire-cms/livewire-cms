@@ -32,7 +32,7 @@
             <span class="text-gray-700 dark:text-gray-400">{{ __('E-Mail Address') }}</span>
             <input type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 @error('email') border-red-500 @enderror focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                value="11111111@qq.com"
+                value="admin@qq.com"
                 placeholder="{{ __('Email') }}" />
         </label>
         @error('email')
@@ -44,7 +44,7 @@
             <span class="text-gray-700 dark:text-gray-400">{{ __('Password') }}</span>
             <input type="password" name="password" required autocomplete="current-password"
                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 @error('password') border-red-500 @enderror focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                value="11111111"
+                value="12345678"
                 placeholder="{{ __('Password') }}" />
         </label>
         @error('password')

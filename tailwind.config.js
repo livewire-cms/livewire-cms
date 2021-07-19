@@ -4,7 +4,11 @@ const Color = require('color')
 const colors = require('./colors')
 
 module.exports = {
-  purge: ['./resources/views/**/*.blade.php', './resources/css/**/*.css'],
+  purge: [
+      './Modules/*/Resources/views/**/*.blade.php',
+      './resources/views/**/*.blade.php',
+       './resources/css/**/*.css'
+    ],
   theme: {
     themeVariants: ['dark'],
     customForms: (theme) => ({
