@@ -3,7 +3,7 @@
     x-init="init()"
     class="{{ $class }}"
     style="{{ $style }}"
-
+wire:ignore
 >
     <div id="{{ 'id'.md5($editorId) }}"></div>
 </div>
