@@ -157,7 +157,7 @@ $relation_field = $attributes->get('relation_field',null);
             @elseif ($field['type']=='textarea')
                 <textarea
                 class="autoexpand tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500"
-                id="{{$field['id']}}" wire:model.lazy="{{ $field['modelName']}}" placeholder="{{$field['placeholder']}}">
+                id="{{$field['id']}}" wire:model="{{ $field['modelName']}}" placeholder="{{$field['placeholder']}}">
 
                 </textarea>
 
@@ -166,7 +166,7 @@ $relation_field = $attributes->get('relation_field',null);
 
                 <input
                 id="{{$field['id']}}"
-                wire:model.lazy="{{ $field['modelName']}}"
+                wire:model="{{ $field['modelName']}}"
                 class="w-full border border-gray-400 text-gray-800 placeholder-gray-400 rounded focus:border-transparent focus:outline-none focus:shadow-outline px-3 py-2"
                 placeholder="{{$field['placeholder']}}"
                 />
