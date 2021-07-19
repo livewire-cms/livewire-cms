@@ -3,7 +3,7 @@
 # ===================================
 
 name: Phone
-form: ~/Modules/Test/Models/Phone/fields.yaml
+form: ~/Modules/Test/Models/phone/fields.yaml
 modelClass: Modules\Test\Models\Phone
 defaultRedirect: test/phone
 

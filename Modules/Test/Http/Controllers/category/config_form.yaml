@@ -3,7 +3,7 @@
 # ===================================
 
 name: Category
-form: ~/Modules/Test/Models/Category/fields.yaml
+form: ~/Modules/Test/Models/category/fields.yaml
 modelClass: Modules\Test\Models\Category
 defaultRedirect: test/category
 

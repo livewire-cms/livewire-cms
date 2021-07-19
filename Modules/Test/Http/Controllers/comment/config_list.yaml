@@ -3,7 +3,7 @@
 # ===================================
 
 # Model List Column configuration
-list: ~/Modules/Test/Models/Comment/columns.yaml
+list: ~/Modules/Test/Models/comment/columns.yaml
 
 # Model Class name
 modelClass: Modules\Test\Models\Comment

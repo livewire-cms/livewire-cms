@@ -3,7 +3,7 @@
 # ===================================
 
 name: Comment
-form: ~/Modules/Test/Models/Comment/fields.yaml
+form: ~/Modules/Test/Models/comment/fields.yaml
 modelClass: Modules\Test\Models\Comment
 defaultRedirect: test/comment
 

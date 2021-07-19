@@ -3,7 +3,7 @@
 # ===================================
 
 # Model List Column configuration
-list: ~/Modules/Test/Models/Category/columns.yaml
+list: ~/Modules/Test/Models/category/columns.yaml
 
 # Model Class name
 modelClass: Modules\Test\Models\Category

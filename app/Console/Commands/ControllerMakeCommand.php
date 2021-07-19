@@ -164,7 +164,7 @@ class ControllerMakeCommand extends GeneratorCommand
             'CLASSNOCONTROLLERU'             => \Str::studly($this->getStrtolowerControllerName()),
 
             //模型名称的小些
-            'MODELNAMEL'             => \Str::singular(\Str::studly($this->getStrtolowerControllerName())),
+            'MODELNAMEL'             => strtolower(\Str::singular(\Str::studly($this->getStrtolowerControllerName()))),
             //模型名称
             'MODELNAME'             => \Str::singular(\Str::studly($this->getStrtolowerControllerName())),
             'LOWER_NAME'        => $module->getLowerName(),

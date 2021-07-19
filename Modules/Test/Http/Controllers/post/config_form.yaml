@@ -3,7 +3,7 @@
 # ===================================
 
 name: Post
-form: ~/Modules/Test/Models/Post/fields.yaml
+form: ~/Modules/Test/Models/post/fields.yaml
 modelClass: Modules\Test\Models\Post
 defaultRedirect: test/post
 
