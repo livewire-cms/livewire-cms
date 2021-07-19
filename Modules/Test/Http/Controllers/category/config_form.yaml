@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Category
+form: ~/Modules/Test/Models/Category/fields.yaml
+modelClass: Modules\Test\Models\Category
+defaultRedirect: test/category
+
+create:
+    redirect: test/category/update/:id
+    redirectClose: test/category
+
+update:
+    redirect: test/category
+    redirectClose: test/category

@@ -16,9 +16,9 @@ class TestController extends Controller
      */
     public function index()
     {
+
         BackendMenu::setContext('Modules.Test', 'test');//选中顶部
         SideNavManager::setContext('Modules.Test', 'test');//选中侧边拦
-
         return view('test::index');
     }
 

@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::group([
     'prefix' => 'backend/test',
     'middleware' => ['web','auth'],
@@ -20,20 +18,88 @@ Route::group([
 ],function () {
     Route::get('/', 'TestController@index')->name('index');
 });
-
-
 Route::group([
-    'prefix' => 'backend/posts',
+    'prefix' => 'backend/test',
     'middleware' => ['web','auth'],
-    'as'=> 'backend.posts.',
+    'as'=> 'backend.test.',
 ], function () {
     Route::group([
-        'prefix'=>'posts',
-        'as' =>'posts.',
+        'prefix'=>'user',
+        'as' =>'user.',
         'middleware' =>[]
     ],function () {
-        Route::get('', 'Posts@index')->name('index');
-        Route::get('create', 'Posts@create')->name('create');
-        Route::get('update/{id}', 'Posts@update')->name('update');
+        Route::get('', 'User@index')->name('');
+        Route::get('create', 'User@create')->name('create');
+        Route::get('update/{id}', 'User@update')->name('update');
+    });
+});Route::group([
+    'prefix' => 'backend/test',
+    'middleware' => ['web','auth'],
+    'as'=> 'backend.test.',
+], function () {
+    Route::group([
+        'prefix'=>'phone',
+        'as' =>'phone.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('', 'Phone@index')->name('');
+        Route::get('create', 'Phone@create')->name('create');
+        Route::get('update/{id}', 'Phone@update')->name('update');
+    });
+});Route::group([
+    'prefix' => 'backend/test',
+    'middleware' => ['web','auth'],
+    'as'=> 'backend.test.',
+], function () {
+    Route::group([
+        'prefix'=>'post',
+        'as' =>'post.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('', 'Post@index')->name('');
+        Route::get('create', 'Post@create')->name('create');
+        Route::get('update/{id}', 'Post@update')->name('update');
+    });
+});Route::group([
+    'prefix' => 'backend/test',
+    'middleware' => ['web','auth'],
+    'as'=> 'backend.test.',
+], function () {
+    Route::group([
+        'prefix'=>'category',
+        'as' =>'category.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('', 'Category@index')->name('');
+        Route::get('create', 'Category@create')->name('create');
+        Route::get('update/{id}', 'Category@update')->name('update');
+    });
+});Route::group([
+    'prefix' => 'backend/test',
+    'middleware' => ['web','auth'],
+    'as'=> 'backend.test.',
+], function () {
+    Route::group([
+        'prefix'=>'comment',
+        'as' =>'comment.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('', 'Comment@index')->name('');
+        Route::get('create', 'Comment@create')->name('create');
+        Route::get('update/{id}', 'Comment@update')->name('update');
+    });
+});Route::group([
+    'prefix' => 'backend/test',
+    'middleware' => ['web','auth'],
+    'as'=> 'backend.test.',
+], function () {
+    Route::group([
+        'prefix'=>'foo',
+        'as' =>'foo.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('', 'Foo@index')->name('');
+        Route::get('create', 'Foo@create')->name('create');
+        Route::get('update/{id}', 'Foo@update')->name('update');
     });
 });

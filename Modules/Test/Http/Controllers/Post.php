@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Modules\Backend\Classes\Controller;
 use BackendMenu;
 use Modules\System\Classes\SideNavManager;
-class PostsController extends Controller
+class Post extends Controller
 {
     public $implement = [
         'Modules.Backend.Behaviors.ListController',
@@ -26,25 +26,25 @@ class PostsController extends Controller
     {
         parent::__construct();
         BackendMenu::setContext('Modules.Test', 'test');//选中顶部
-        SideNavManager::setContext('Modules.Test', 'posts');//选中侧边拦
+        SideNavManager::setContext('Modules.Test', 'post');//选中侧边拦
 
     }
     public function index()
     {
         $this->asExtension('ListController')->index();
-        return view('test::posts.index',['widget'=>$this->widget]);
+        return view('test::post.index',['widget'=>$this->widget]);
 
     }
     public function create()
     {
         $this->asExtension('FormController')->create();
-        return view('test::posts.create',['widget'=>$this->widget]);
+        return view('test::post.create',['widget'=>$this->widget]);
 
     }
     public function update($id)
     {
         $this->asExtension('FormController')->update($id);
-        return view('test::posts.update', ['widget'=>$this->widget]);
+        return view('test::post.update', ['widget'=>$this->widget]);
 
     }
 }

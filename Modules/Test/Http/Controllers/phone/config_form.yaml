@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Phone
+form: ~/Modules/Test/Models/Phone/fields.yaml
+modelClass: Modules\Test\Models\Phone
+defaultRedirect: test/phone
+
+create:
+    redirect: test/phone/update/:id
+    redirectClose: test/phone
+
+update:
+    redirect: test/phone
+    redirectClose: test/phone

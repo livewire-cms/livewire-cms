@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: ~/Modules/Test/Models/Post/columns.yaml
+list: ~/Modules/Test/Models/User/columns.yaml
 
 # Model Class name
-modelClass: Modules\Test\Models\Post
+modelClass: Modules\Test\Models\User
 
 # List Title
-title: Manage Posts
+title: Manage User
 
 # Link URL for each record
-recordUrl: hello/posts/update/:id
+recordUrl: test/user/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

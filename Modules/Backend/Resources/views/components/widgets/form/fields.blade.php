@@ -116,21 +116,24 @@ $relation_field = $attributes->get('relation_field',null);
             @elseif ($field['type']=='editor')
                 <x-form.editor wire:model.debounce.1000ms="{{ $field['modelName']}}"></x-form.editor>
             @elseif ($field['type']=='wangeditor')
-                <x-form.wangeditor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']"></x-form.wangeditor>
+                <x-form.wangeditor wire:model.lazy="{{ $field['modelName']}}" :value="$field['value']"></x-form.wangeditor>
            @elseif ($field['type']=='quilleditor')
-                <x-form.quill-editor wire:model.defer="{{ $field['modelName']}}" :value="$field['value']" :config="$field['config']['config']" :prefix="str_replace('-','_',$field['id'])"></x-form.quill-editor>
+                <x-form.quill-editor wire:model.lazy="{{ $field['modelName']}}" :value="$field['value']" :config="$field['config']['config']" :prefix="str_replace('-','_',$field['id'])"></x-form.quill-editor>
            @elseif ($field['type']=='editorjs')
-                @livewire('backend.widgets.form.editorjs', [
-                    'editorId' => $field["modelName"],
-                    'value' => $field['value'],
-                    'uploadDisk' => 'public',
-                    'downloadDisk' => 'public',
-                    'class' => '',
-                    'style' => '',
-                    'readOnly' => false,
-                    'placeholder' => $field['placeholder'],
-                    'relation_field'=>$relation_field
-                ])
+                <div wire:ignore>
+                    @livewire('backend.widgets.form.editorjs', [
+                        'editorId' => $field["modelName"],
+                        'value' => $field['value'],
+                        'uploadDisk' => 'public',
+                        'downloadDisk' => 'public',
+                        'class' => '',
+                        'style' => '',
+                        'readOnly' => false,
+                        'placeholder' => $field['placeholder'],
+                        'relation_field'=>$relation_field
+                    ],key($field['id']))
+                </div>
+
 
             @elseif ($field['type']=='password')
 
@@ -151,6 +154,14 @@ $relation_field = $attributes->get('relation_field',null);
                     <x-back-form-relation_lists :field="$field" :widget="$widget" :form="$form"></x-back-form-relation_lists>
                    @endisset
                </div>
+            @elseif ($field['type']=='textarea')
+                <textarea
+                class="autoexpand tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500"
+                id="{{$field['id']}}" wire:model.lazy="{{ $field['modelName']}}" placeholder="{{$field['placeholder']}}">
+
+                </textarea>
+
+
             @else
 
                 <input

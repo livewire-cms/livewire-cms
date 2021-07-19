@@ -67,6 +67,17 @@ class Plugin extends PluginBase
                 'keywords' => 'test',
                 'permissions' => [],
             ],
+            'foo' => [
+                'label' => '基础编辑',
+                'description' => '',
+                'category' => '基础编辑',//侧边栏分组
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('test/foo'),
+                'order' => 500,
+                'context'=>['modules.test'],//对应模块1的标识符
+                'keywords' => 'test foo',
+                'permissions' => [],
+            ],
         ];
     }
 

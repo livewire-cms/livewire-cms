@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: User
+form: ~/Modules/Test/Models/User/fields.yaml
+modelClass: Modules\Test\Models\User
+defaultRedirect: test/user
+
+create:
+    redirect: test/user/update/:id
+    redirectClose: test/user
+
+update:
+    redirect: test/user
+    redirectClose: test/user

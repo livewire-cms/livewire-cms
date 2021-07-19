@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Comment
+form: ~/Modules/Test/Models/Comment/fields.yaml
+modelClass: Modules\Test\Models\Comment
+defaultRedirect: test/comment
+
+create:
+    redirect: test/comment/update/:id
+    redirectClose: test/comment
+
+update:
+    redirect: test/comment
+    redirectClose: test/comment

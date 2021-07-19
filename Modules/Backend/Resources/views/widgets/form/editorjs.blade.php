@@ -1,9 +1,9 @@
 <div
-    x-data="editorInstance('data', '{{ $editorId }}', {{ $readOnly ? 'true' : 'false' }}, '{{ $placeholder }}', '{{ $logLevel }}')"
+    x-data="editorInstance('data', '{{ 'id'.md5($editorId) }}', {{ $readOnly ? 'true' : 'false' }}, '{{ $placeholder }}', '{{ $logLevel }}')"
     x-init="init()"
     class="{{ $class }}"
     style="{{ $style }}"
-    wire:ignore
+
 >
-    <div id="{{ $editorId }}"></div>
+    <div id="{{ 'id'.md5($editorId) }}"></div>
 </div>

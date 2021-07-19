@@ -33,6 +33,9 @@ if(!isset($widget)){
     </x-slot>
 
     <x-slot name="footer">
+        <div wire:loading>
+            Loading...
+        </div>
         <x-jet-secondary-button wire:click="$toggle('relationFormModal')" wire:loading.attr="disabled">
             {{ __('Cancel') }}
         </x-jet-secondary-button>
