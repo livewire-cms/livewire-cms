@@ -27,6 +27,14 @@ tabs:
             span: auto
             imageHeight: 250
             imageWidth: 250
+        avatars:
+            label: 多图上传
+            tab: 图片
+            type: fileupload
+            mode: image
+            span: auto
+            imageHeight: 250
+            imageWidth: 250
         extra[checkboxlist]:
             label: 多选
             type: checkboxlist

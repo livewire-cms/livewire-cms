@@ -75,5 +75,8 @@ class Foo extends Model
     public $attachOne = [
         'avatar' => \Modules\System\Models\File::class
     ];
-    public $attachMany = [];
+    public $attachMany = [
+        'avatars' => \Modules\System\Models\File::class
+
+    ];
 }

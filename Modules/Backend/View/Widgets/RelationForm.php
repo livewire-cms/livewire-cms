@@ -413,6 +413,7 @@ class RelationForm extends Component
 
 
         if (is_array($uplodaFiles)) {//多文件
+            $this->form['fileList'][$arrayName[0]][$arrayName[1]] = [];
 
             foreach ($uplodaFiles as $uplodaFile) {
                 // dd($c->widget,'form'.ucfirst(\Str::camel($arrayName[1])));
