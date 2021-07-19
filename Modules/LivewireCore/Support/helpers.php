@@ -34,7 +34,7 @@ if (!function_exists('find_controller_by_url')) {
                 $path = '/'.ltrim($path, '/');
                 return preg_match($route->getCompiled()->getRegex(), rawurldecode($path));
             })($r,$path)){
-                dd($r->getController());
+                dd($r,$r->controller);
                 return $r->getController();
             }
 
