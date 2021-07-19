@@ -2,6 +2,7 @@
 
 use Modules\LivewireCore\Filesystem\PathResolver;
 
+use Illuminate\Support\Facades\Route;
 
 
 
