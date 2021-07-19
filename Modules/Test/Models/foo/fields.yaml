@@ -27,6 +27,24 @@ tabs:
             span: auto
             imageHeight: 250
             imageWidth: 250
+        extra[checkboxlist]:
+            label: 多选
+            type: checkboxlist
+            span: full
+            options:
+                1: abc
+                2: def
+                3: ghi
+            tab: 下拉选择
+        extra[dropdown]:
+            label: 单选
+            type: dropdown
+            span: full
+            options:
+                1: abc
+                2: def
+                3: ghi
+            tab: 下拉选择
         extra[wangeditor]:
             label: wangeditor
             type: wangeditor

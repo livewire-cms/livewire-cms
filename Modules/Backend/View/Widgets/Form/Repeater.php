@@ -259,7 +259,12 @@ class Repeater extends Component
                 $field->options = $field->options();
             }
             // dd($primaryTabField);
-        } elseif ($field->type =='checkboxlist') {
+        } elseif ($field->type =='dropdown') {
+            if (is_callable($field->options)) {
+                $field->options = $field->options();
+            }
+
+        }elseif ($field->type =='checkboxlist') {
             if (is_callable($field->options)) {
                 $field->options = $field->options();
             }
