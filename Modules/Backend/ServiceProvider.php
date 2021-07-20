@@ -13,6 +13,7 @@ use Modules\Backend\View\Components\Widgets\Form\Tabs;
 use Modules\Backend\View\Components\Widgets\Form\Widget;
 use Livewire\Livewire;
 use Modules\Backend\View\Widgets\Lists as WidgetLists;
+use Modules\Backend\View\Widgets\ListApplySetup as WidgetListApplySetup;
 use Modules\Backend\View\Widgets\RelationLists as WidgetRelationLists;
 use Modules\Backend\View\Widgets\RelationLists\Column as WidgetRelationListsColumn;
 use Modules\Backend\View\Widgets\Toolbar as WidgetToolbar;
@@ -78,6 +79,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.widgets.filter.select', WidgetFilterSelect::class);
                 Livewire::component('backend.widgets.filter.input', WidgetFilterInput::class);
                 Livewire::component('backend.widgets.lists', WidgetLists::class);
+                Livewire::component('backend.widgets.listapplysetup', WidgetListApplySetup::class);
                 Livewire::component('backend.widgets.relation_lists', WidgetRelationLists::class);
                 Livewire::component('backend.widgets.relation_lists.column', WidgetRelationListsColumn::class);
                 Livewire::component('backend.widgets.items', WidgetItems::class);

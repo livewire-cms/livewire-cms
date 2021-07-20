@@ -13,7 +13,7 @@ class Lists extends Component
 
 
 
-    protected $listeners = ['search','filter'];
+    protected $listeners = ['search','filter','onApplySetup'];
 
 
 
@@ -65,6 +65,19 @@ class Lists extends Component
         $this->widget = $c->widget;
 
 
+    }
+
+    public function onApplySetup($data)
+    {
+        request()->merge($data);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        $c->asExtension('ListController')->index();
+        $c->widget->{$this->prefix}->onApplySetup();
+        $this->widget = $c->widget;
     }
 
 

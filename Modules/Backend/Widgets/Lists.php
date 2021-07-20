@@ -221,8 +221,8 @@ class Lists extends WidgetBase
          * Configure the list widget
          */
         if ($this->showSetup) {
-            // $this->recordsPerPage = $this->getUserPreference('per_page', $this->recordsPerPage);
-            $this->recordsPerPage = 20;
+            $this->recordsPerPage = $this->getUserPreference('per_page', $this->recordsPerPage);
+            // $this->recordsPerPage = 20;
         }
         // dd(31312231);
 
@@ -752,6 +752,7 @@ class Lists extends WidgetBase
     public function getVisibleColumns()
     {
         $definitions = $this->defineListColumns();
+        // dd($definitions);
         $columns = [];
         // dd(44441);
         /*
@@ -759,7 +760,7 @@ class Lists extends WidgetBase
          */
         if ($this->showSetup && $this->columnOverride === null) {
             //todo
-            // $this->columnOverride = $this->getUserPreference('visible', null);
+            $this->columnOverride = $this->getUserPreference('visible', null);
         }
 
         if ($this->columnOverride && is_array($this->columnOverride)) {
