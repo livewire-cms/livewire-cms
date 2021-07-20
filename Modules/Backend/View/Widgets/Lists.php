@@ -24,6 +24,8 @@ class Lists extends Component
         $this->prefix = $prefix;
     }
 
+
+
     public function search($data)
     {
         // dd(request()->input('fingerprint.path'));
@@ -48,6 +50,21 @@ class Lists extends Component
         // dd($this->search);
         // dd(request()->all());
         $this->widget = $c->widget;
+    }
+    // sortColumn
+    public function onSort($data)
+    {
+        request()->merge($data);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        $c->asExtension('ListController')->index();
+        $c->widget->{$this->prefix}->onSort();
+        $this->widget = $c->widget;
+
+
     }
 
 

@@ -76,9 +76,28 @@
                 </th>
 
                 @foreach ($list->vars['columns'] as $fie=>$column)
-                    <th class="px-4 py-3 {{$fie}}{{$prefix}}" x-ref="{{$fie.$prefix}}" >
+                    @if($column->sortable)
+                    <th wire:click="onSort({sortColumn:'{{$column->columnName}}'})" class="px-4 py-3 cursor-pointer {{$fie}}{{$prefix}}" x-ref="{{$fie.$prefix}}" >
+
+                        {{ __($column->label) }}
+
+                        @if ($list->getSortColumn()==$column->columnName)
+
+                            @if ($list->getSortDirection()=='desc')
+                                <span> &uarr;</span>
+                            @else
+                                <span> &darr;</span>
+                            @endif
+                        @else
+                            <span> &uarr;&darr;</span>
+                        @endif
+                    </th>
+                    @else
+                    <th  class="px-4 py-3 {{$fie}}{{$prefix}}" x-ref="{{$fie.$prefix}}" >
                         {{ __($column->label) }}
                     </th>
+                    @endif
+
                 @endforeach
                 <th class="px-4 py-3">
                     操作
