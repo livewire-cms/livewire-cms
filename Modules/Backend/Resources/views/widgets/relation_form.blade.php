@@ -18,7 +18,7 @@ if(!isset($widget)){
     <x-slot name="content">
         <div class="container grid p-6 mx-auto">
 
-            @if (!empty($fields)||!empty($tabs)||!empty($secondTabs))
+            @if ($relationFormModal)
 
                 <form wire:submit.prevent="save" >
                     <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="">
