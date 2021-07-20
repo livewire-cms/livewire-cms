@@ -9,4 +9,3 @@ columns:
     name:
         label: 名称
         span: auto
-        sortable: false
