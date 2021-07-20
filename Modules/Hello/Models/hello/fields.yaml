@@ -14,10 +14,6 @@ fields:
       label: 手机号
       # context: proxyfields
 
-    mood[feeling]:
-      label: Overall feeling
-      span: auto
-      tab: Mood
     mood[quilleditor]:
       label: quilleditor
       type: quilleditor
@@ -113,15 +109,6 @@ tabs:
             type: editor
             span: auto
 
-        mood[feeling]:
-          label: Overall feeling
-          span: auto
-          tab: Mood
-        mood[comment]:
-          label: Mood comment
-          span: auto
-          type: text
-          tab: Mood
         excerpt:
           tab: tab1
           cssClass: field-slim blog-post-preview

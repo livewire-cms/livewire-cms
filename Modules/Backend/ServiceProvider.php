@@ -24,6 +24,7 @@ use Modules\Backend\View\Widgets\Items as WidgetItems;
 use Modules\Backend\View\Widgets\MainMenu as WidgetMainMenu;
 use Modules\Backend\View\Widgets\SideMenu as WidgetSideMenu;
 use Modules\Backend\View\Widgets\Form as WidgetForm;
+use Modules\Backend\View\Widgets\QuickForm as WidgetQuickForm;
 use Modules\Backend\View\Widgets\RelationForm as WidgetRelationForm;
 use Modules\Backend\View\Widgets\Form\Fields as WidgetFormFields;
 use Modules\Backend\View\Widgets\Form\Repeater as WidgetFormRepeater;
@@ -83,6 +84,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.widgets.mainmenu', WidgetMainMenu::class);
                 Livewire::component('backend.widgets.sidemenu', WidgetSideMenu::class);
                 Livewire::component('backend.widgets.form', WidgetForm::class);
+                Livewire::component('backend.widgets.quickform', WidgetQuickForm::class);
                 Livewire::component('backend.widgets.relation_form', WidgetRelationForm::class);
                 Livewire::component('backend.widgets.form.fields', WidgetFormFields::class);
                 Livewire::component('backend.widgets.form.repeater', WidgetFormRepeater::class);
@@ -197,7 +199,8 @@ class ServiceProvider extends BaseServiceProvider
     {
 
         Blade::directive('livewireEditorjsScripts', function () {
-            $scriptsUrl = asset('/vendor/livewire-editorjs/editorjs.js',true);
+            // $scriptsUrl = asset('/vendor/livewire-editorjs/editorjs.js',true);
+            $scriptsUrl = '/vendor/livewire-editorjs/editorjs.js';
 
             return <<<EOF
                 <script src="$scriptsUrl"></script>

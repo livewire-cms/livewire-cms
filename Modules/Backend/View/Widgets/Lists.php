@@ -93,6 +93,27 @@ class Lists extends Component
 
 
 
+    public function onQuickFormCreate($data)
+    {
+        // dd($data);
+        $this->emitTo(
+            'backend.widgets.quickform',
+            'onQuickFormCreate',
+            $data
+        );
+    }
+    public function onQuickFormUpdate($data)
+    {
+        // dd($data);
+        $this->emitTo(
+            'backend.widgets.quickform',
+            'onQuickFormUpdate',
+            $data
+        );
+    }
+
+
+
     public function render()
     {
         // //search

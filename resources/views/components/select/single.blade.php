@@ -13,7 +13,78 @@
     @endphp
 
 
-<div  x-data="{{$prefix}}sdropdown()" {{$attributes->wire('model')}} x-init="loadOptions()" class="flex flex-col">
+<div  wire:ignore x-data="
+{
+    options: [],
+    selected: [],
+    value:@entangle($attributes->wire('model')),
+    show: false,
+    search:'',
+    open() { this.show = true },
+    close() { this.show = false },
+    isOpen() { return this.show === true },
+    select(index, event) {
+        if(this.selected.length==1){
+            this.options[this.selected[0]].selected= false
+            this.selected = []
+        }
+        if (!this.options[index].selected) {
+
+            this.options[index].selected = true;
+            this.options[index].element = event.target;
+
+            this.selected.push(index);
+
+        } else {
+            this.selected.splice(this.selected.lastIndexOf(index), 1);
+            this.options[index].selected = false
+        }
+
+        let sele = [];
+
+        for (let index = 0; index < this.selected.length; index++) {
+
+              sele.push(this.options[this.selected[index]].value)
+        }
+        this.value = sele[0]
+
+
+
+    },
+    filterOptions(option){
+
+        return option.text.includes(this.search)
+    },
+    remove(index, option) {
+        this.options[option].selected = false;
+        this.selected.splice(index, 1);
+        this.value = ''
+    },
+    loadOptions() {
+
+        const options = this.$refs['{{$id}}'].options;
+
+        for (let i = 0; i < options.length; i++) {
+            if(options[i].value==this.value){
+              this.selected.push(i)
+            }
+            this.options.push({
+                value: options[i].value,
+                text: options[i].innerText,
+                selected: (options[i].getAttribute('selected') != null || options[i].value==this.value)? true : false
+            });
+        }
+
+
+    },
+
+    selectedValues(){
+        return this.selected.map((option)=>{
+            return this.options[option].value;
+        })
+    }
+}
+" {{$attributes->wire('model')}} x-init="loadOptions()" class="flex flex-col">
     <select  x-ref="{{$id}}" style="display:none">
         @foreach ($o as $k1=>$v1)
         <option value="{{$v1['id']}}"

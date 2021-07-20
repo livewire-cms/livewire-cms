@@ -2,7 +2,13 @@
     <div class="p-2">
         <a
         href="<?= Backend::url('test/foo/create')?>"
-        class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+        class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
         >创建</a>
+    </div>
+    <div class="p-2">
+        <a
+        wire:click="onQuickFormCreate({abc:'def'})"
+        class=" p-2  border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+        >快速创建</a>
     </div>
 </div>

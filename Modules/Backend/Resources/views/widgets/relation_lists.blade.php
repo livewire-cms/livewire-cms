@@ -40,7 +40,55 @@
     @endif
     @isset($list)
 
-    <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
+    <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="
+    {
+        selectedRows: [],
+        open: false,
+        toggleColumn(key) {
+            // Note: All td must have the same class name as the headings key!
+            let columns = document.querySelectorAll('.' + key+'{{$prefix}}');
+            if (this.$refs[key+'{{$prefix}}'].classList.contains('hidden') && this.$refs[key+'{{$prefix}}'].classList.contains(key+'{{$prefix}}')) {
+                columns.forEach(column => {
+                    column.classList.remove('hidden');
+                });
+            } else {
+                columns.forEach(column => {
+                    column.classList.add('hidden');
+                });
+            }
+        },
+
+        getRowDetail($event, id) {
+
+            let rows = this.selectedRows;
+
+            if (rows.includes(id)) {
+                let index = rows.indexOf(id);
+                rows.splice(index, 1);
+            } else {
+                rows.push(id);
+            }
+        },
+
+        selectAllCheckbox($event) {
+            let columns = document.querySelectorAll('.rowCheckbox'+'{{$prefix}}');
+
+            this.selectedRows = [];
+
+            if ($event.target.checked == true) {
+                columns.forEach(column => {
+                    column.checked = true
+                    this.selectedRows.push(parseInt(column.name))
+                });
+            } else {
+                columns.forEach(column => {
+                    column.checked = false
+                });
+                this.selectedRows = [];
+            }
+        }
+    }
+    " x-cloak>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>

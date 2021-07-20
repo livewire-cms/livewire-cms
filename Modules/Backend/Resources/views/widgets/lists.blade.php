@@ -1,4 +1,5 @@
 
+@if ($widget)
 @php
 
     // dd($widget);
@@ -50,7 +51,7 @@
 
 
                     @foreach ($listFilter->vars['scopes'] as $k=>$scope)
-                        <td class="px-2 max-w-xs">
+                        <td class="px-2 max-w-xs" wire:ignore>
                             @if ($scope->type=='group')
                                 {{__($scope->label)}}
                             @livewire('backend.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
@@ -102,9 +103,12 @@
                                 {!!$list->getColumnValue($record,$column)!!}
                             </td>
                          @endforeach
-                         <td class="border-dashed border-t border-gray-200">
+                         <td class="flex border-dashed border-t border-gray-200">
                              <span class="text-gray-700 px-6 py-3 flex items-center">
                                 <a class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" href="<?= $list->getRecordUrl($record) ?>">编辑</a>
+                             </span>
+                             <span class="text-gray-700 px-6 py-3 flex items-center">
+                                <a class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onQuickFormUpdate({record_id:'{{$record->id}}'})">快速编辑</a>
                              </span>
                          </td>
                     </tr>
@@ -181,3 +185,4 @@
       }
   </script>
   @endpush
+  @endif
