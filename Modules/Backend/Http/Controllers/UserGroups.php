@@ -1,9 +1,9 @@
 <?php namespace Modules\Backend\Http\Controllers;
 
-use BackendMenu;
+
 use Modules\Backend\Classes\Controller;
-
-
+use BackendMenu;
+use Modules\System\Classes\SideNavManager;
 /**
  * Backend user groups controller
  *
@@ -28,7 +28,14 @@ class UserGroups extends Controller
     /**
      * @var array Permissions required to view this page.
      */
-    public $requiredPermissions = ['backend.manage_users'];
+    // public $requiredPermissions = ['backend.manage_users'];
+
+    public function __construct()
+    {
+        parent::__construct();
+        BackendMenu::setContext('Modules.system', 'system');
+        SideNavManager::setContext('Modules.Backend', 'usergroups');//选中侧边拦
+    }
 
 
 

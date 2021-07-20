@@ -24,7 +24,7 @@ Route::group([
     Route::group([
         'prefix'=>'users',
         'as' =>'users.',
-        'middleware' =>[]
+        'middleware' =>['auth']
     ],function () {
         Route::get('', 'Users@index')->name('');
         Route::get('create', 'Users@create')->name('create');
@@ -33,10 +33,19 @@ Route::group([
     Route::group([
         'prefix'=>'usergroups',
         'as' =>'usergroups.',
-        'middleware' =>[]
+        'middleware' =>['auth']
     ],function () {
         Route::get('', 'UserGroups@index')->name('');
         Route::get('create', 'UserGroups@create')->name('create');
         Route::get('update/{id}', 'UserGroups@update')->name('update');
+    });
+    Route::group([
+        'prefix'=>'userroles',
+        'as' =>'userroles.',
+        'middleware' =>['auth']
+    ],function () {
+        Route::get('', 'UserRoles@index')->name('');
+        Route::get('create', 'UserRoles@create')->name('create');
+        Route::get('update/{id}', 'UserRoles@update')->name('update');
     });
 });

@@ -53,17 +53,28 @@ class Plugin extends PluginBase
     {
         // dd(232);
         return [
-            // 'users' => [
-            //     'label' => '后台用户列表',
-            //     'description' => 'rainlab.blog::lang.blog.settings_description',
-            //     'category' => '后台用户设置',
-            //     'icon' => 'icon-pencil',
-            //     'url'         => Backend::url('backend/users'),
-            //     'order' => 800,
-            //     'context'=>['modules.system'],//对应模块1的标识符
-            //     'keywords' => 'blog post category',
-            //     'permissions' => [],
-            // ],
+            'users' => [
+                'label' => '后台用户列表',
+                'description' => 'rainlab.blog::lang.blog.settings_description',
+                'category' => '后台用户设置',
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('backend/users'),
+                'order' => 800,
+                'context'=>['modules.system'],//对应模块1的标识符
+                'keywords' => 'system users',
+                'permissions' => [],
+            ],
+            'usergroups' => [
+                'label' => 'Group',
+                'description' => 'rainlab.blog::lang.blog.settings_description',
+                'category' => '后台用户设置',
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('backend/usergroups'),
+                'order' => 900,
+                'context'=>['modules.system'],//对应模块1的标识符
+                'keywords' => 'system groups',
+                'permissions' => [],
+            ],
 
         ];
     }

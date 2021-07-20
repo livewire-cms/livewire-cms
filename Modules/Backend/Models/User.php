@@ -36,7 +36,7 @@ class User extends Model implements
 
     use \Modules\LivewireCore\Database\Traits\SoftDelete;
     use \Modules\LivewireCore\Database\Traits\Purgeable;
-
+    use \Modules\LivewireCore\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
@@ -159,7 +159,7 @@ class User extends Model implements
         $this->restorePurgedValues();
 
         if ($this->send_invite) {
-            $this->sendInvitation();
+            // $this->sendInvitation();
         }
     }
 

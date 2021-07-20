@@ -52,6 +52,7 @@ class Controller extends BaseController
 
     public function __construct()
     {
+        // dd(\Auth::user());
         // $this->user = BackendAuth::getUser();//todo 后台用户登录
         // if(!$this->user || ($this->requiredPermissions && !$this->user->hasAnyAccess($this->requiredPermissions))){
         //     abort(404);
