@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Foo
+form: ~/Modules/Test/Models/foo/test_fields.yaml
+modelClass: Modules\Test\Models\Foo
+defaultRedirect: test/foo
+
+create:
+    redirect: test/foo/update/:id
+    redirectClose: test/foo
+
+update:
+    redirect: test/foo
+    redirectClose: test/foo

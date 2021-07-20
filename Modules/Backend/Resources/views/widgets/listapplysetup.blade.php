@@ -1,4 +1,4 @@
-<div>
+<div wire:ignore>
 
         <x-jet-dialog-modal wire:model="modal">
             <x-slot name="title">

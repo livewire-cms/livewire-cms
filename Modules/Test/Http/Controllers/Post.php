@@ -24,6 +24,9 @@ class Post extends Controller
 
     public function __construct()
     {
+        if(post('custome_form')){
+            $this->formConfig = post('custome_form').'_config_form.yaml';
+        }
         parent::__construct();
         BackendMenu::setContext('Modules.Test', 'test');//选中顶部
         SideNavManager::setContext('Modules.Test', 'post');//选中侧边拦

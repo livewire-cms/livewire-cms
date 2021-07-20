@@ -38,6 +38,9 @@ class QuickForm extends Component
     protected $widget;
 
 
+    public $customData = [];
+
+
 
     protected $listeners = [
         'upload:finished' => 'uploadFinished',
@@ -53,6 +56,7 @@ class QuickForm extends Component
         $this->fields = [];
         $this->tabs = [];
         $this->secondTabs = [];
+        $this->customData = [];
     }
 
 
@@ -224,7 +228,7 @@ class QuickForm extends Component
         // dd($this->form['User']['avatar']);
 
         // dd($this->form);
-        request()->merge($data)->merge($this->form);
+        request()->merge($data)->merge($this->customData)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
@@ -381,6 +385,7 @@ class QuickForm extends Component
     public function onQuickFormCreate($data)
     {
         $this->resetData();
+        $this->customData = $data;
 
         $this->quickFormModal = true;
         request()->merge($data);
@@ -400,6 +405,7 @@ class QuickForm extends Component
         $this->resetData();
 
         $this->quickFormModal = true;
+        $this->customData = $data;
         request()->merge($data);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
