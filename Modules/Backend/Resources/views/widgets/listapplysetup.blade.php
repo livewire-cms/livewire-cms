@@ -2,7 +2,7 @@
 
         <x-jet-dialog-modal wire:model="modal">
             <x-slot name="title">
-                {{__('Display Column')}}
+                {{__('Setup')}}
             </x-slot>
             <x-slot name="content">
                 <div class="container  p-6 mx-auto">
