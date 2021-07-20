@@ -8,13 +8,14 @@
 <div>
 
         <x-jet-dialog-modal wire:model="quickFormModal">
+
             <x-slot name="title">
                 {{$context=='create'?'create':'update'}}
             </x-slot>
 
             <x-slot name="content">
-                <div class="container grid p-6 mx-auto">
-                    @if (!empty($fields)||!empty($tabs)||!empty($secondTabs))
+                @if ($quickFormModal)
+                    <div class="container grid p-6 mx-auto">
                         <form>
                             <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="">
                                 <x-back-form-fields :fields="$fields" :form="$form" :widget="$widget"></x-back-form-fields>
@@ -22,8 +23,9 @@
                                 <x-back-form-tabs :tabs="$secondTabs" tab_name="secondTab" :form="$form" :widget="$widget"></x-back-form-tabs>
                             </div>
                         </form>
-                    @endif
-                </div>
+
+                    </div>
+                @endif
             </x-slot>
             <x-slot name="footer">
                 <div wire:loading>

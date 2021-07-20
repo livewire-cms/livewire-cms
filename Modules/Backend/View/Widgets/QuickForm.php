@@ -63,6 +63,7 @@ class QuickForm extends Component
     public function mount($widget=null)
     {
 
+        // $this->resetData();
         if(!$widget){
             return ;
         }
@@ -239,10 +240,10 @@ class QuickForm extends Component
             // dd($this->form);
             $c->asExtension('FormController')->update_onSave($this->modelId);
         }
-        $this->quickFormModal = false;
 
         $this->emitTo('backend.widgets.lists', 'search', ['search'=>'']);
 
+        $this->quickFormModal = false;
 
     }
 
