@@ -9,7 +9,7 @@
 
         <x-jet-dialog-modal wire:model="quickFormModal">
             <x-slot name="title">
-                hello create
+                {{$context=='create'?'create':'update'}}
             </x-slot>
 
             <x-slot name="content">

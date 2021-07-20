@@ -103,7 +103,7 @@
                                 {!!$list->getColumnValue($record,$column)!!}
                             </td>
                          @endforeach
-                         <td class="flex border-dashed border-t border-gray-200">
+                         <td class="flex border-dashed  border-gray-200">
                              <span class="text-gray-700 px-6 py-3 flex items-center">
                                 <a class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" href="<?= $list->getRecordUrl($record) ?>">编辑</a>
                              </span>
