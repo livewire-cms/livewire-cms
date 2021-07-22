@@ -18,12 +18,15 @@
         rel="stylesheet" /> --}}
 
     {{-- Styles --}}
+    @wireUiStyles
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <style>
         [x-cloak] {
             display: none;
         }
     </style>
+    @wireUiScripts
+
     @livewireStyles
     @stack('styles')
     {{-- Scripts --}}

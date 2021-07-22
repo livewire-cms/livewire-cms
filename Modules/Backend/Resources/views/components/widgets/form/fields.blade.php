@@ -107,8 +107,14 @@ $relation_field = $attributes->get('relation_field',null);
 
                 <x-select.radio wire:model.lazy="{{ $field['modelName']}}" :options="$field['options']" :prefix="str_replace('-','_',$field['id'])"></x-select.radio>
             @elseif ($field['type']=='checkbox')
-                <x-form.check-box wire:model.lazy="{{ $field['modelName']}}"  :prefix="str_replace('-','_',$field['id'])"></x-form.check-box>
 
+
+                <x-form.check-box wire:model.lazy="{{ $field['modelName']}}"  :options="$field['options']" :prefix="str_replace('-','_',$field['id'])" :inline="$field['attributes']['field']['inline']??''"></x-form.check-box>
+
+            @elseif ($field['type']=='toggle')
+                {{-- {{dd($field)}} --}}
+                {{-- <x-form.check-box wire:model.lazy="{{ $field['modelName']}}"  :prefix="str_replace('-','_',$field['id'])"></x-form.check-box> --}}
+                <x-toggle :id="$field['id']" lg   wire:model.defer="{{$field['modelName']}}" :label="$field['label']?__($field['label']):''"/>
             @elseif ($field['type']=='dropdown')
                 <x-select.single wire:model.lazy="{{ $field['modelName']}}" :options="$field['options']" :prefix="str_replace('-','_',$field['id'])"></x-select.single>
             @elseif ($field['type']=='datepicker')
@@ -157,13 +163,16 @@ $relation_field = $attributes->get('relation_field',null);
                    @endisset
                </div>
             @elseif ($field['type']=='textarea')
-                <textarea
+                {{-- <textarea
                 class="autoexpand tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500"
                 id="{{$field['id']}}" wire:model="{{ $field['modelName']}}" placeholder="{{$field['placeholder']}}">
 
-                </textarea>
+                </textarea> --}}
+                <x-textarea wire:model="{{ $field['modelName']}}" :id="$field['id']" :icon="$field['attributes']['field']['icon']??''" :label="$field['label']" :right-icon="$field['attributes']['field']['right-icon']??''"  :placeholder="$field['placeholder']" :hint="$field['comment']" :prefix="$field['attributes']['field']['prefix']??''" :suffix="$field['attributes']['field']['suffix']??''" :class="$field['cssClass']"/>
 
-
+            @elseif ($field['type']=='text')
+                {{-- {{dd($field)}} --}}
+                <x-input wire:model="{{ $field['modelName']}}" :id="$field['id']" :icon="$field['attributes']['field']['icon']??''" :label="$field['label']" :right-icon="$field['attributes']['field']['right-icon']??''"  :placeholder="$field['placeholder']" :hint="$field['comment']" :prefix="$field['attributes']['field']['prefix']??''" :suffix="$field['attributes']['field']['suffix']??''" :class="$field['cssClass']"/>
             @else
 
                 <input

@@ -258,6 +258,9 @@ class RelationForm extends Component
         }else if ($field->type=='checkboxlist') {
             \Arr::set($this->form, $keyName,$field->value?:[]);
 
+        }else if ($field->type=='checkbox') {
+            \Arr::set($this->form, $keyName,$field->value?:[]);
+
         } else {
             \Arr::set($this->form, $keyName,$field->value);
 

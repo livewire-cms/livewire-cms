@@ -4,10 +4,17 @@ const Color = require('color')
 const colors = require('./colors')
 
 module.exports = {
+    presets: [
+
+        require('./vendor/ph7jack/wireui/tailwind.config.js')
+    ],
   purge: [
       './Modules/*/Resources/views/**/*.blade.php',
       './resources/views/**/*.blade.php',
-       './resources/css/**/*.css'
+       './resources/css/**/*.css',
+       './vendor/ph7jack/wireui/resources/**/*.blade.php',
+        './vendor/ph7jack/wireui/ts/**/*.ts',
+        './vendor/ph7jack/wireui/src/View/**/*.php'
     ],
   theme: {
     themeVariants: ['dark'],

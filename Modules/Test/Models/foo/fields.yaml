@@ -9,6 +9,14 @@ fields:
     name:
         label: 名称
         span: auto
+        comment: hello comment
+        # cssClass: p-4
+        attributes:
+            prefix: $
+            icon: user
+            # right-icon: pencil
+            suffix: '@email'
+
     desc:
         label: 描述
         span: auto
@@ -35,6 +43,32 @@ tabs:
             span: auto
             imageHeight: 250
             imageWidth: 250
+        extra[toggle]:
+            tab: 选择框
+            label: toggle
+            span: auto
+            type: toggle
+            size: lg
+        extra[checkbox]:
+            tab: 选择框
+            label: checkbox
+            span: auto
+            type: checkbox
+            options:
+                1: 男
+                2: 女
+        extra[checkbox-inline]:
+            tab: 选择框
+            label: checkbox-inline
+            span: auto
+            type: checkbox
+            cssClass:
+            attributes:
+                inline: true
+            options:
+                1: 男
+                2: 女
+
         extra[checkboxlist]:
             label: 多选
             type: checkboxlist

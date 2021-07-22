@@ -146,6 +146,8 @@ class FormField
      */
     public $attributes;
 
+    public $attributeHtml;
+
     /**
      * @var string Specifies a CSS class to attach to the field container.
      */
@@ -325,6 +327,8 @@ class FormField
         }
         if (isset($config['attributes'])) {
             $this->attributes($config['attributes']);
+            $this->attributeHtml = $this->getAttributes();
+
         }
         if (isset($config['containerAttributes'])) {
             $this->attributes($config['containerAttributes'], 'container');
