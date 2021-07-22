@@ -37,6 +37,7 @@ if (!function_exists('find_controller_by_url')) {
                 $c = explode('@', $r->action['controller'])[0];
                 $c = new $c;
                 $c->setUser();
+                $c->verifyPermissions();
 
                 return  $c;
                 dd($r,$r->action);

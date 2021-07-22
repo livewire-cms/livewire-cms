@@ -57,6 +57,7 @@ class Controller extends BaseController
         $this->middleware(function ($request, $next) {
 
             $this->setUser();
+            $this->verifyPermissions();
 
             return $next($request);
         });
@@ -69,7 +70,13 @@ class Controller extends BaseController
         // dd(321,BackendAuth::getUser());
         $this->user = BackendAuth::getUser();//todo 后台用户登录
 
+    }
 
+    public function verifyPermissions()
+    {
+        if ($this->requiredPermissions && !$this->user->hasAnyAccess($this->requiredPermissions)) {
+            abort(403);
+        }
     }
     /**
     * Extend this object properties upon construction.

@@ -69,6 +69,7 @@ class User extends Model implements
         'login',
         'email',
         'password',
+        'password_confirmation'
     ];
 
     /**

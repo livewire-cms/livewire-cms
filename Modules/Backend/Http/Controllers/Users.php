@@ -23,6 +23,7 @@ class Users extends Controller
         'list'=>'config_list.yaml',
     ];
     public $formConfig = 'config_form.yaml';
+    public $requiredPermissions = ['backend.manage_users'];
 
     public function __construct()
     {

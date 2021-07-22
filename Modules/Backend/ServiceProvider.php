@@ -106,6 +106,7 @@ class ServiceProvider extends BaseServiceProvider
         //todo后台管理基础页面
         BackendMenu::registerCallback(function ($manager) {
             $manager->registerMenuItems('Winter.Backend', [
+
                 // 'dashboard' => [
                 //     'label'       => 'backend::lang.dashboard.menu_label',
                 //     'icon'        => 'icon-dashboard',
@@ -146,6 +147,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         PermissionManager::instance()->registerCallback(function ($manager) {
             //todo
+
+
+
         });
     }
     /*

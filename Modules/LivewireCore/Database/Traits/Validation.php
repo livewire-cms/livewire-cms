@@ -298,7 +298,7 @@ trait Validation
                 $attributeNames = array_merge($translations, $attributeNames);
             }
             // dd(31112);
-
+            // dd($data);
             /*
              * Hand over to the validator
              */

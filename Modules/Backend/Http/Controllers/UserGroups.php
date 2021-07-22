@@ -28,7 +28,7 @@ class UserGroups extends Controller
     /**
      * @var array Permissions required to view this page.
      */
-    // public $requiredPermissions = ['backend.manage_users'];
+    public $requiredPermissions = ['backend.manage_users'];
 
     public function __construct()
     {

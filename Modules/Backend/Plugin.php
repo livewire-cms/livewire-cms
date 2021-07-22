@@ -5,6 +5,7 @@ namespace Modules\Backend;
 use Backend;
 use Modules\System\Classes\PluginBase;
 use BackendMenu;
+use Modules\Backend\Models\UserRole;
 
 /**
  * Test Plugin Information File
@@ -16,7 +17,11 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-
+            'backend.manage_users' => [
+                'label' => 'system::lang.permissions.manage_other_administrators',
+                'tab'   => 'system::lang.permissions.name',
+                'roles' => UserRole::CODE_DEVELOPER,
+            ],
         ];
     }
 
@@ -62,7 +67,7 @@ class Plugin extends PluginBase
                 'order' => 800,
                 'context'=>['modules.system'],//对应模块1的标识符
                 'keywords' => 'system users',
-                'permissions' => [],
+                'permissions' => ['backend.manage_users'],
             ],
             'usergroups' => [
                 'label' => 'Group',
@@ -73,7 +78,7 @@ class Plugin extends PluginBase
                 'order' => 900,
                 'context'=>['modules.system'],//对应模块1的标识符
                 'keywords' => 'system groups',
-                'permissions' => [],
+                'permissions' => ['backend.manage_users'],
             ],
             'userroles' => [
                 'label' => 'Role',
@@ -84,7 +89,7 @@ class Plugin extends PluginBase
                 'order' => 900,
                 'context'=>['modules.system'],//对应模块1的标识符
                 'keywords' => 'system roles',
-                'permissions' => [],
+                'permissions' => ['backend.manage_users'],
             ],
 
         ];
