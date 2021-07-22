@@ -49,6 +49,14 @@ tabs:
             span: auto
             type: toggle
             size: lg
+        extra[radio]:
+            tab: 选择框
+            label: 单选框
+            span: auto
+            type: radio
+            options:
+                1: 男
+                2: 女
         extra[checkbox]:
             tab: 选择框
             label: checkbox
