@@ -160,6 +160,9 @@ class Manager implements \Illuminate\Contracts\Auth\StatefulGuard
     {
 
 
+        // return $this->user;
+        // return $this->user = \Auth::user();
+
         // \Auth::logout();
         // return $this->user;
         // return \Modules\Backend\Models\User::find(3);
@@ -169,7 +172,9 @@ class Manager implements \Illuminate\Contracts\Auth\StatefulGuard
            }else{
                $this->user = \Auth::user();
            }
+
         }
+        // dd( $this->user);
 
         // dd($this->user);
         return $this->user;

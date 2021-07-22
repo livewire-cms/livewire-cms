@@ -52,12 +52,24 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        // dd(\Auth::user());
-        // $this->user = BackendAuth::getUser();//todo 后台用户登录
-        // if(!$this->user || ($this->requiredPermissions && !$this->user->hasAnyAccess($this->requiredPermissions))){
-        //     abort(404);
-        // }
+
+
+        $this->middleware(function ($request, $next) {
+
+            $this->setUser();
+
+            return $next($request);
+        });
+
         $this->extendableConstruct();
+    }
+
+    public function setUser()
+    {
+        // dd(321,BackendAuth::getUser());
+        $this->user = BackendAuth::getUser();//todo 后台用户登录
+
+
     }
     /**
     * Extend this object properties upon construction.

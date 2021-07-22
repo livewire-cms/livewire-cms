@@ -75,6 +75,17 @@ class Plugin extends PluginBase
                 'keywords' => 'system groups',
                 'permissions' => [],
             ],
+            'userroles' => [
+                'label' => 'Role',
+                'description' => 'rainlab.blog::lang.blog.settings_description',
+                'category' => '后台用户设置',
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('backend/userroles'),
+                'order' => 900,
+                'context'=>['modules.system'],//对应模块1的标识符
+                'keywords' => 'system roles',
+                'permissions' => [],
+            ],
 
         ];
     }

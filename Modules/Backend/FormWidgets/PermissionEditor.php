@@ -2,6 +2,7 @@
 
 use Modules\Backend\Classes\FormWidgetBase;
 use BackendAuth;
+use Modules\LivewireCore\Html\Helper as HtmlHelper;
 
 /**
  * User/group permission editor
@@ -63,8 +64,31 @@ class PermissionEditor extends FormWidgetBase
     public function render()
     {
         $this->prepareVars();
+
         return $this;
         return $this->makePartial('permissioneditor');
+    }
+    public function getModelName($end='')
+    {
+
+
+
+
+        $names = HtmlHelper::nameToArray($this->formField->getName());
+
+        if($end){
+            $end = str_replace('.', '___',$end);
+            array_push($names, $end);
+        }
+
+        foreach ($names as &$name) {
+            if (is_numeric($name)) {
+                // $name = '['.$name.']';
+                $name = ''.$name.'';
+            }
+        }
+
+        return $this->formField->modelName = 'form.'.implode('.', $names);
     }
 
     /**
@@ -80,12 +104,31 @@ class PermissionEditor extends FormWidgetBase
         if (!is_array($permissionsData)) {
             $permissionsData = [];
         }
+        $newPermissions = [];
+        foreach ($permissionsData as $kk=>$v){
+            $newPermissions[str_replace('.', '___', $kk)]=$v;
+        }
+
 
         $this->vars['mode'] = $this->mode;
         $this->vars['permissions'] = $this->getFilteredPermissions();
         $this->vars['baseFieldName'] = $this->getFieldName();
+
+        foreach ($this->vars['permissions'] as $tab=>$ps){
+            foreach ($ps as $p){
+                if(!isset($newPermissions[str_replace('.', '___', $p->code)])){
+                    $newPermissions[str_replace('.', '___', $p->code)]= 0;
+                }
+            }
+
+        }
+
         $this->vars['permissionsData'] = $permissionsData;
         $this->vars['field'] = $this->formField;
+
+        $this->formField->value = $newPermissions;
+        $this->formField->html   = $this->makePartial('default');
+
         // dd($this);
     }
 
@@ -94,11 +137,36 @@ class PermissionEditor extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
+        if(is_array($value)){
+            $newValue = [];
+            foreach($value as $k=>$v){
+                $newValue[str_replace('___', '.', $k)]= $v;
+            }
+            $value = $newValue;
+        }
+
         if ($this->user->isSuperUser()) {
             return is_array($value) ? $value : [];
         }
 
         return $this->getSaveValueSecure($value);
+    }
+     /**
+     * Returns the value for this form field,
+     * supports nesting via HTML array.
+     * @return string
+     */
+    public function getLoadValue()
+    {
+
+        if ($this->formField->value !== null) {
+            return $this->formField->value;
+        }
+
+        $defaultValue = !$this->model->exists
+            ? $this->formField->getDefaultFromData($this->data ?: $this->model)
+            : null;
+        return $this->formField->getValueFromData($this->data ?: $this->model, $defaultValue);
     }
 
     /**
@@ -126,7 +194,7 @@ class PermissionEditor extends FormWidgetBase
 
             $allowedPermissions = array_map(function ($permissionObject) {
                 return $permissionObject->code;
-            }, array_flatten($this->getFilteredPermissions()));
+            }, \Arr::flatten($this->getFilteredPermissions()));
 
             foreach ($newPermissions as $permission => $code) {
                 if (in_array($permission, $allowedPermissions)) {
@@ -147,6 +215,7 @@ class PermissionEditor extends FormWidgetBase
      */
     protected function getFilteredPermissions()
     {
+        // dd($this->user);
         $permissions = BackendAuth::listTabbedPermissions();
 
         foreach ($permissions as $tab => $permissionsArray) {
@@ -167,6 +236,8 @@ class PermissionEditor extends FormWidgetBase
                 $permissions[$tab] = $permissionsArray;
             }
         }
+        // dd($permissions);
+
 
         return $permissions;
     }

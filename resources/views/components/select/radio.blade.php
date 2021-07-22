@@ -10,6 +10,7 @@
             'option' =>is_string($v)? array($v):$v
         ];
     }
+
 @endphp
 
 <div x-data="{{$prefix}}radio()" class="bg-gray-200">
@@ -21,13 +22,13 @@
                 <label class="inline-flex items-center my-3 " >
                     <input type="radio" x-model="value" class="form-radio h-5 w-5 text-green-600" value="{{$ov['id']}}"><span class="ml-2 text-gray-700">{{$ov['option'][0]}}</span>
                 </label>
-                @isset($ov['option'][1]))
-                     <p class="help-block"><?= e(trans($ov['option'][1])) ?></p>
+                @isset($ov['option'][1])
+                     <p class="text-xs">{{__($ov['option'][1])}}</p>
                 @endisset
 
             @endforeach
 
-           
+
         </div>
     </div>
 </div>

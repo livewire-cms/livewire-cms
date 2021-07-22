@@ -18,6 +18,7 @@ class Plugin extends PluginBase
         return [
             'hello.hellos.index' => [
                 'label' => 'hello列表',
+                'comment' =>'23132',
                 'tab' => 'hello'
             ],
         ];

@@ -89,7 +89,9 @@ $relation_field = $attributes->get('relation_field',null);
 
                 @else
                 <x-back-form-widget>
-                    {!! $field['html']??'' !!}
+                    <div wire:ignore>
+                        {!! $field['html']??'' !!}
+                    </div>
                 </x-back-form-widget>
                 @endisset
 

@@ -7,7 +7,7 @@ use Arr;
 use Str;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
-
+use Livewire\Livewire;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -50,6 +50,11 @@ class AppServiceProvider extends ServiceProvider
             $name = Str::normalizeClassName($name);
             return substr($name, 0, strrpos($name, "\\"));
         });
+        Str::macro('getPrecedingSymbols', function($string, $symbol){
+            return strlen($string) - strlen(ltrim($string, $symbol));
+        });
+
+
     }
 
     /**

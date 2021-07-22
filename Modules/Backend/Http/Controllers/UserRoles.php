@@ -48,7 +48,7 @@ class UserRoles extends Controller
         parent::__construct();
 
         BackendMenu::setContext('Modules.System', 'system');
-        SideNavManager::setContext('Modules.System', 'userroles');
+        SideNavManager::setContext('Modules.Backend', 'userroles');
 
     }
 

@@ -100,6 +100,39 @@ class User extends Model implements
      */
     public static $loginAttribute = 'login';
 
+        /**
+     * @var array The array of custom attribute names.
+     */
+    public $attributeNames = [];
+
+    /**
+     * @var array The array of custom error messages.
+     */
+    public $customMessages = [];
+
+    /**
+     * @var array List of attribute names which are json encoded and decoded from the database.
+     */
+    protected $jsonable = ['permissions'];
+
+    /**
+     * Allowed permissions values.
+     *
+     * Possible options:
+     *   -1 => Deny (adds to array, but denies regardless of user's group).
+     *    0 => Remove.
+     *    1 => Add.
+     *
+     * @var array
+     */
+    protected $allowedPermissionsValues = [-1, 0, 1];
+
+
+    /**
+     * @var array The user merged permissions.
+     */
+    protected $mergedPermissions;
+
     /**
      * @return string Returns the user's full name.
      */
@@ -480,6 +513,7 @@ class User extends Model implements
      */
     public function setPermissionsAttribute($permissions)
     {
+
         $permissions = json_decode($permissions, true) ?: [];
         foreach ($permissions as $permission => &$value) {
             if (!in_array($value = (int) $value, $this->allowedPermissionsValues)) {

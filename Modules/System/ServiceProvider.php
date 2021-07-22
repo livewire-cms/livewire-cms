@@ -12,6 +12,7 @@ use Modules\System\Classes\SideNavManager;
 use BackendMenu;
 use Backend;
 use Event;
+use Livewire\Livewire;
 
 class ServiceProvider extends BaseServiceProvider
 {

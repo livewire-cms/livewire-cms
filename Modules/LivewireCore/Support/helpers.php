@@ -35,7 +35,10 @@ if (!function_exists('find_controller_by_url')) {
                 return preg_match($route->getCompiled()->getRegex(), rawurldecode($path));
             })($r,$path)){
                 $c = explode('@', $r->action['controller'])[0];
-                return  new $c;
+                $c = new $c;
+                $c->setUser();
+
+                return  $c;
                 dd($r,$r->action);
                 return $r->getController();
             }

@@ -6,6 +6,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Modules\Backend\Classes\Controller;
 use BackendMenu;
+use Modules\Backend\Models\UserGroup;
+
 use Modules\System\Classes\SideNavManager;
 
 class Users extends Controller
@@ -62,5 +64,71 @@ class Users extends Controller
 
 
         return view('backend::users.update', ['widget'=>$this->widget,'cc'=>$this]);
+    }
+
+     /**
+     * Extends the form query to prevent non-superusers from accessing superusers at all
+     */
+    public function formExtendQuery($query)
+    {
+
+
+
+        if (!$this->user->isSuperUser()) {
+            $query->where('is_superuser', false);
+        }
+
+        // Ensure soft-deleted records can still be managed
+        $query->withTrashed();
+    }
+
+    /**
+     * Add available permission fields to the User form.
+     * Mark default groups as checked for new Users.
+     */
+    public function formExtendFields($form)
+    {
+        if ($form->getContext() == 'myaccount') {
+            return;
+        }
+        if (!$this->user->isSuperUser()) {
+            $form->removeField('is_superuser');
+        }
+
+        /*
+         * Add permissions tab
+         */
+        $form->addTabFields($this->generatePermissionsField());
+
+        /*
+         * Mark default groups
+         */
+        if (!$form->model->exists) {
+            $defaultGroupIds = UserGroup::where('is_new_user_default', true)->lists('id');
+
+            $groupField = $form->getField('groups');
+            if ($groupField) {
+                $groupField->value = $defaultGroupIds;
+            }
+        }
+    }
+
+        /**
+     * Adds the permissions editor widget to the form.
+     * @return array
+     */
+    protected function generatePermissionsField()
+    {
+        return [
+            'permissions' => [
+                'tab' => 'backend::lang.user.permissions',
+                'type' => 'Modules\Backend\FormWidgets\PermissionEditor',
+                'trigger' => [
+                    'action' => 'disable',
+                    'field' => 'is_superuser',
+                    'condition' => 'checked'
+                ]
+            ]
+        ];
     }
 }

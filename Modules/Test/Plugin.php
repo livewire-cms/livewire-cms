@@ -16,6 +16,8 @@ class Plugin extends PluginBase
         return [
             'backend.test.index' => [
                 'label' => 'Test',
+                'comment' =>'23132',
+
                 'tab' => 'Test'
             ],
         ];
