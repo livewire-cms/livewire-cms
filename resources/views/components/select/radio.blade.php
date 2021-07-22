@@ -10,13 +10,19 @@
             'option' =>is_string($v)? array($v):$v
         ];
     }
+    $inline = $attributes->get('inline',false);
 
 @endphp
 
-<div x-data="{{$prefix}}radio()" class="bg-gray-200">
+<div x-data="
+{
+    options: [],
+    value:@entangle($attributes->wire('model')),
+}
+" class="bg-gray-200">
     <div class="flex flex-col  ml-5">
 
-        <div class="flex flex-col">
+        <div class="flex {{$inline?'':'flex-col'}}">
             @foreach ($o as $ov)
 
                 <label class="inline-flex items-center my-3 " >

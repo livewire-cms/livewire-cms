@@ -57,14 +57,24 @@ tabs:
             options:
                 1: 男
                 2: 女
+        extra[radio-inline]:
+            tab: 选择框
+            label: 单选框
+            span: auto
+            type: radio
+            options:
+                1: 男
+                2: 女
+            attributes:
+                inline: true
         extra[checkbox]:
             tab: 选择框
             label: checkbox
             span: auto
             type: checkbox
             options:
-                1: 男
-                2: 女
+                1: 红色
+                2: 黄色
         extra[checkbox-inline]:
             tab: 选择框
             label: checkbox-inline
@@ -74,8 +84,8 @@ tabs:
             attributes:
                 inline: true
             options:
-                1: 男
-                2: 女
+                1: 红色
+                2: 黄色
 
         extra[checkboxlist]:
             label: 多选

@@ -105,7 +105,7 @@ $relation_field = $attributes->get('relation_field',null);
 
             @elseif ($field['type']=='radio')
 
-                <x-select.radio wire:model.lazy="{{ $field['modelName']}}" :options="$field['options']" :prefix="str_replace('-','_',$field['id'])"></x-select.radio>
+                <x-select.radio wire:model.lazy="{{ $field['modelName']}}" :options="$field['options']" :prefix="str_replace('-','_',$field['id'])" :inline="$field['attributes']['field']['inline']??''"></x-select.radio>
             @elseif ($field['type']=='checkbox')
                 <x-form.check-box wire:model.lazy="{{ $field['modelName']}}"  :options="$field['options']" :prefix="str_replace('-','_',$field['id'])" :inline="$field['attributes']['field']['inline']??''"></x-form.check-box>
             @elseif ($field['type']=='toggle')
