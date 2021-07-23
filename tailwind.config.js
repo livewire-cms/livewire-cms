@@ -72,6 +72,7 @@ module.exports = {
     require('@tailwindcss/ui'),
     require('tailwindcss-multi-theme'),
     require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
     plugin(({ addUtilities, e, theme, variants }) => {
       const newUtilities = {}
       Object.entries(theme('colors')).map(([name, value]) => {

@@ -116,6 +116,21 @@ tabs:
             type: wangeditor
             span: full
             tab: 编辑器
+        extra[Codemirror]:
+            label: Codemirror
+            type: codemirror
+            span: full
+            tab: Codemirror
+            config:
+                mode: php
+                theme: material-darker
+
+
+        extra[markdown]:
+            label: markdown
+            type: markdown
+            span: full
+            tab: markdown
         extra[editorjs]:
             label: editorjs
             type: editorjs

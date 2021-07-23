@@ -251,6 +251,8 @@ class ServiceProvider extends BaseServiceProvider
             $this->registerFormComponent('inputs.password');
             $this->registerFormComponent('inputs.email');
             $this->registerFormComponent('inputs.fileupload');
+            $this->registerFormComponent('inputs.codemirror');
+            $this->registerFormComponent('inputs.markdown');
             $this->registerFormComponent('relation_lists');
         });
     }
