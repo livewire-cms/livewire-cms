@@ -5,7 +5,18 @@ use Modules\LivewireCore\Filesystem\PathResolver;
 use Illuminate\Support\Facades\Route;
 
 
-
+if (!function_exists('temp_path')) {
+    /**
+     * Get the path to the temporary storage folder.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function temp_path($path = '')
+    {
+        return PathResolver::join(app('path.temp'), $path);
+    }
+}
 if (!function_exists('plugins_path')) {
     /**
      * Get the path to the plugins folder.

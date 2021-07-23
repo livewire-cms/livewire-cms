@@ -8,3 +8,18 @@ columns:
         searchable: true
     name:
         label: 名称
+    avatar:
+        label: 图像
+        type: image
+        sortable: false
+    extra[toggle]:
+        label: 是否支持
+        type: switch
+    created_at:
+        label: 创建时间
+        type: datetime
+        format: Y-m-d H:i:s
+    updated_at:
+        label: 更新时间
+        type: timesince
+

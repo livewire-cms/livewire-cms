@@ -8,10 +8,10 @@ use DbDongle;
 use Carbon\Carbon;
 use Modules\LivewireCore\Html\Helper as HtmlHelper;
 use Modules\LivewireCore\Router\Helper as RouterHelper;
-use System\Helpers\DateTime as DateTimeHelper;
+use Modules\System\Helpers\DateTime as DateTimeHelper;
 use Modules\System\Classes\PluginManager;
 use System\Classes\MediaLibrary;
-use System\Classes\ImageResizer;
+use Modules\System\Classes\ImageResizer;
 use Modules\Backend\Classes\ListColumn;
 use Modules\Backend\Classes\WidgetBase;
 use Illuminate\Database\Eloquent\Model;
@@ -1263,9 +1263,11 @@ class Lists extends WidgetBase
         } else {
             $image = MediaLibrary::url($value);
         }
+        // dd($image);
 
         if (!is_null($image)) {
             $imageUrl = ImageResizer::filterGetUrl($image, $width, $height, $options);
+            // dd($imageUrl);
             return "<img src='$imageUrl' width='$width' height='$height' />";
         }
     }

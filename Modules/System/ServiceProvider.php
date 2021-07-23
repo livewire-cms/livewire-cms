@@ -17,6 +17,7 @@ use Livewire\Livewire;
 class ServiceProvider extends BaseServiceProvider
 {
     public $pluginsPath;
+    public $tempPath;
     /**
      * Register any application services.
      *
@@ -25,6 +26,8 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->instance('path.plugins', $this->pluginsPath());
+        $this->app->instance('path.temp', $this->tempPath());
+
         $this->registerSingletons();
 
         PluginManager::instance()->registerAll();
@@ -35,6 +38,16 @@ class ServiceProvider extends BaseServiceProvider
 
         $this->registerBackendNavigation();
 
+    }
+
+        /**
+     * Get the path to the public / web directory.
+     *
+     * @return string
+     */
+    public function tempPath()
+    {
+        return $this->tempPath ?: PathResolver::join(base_path(), '/storage/temp');
     }
 
 

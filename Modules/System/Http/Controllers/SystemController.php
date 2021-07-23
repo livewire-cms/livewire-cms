@@ -6,6 +6,12 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use BackendMenu;
+
+use Modules\System\Classes\ImageResizer;
+use Modules\LivewireCore\Exception\SystemException;
+use Exception;
+use Config;
+
 class SystemController extends Controller
 {
     /**
@@ -19,63 +25,48 @@ class SystemController extends Controller
         return view('system::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     /**
+     * Resizes an image using the provided configuration
+     * and returns a redirect to the resized image
+     *
+     * @param string $identifier The identifier used to retrieve the image configuration
+     * @param string $encodedUrl The double-encoded URL of the resized image, see https://github.com/octobercms/october/issues/3592#issuecomment-671017380
+     * @return RedirectResponse
      */
-    public function create()
+    public function resizer(string $identifier, string $encodedUrl)
     {
-        return view('system::create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $resizedUrl = ImageResizer::getValidResizedUrl($identifier, $encodedUrl);
+        // dd($resizedUrl);
+        if (empty($resizedUrl)) {
+            return response('Invalid identifier or redirect URL', 400);
+        }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('system::show');
-    }
+        // Attempt to process the resize
+        try {
+            $resizer = ImageResizer::fromIdentifier($identifier);
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('system::edit');
-    }
+            $resizer->resize();
+        } catch (SystemException $ex) {
+            // If the resizing failed with a SystemException, it was most
+            // likely because it is in progress or has already finished
+            // although it could also be because the cache system used to store
+            // configuration data is broken
+            if (Config::get('cache.default', 'file') === 'array') {
+                throw new Exception('Image resizing requires a persistent cache driver, "array" is not supported. Try changing config/cache.php -> default to a persistent cache driver.');
+            }
+        } catch (Exception $ex) {
+            // If it failed for any other reason, restore the config so that
+            // the resizer route will continue to work until it succeeds
+            if ($resizer) {
+                $resizer->storeConfig();
+            }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            // Rethrow the exception
+            throw $ex;
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
+
+        return redirect()->to($resizedUrl);
     }
 }

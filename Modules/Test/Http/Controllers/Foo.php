@@ -50,4 +50,14 @@ class Foo extends Controller
         return view('test::foo.update', ['widget'=>$this->widget]);
 
     }
+
+    public function onTest($component,$params)
+    {
+
+        $component->notification()->success(
+            $title = 'Success',
+            $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
+        );
+        // dd($params);
+    }
 }
