@@ -1,12 +1,12 @@
 <x-back-container>
-    @livewire('backend.widgets.lists',[
+    @livewire('backend.livewire.widgets.lists',[
         'widget' =>$widget,
         'prefix' => 'list'
     ])
-    @livewire('backend.widgets.quickform',[
+    @livewire('backend.livewire.widgets.quickform',[
         'widget' =>null,
     ])
 
-    @livewire('backend.widgets.relation_form',['parentSessionKey'=>''])
+    @livewire('backend.livewire.widgets.relation_form',['parentSessionKey'=>''])
 
 </x-back-container>

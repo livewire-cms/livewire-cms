@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\View\Widgets\RelationLists;
+namespace Modules\Backend\View\Livewire\Widgets\RelationLists;
 
 use Livewire\Component;
 use Route;

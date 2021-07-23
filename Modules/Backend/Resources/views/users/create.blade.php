@@ -1,7 +1,7 @@
 <x-back-container>
     {{-- {{dd($widget)}} --}}
 
-    @livewire('backend.widgets.form',[
+    @livewire('backend.livewire.widgets.form',[
         'widget' =>$widget,
     ])
 

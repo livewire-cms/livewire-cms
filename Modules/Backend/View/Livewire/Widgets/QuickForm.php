@@ -1,19 +1,19 @@
 <?php
 
-namespace Modules\Backend\View\Widgets;
+namespace Modules\Backend\View\Livewire\Widgets;
 
 use Livewire\Component;
 use Route;
 use Modules\LivewireCore\Html\Helper as HtmlHelper;
 use Validator;
 use Livewire\WithFileUploads;
-use WireUi\Traits\Actions;
-class Form extends Component
-{
 
+
+class QuickForm extends Component
+{
     use WithFileUploads;
-    use \WireUi\Traits\Actions;
     // protected $widget;
+    use \WireUi\Traits\Actions;
 
     public $fields = [];
     public $tabs = [];
@@ -34,19 +34,41 @@ class Form extends Component
 
     public $update;
 
+    public $quickFormModal;
+
 
     protected $widget;
 
 
-
-    protected $listeners = ['upload:finished' => 'uploadFinished','setFormProperty'];
-
+    public $customData = [];
 
 
 
-    public function mount($widget)
+    protected $listeners = [
+        'upload:finished' => 'uploadFinished',
+        'setFormProperty',
+        'onQuickFormCreate',
+        'onQuickFormUpdate',
+    ];
+
+
+    public function resetData()
+    {
+        $this->form = [];
+        $this->fields = [];
+        $this->tabs = [];
+        $this->secondTabs = [];
+        $this->customData = [];
+    }
+
+
+    public function mount($widget=null)
     {
 
+        // $this->resetData();
+        if(!$widget){
+            return ;
+        }
         $widget->form->render();
 
         $this->widget = $widget;
@@ -171,8 +193,14 @@ class Form extends Component
 
         $names = HtmlHelper::nameToArray($field->getName());
 
+        foreach ($names as &$name) {
+            if (is_numeric($name)) {
+                $name = ''.$name.'';
+            }
+        }
+
         $keyName  = implode('.', $names);
-        // $field->modelName = 'form.'.implode('.', $names);
+        $field->modelName = 'form.'.implode('.', $names);
         $field->id = $field->getId();
         // dd($field);
 
@@ -206,24 +234,27 @@ class Form extends Component
         // dd($this->form['User']['avatar']);
 
         // dd($this->form);
-        request()->merge($data)->merge($this->form);
+        request()->merge($data)->merge($this->customData)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
         if ($this->context=='create') {
-
             $c->asExtension('FormController')->create_onSave();
         } elseif ($this->context=='update') {
             // dd($this->form);
-            // dd($c);
             $c->asExtension('FormController')->update_onSave($this->modelId);
         }
+
+        $this->emitTo('backend.livewire.widgets.lists', 'search', ['search'=>'']);
+
+        $this->quickFormModal = false;
 
         $this->notification()->success(
             $title = 'Success',
             $description = 'Your data was successfull saved'
         );
+
     }
 
 
@@ -362,11 +393,48 @@ class Form extends Component
 
     }
 
+    public function onQuickFormCreate($data)
+    {
+        $this->resetData();
+        $this->customData = $data;
+
+        $this->quickFormModal = true;
+        request()->merge($data);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+
+        $c->create();
+
+        $this->mount($c->widget);
+        // $this->context = 'create';
+
+    }
+    public function onQuickFormUpdate($data)
+    {
+        $this->resetData();
+
+        $this->quickFormModal = true;
+        $this->customData = $data;
+        request()->merge($data);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+
+        $c->update($data['record_id']??$data);
+
+        $this->mount($c->widget);
+
+
+    }
+
 
 
     public function render()
     {
         // dd($this->form);
-        return view('backend::widgets.form',['widget'=>$this->widget]);
+        return view('backend::widgets.quickform',['widget'=>$this->widget]);
     }
 }

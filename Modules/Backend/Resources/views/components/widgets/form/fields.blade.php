@@ -119,7 +119,7 @@ $relation_field = $attributes->get('relation_field',null);
                 <x-form.quill-editor wire:model.lazy="{{ $field['modelName']}}" :value="$field['value']" :config="$field['config']['config']" :prefix="str_replace('-','_',$field['id'])"></x-form.quill-editor>
            @elseif ($field['type']=='editorjs')
                 <div wire:ignore>
-                    @livewire('backend.widgets.form.editorjs', [
+                    @livewire('backend.livewire.widgets.form.editorjs', [
                         'editorId' => $field["modelName"],
                         'value' => $field['value'],
                         'uploadDisk' => 'public',

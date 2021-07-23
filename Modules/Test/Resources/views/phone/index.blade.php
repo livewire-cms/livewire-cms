@@ -1,5 +1,5 @@
 <x-back-container>
-    @livewire('backend.widgets.lists',[
+    @livewire('backend.livewire.widgets.lists',[
         'widget' =>$widget,
         'prefix' => 'list'
     ])

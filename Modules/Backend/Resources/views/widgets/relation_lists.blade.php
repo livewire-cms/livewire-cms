@@ -35,7 +35,7 @@
         <div class="grid grid-cols-3">
             <div></div>
             <div></div>
-            @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+            @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
         </div>
     @endif
     @isset($list)
@@ -98,14 +98,14 @@
                         <td class="px-2">
                             @if ($scope->type=='group')
                                 {{__($scope->label)}}
-                            @livewire('backend.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
+                            @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
 
                             @elseif ($scope->type=='text')
                                 {{__($scope->label)}}
-                                @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                                @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                             @else
                                 {{__($scope->label)}}
-                                @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                                @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                             @endif
                         </td>
                     @endforeach
@@ -130,7 +130,7 @@
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 @foreach ($list->vars['records'] as $record)
-                    <tr class="text-gray-700 dark:text-gray-400" wire:click.stop="$emitTo('backend.widgets.relation_form','onRelationClickViewList',{_relation_field:'{{$prefix}}',modelId:'{{$modelId}}',manage_id:'{{$record->getKey()}}',context:'{{$context}}'})">
+                    <tr class="text-gray-700 dark:text-gray-400" wire:click.stop="$emitTo('backend.livewire.widgets.relation_form','onRelationClickViewList',{_relation_field:'{{$prefix}}',modelId:'{{$modelId}}',manage_id:'{{$record->getKey()}}',context:'{{$context}}'})">
                         <td class="px-4 py-3">
                             <label
                                 class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">

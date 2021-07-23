@@ -246,7 +246,7 @@ class QuickForm extends Component
             $c->asExtension('FormController')->update_onSave($this->modelId);
         }
 
-        $this->emitTo('backend.widgets.lists', 'search', ['search'=>'']);
+        $this->emitTo('backend.livewire.widgets.lists', 'search', ['search'=>'']);
 
         $this->quickFormModal = false;
 
@@ -369,7 +369,7 @@ class QuickForm extends Component
     public function onRelationButtonCreate($data)
     {
         $this->emitTo(
-            'backend.widgets.relation_form',
+            'backend.livewire.widgets.relation_form',
             'onRelationButtonCreate',
             [
                 '_relation_field' => $data,

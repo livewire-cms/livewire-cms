@@ -17,14 +17,14 @@
 
 
     @endphp
-    @livewire('backend.widgets.form.fields',array_merge(['widget'=>$widget],['context'=>$form->context,'modelId'=>$form->model->getKey()]))
+    @livewire('backend.livewire.widgets.form.fields',array_merge(['widget'=>$widget],['context'=>$form->context,'modelId'=>$form->model->getKey()]))
 
     {{-- @if ($outsideTabs->hasFields())
         @if ($outsideTabs->suppressTabs)
-        {{-- @livewire('backend.widgets.form.fields',['fields'=>$outsideTabs]) --}}
+        {{-- @livewire('backend.livewire.widgets.form.fields',['fields'=>$outsideTabs]) --}}
             {{-- @foreach ($outsideTabs as $field)
                 @if ($field->type=='text')
-                @livewire('backend.widgets.form.text', ['field'=>$field])
+                @livewire('backend.livewire.widgets.form.text', ['field'=>$field])
 
                 @endif
             @endforeach --}}

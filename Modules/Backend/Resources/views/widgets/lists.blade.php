@@ -20,7 +20,7 @@
 @endphp
 
 <div class="container grid px-6 mx-auto">
-    @livewire('backend.widgets.listapplysetup',['list'=>$list])
+    @livewire('backend.livewire.widgets.listapplysetup',['list'=>$list])
     <h2
       class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
     >
@@ -37,7 +37,7 @@
             <div class="grid p-2 grid-cols-3">
                 <div></div>
                 <div></div>
-                @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+                @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
             </div>
         @endif
 
@@ -57,14 +57,14 @@
                         <td class="px-2 max-w-xs" wire:ignore>
                             @if ($scope->type=='group')
                                 {{__($scope->label)}}
-                            @livewire('backend.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
+                            @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
 
                             @elseif ($scope->type=='text')
                                 {{__($scope->label)}}
-                                @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                                @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                             @else
                                 {{__($scope->label)}}
-                                @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                                @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                             @endif
                         </td>
                     @endforeach
@@ -105,7 +105,7 @@
                 <th class="px-4 py-3">
                     操作
 
-                    <span class="cursor-pointer float-right" wire:click="$emitTo('backend.widgets.listapplysetup','onApplySetup_{{$prefix}}')">{{__('Setup')}}</span>
+                    <span class="cursor-pointer float-right" wire:click="$emitTo('backend.livewire.widgets.listapplysetup','onApplySetup_{{$prefix}}')">{{__('Setup')}}</span>
 
                 </th>
             </tr>

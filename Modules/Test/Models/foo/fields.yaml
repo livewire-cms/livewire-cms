@@ -157,7 +157,7 @@ tabs:
             prompt: 添加一条
             span: full
             tab: 数组编辑
-            livewireComponent: backend.widgets.form.repeater
+            livewireComponent: backend.livewire.widgets.form.repeater
             form:
                 fields:
                     name:

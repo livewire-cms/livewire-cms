@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Backend\View\Widgets;
+namespace Modules\Backend\View\Livewire\Widgets;
 
 use Livewire\Component;
 use Route;

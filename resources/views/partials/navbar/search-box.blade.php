@@ -1,1 +1,1 @@
-@livewire('backend.widgets.mainmenu')
+@livewire('backend.livewire.widgets.mainmenu')

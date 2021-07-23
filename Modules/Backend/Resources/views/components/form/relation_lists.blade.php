@@ -27,7 +27,7 @@
 </div>
 
 
-@livewire('backend.widgets.relation_lists',[
+@livewire('backend.livewire.widgets.relation_lists',[
     'widget' =>$widget,
     'prefix' => $loadRelation,
 ])

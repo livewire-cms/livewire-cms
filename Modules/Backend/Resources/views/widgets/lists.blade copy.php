@@ -44,7 +44,7 @@
                 {!! $listToolbar->vars['controlPanel'] !!}
             @endif
             @if (isset($listToolbarSearch))
-                @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+                @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
             @endif
 
 			<div>
@@ -92,16 +92,16 @@
                 @if ($scope->type=='group')
 
                 <?= e(trans($scope->label)) ?>
-                @livewire('backend.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
+                @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
 
                 @elseif ($scope->type=='text')
                 <?= e(trans($scope->label)) ?>
 
-                    @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                    @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                 @else
 
                      <?= e(trans($scope->label)) ?>
-                    @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                    @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                 @endif
 
 

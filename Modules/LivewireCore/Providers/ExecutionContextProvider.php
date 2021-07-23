@@ -20,7 +20,7 @@ class ExecutionContextProvider extends ServiceProvider
 
             // dd($requestPath);
 
-            if (\Str::startsWith($requestPath, $backendUri)||\Str::startsWith($requestPath,'/livewire/message/backend.widgets')) {
+            if (\Str::startsWith($requestPath, $backendUri)||\Str::startsWith($requestPath,'/livewire/message/backend.livewire.widgets')) {
 
                 return 'back-end';
             }

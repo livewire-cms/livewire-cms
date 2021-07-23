@@ -8,7 +8,7 @@
 <div>
 
     <div wire:ignore>
-        @livewire('backend.widgets.form.editorjs', [
+        @livewire('backend.livewire.widgets.form.editorjs', [
             'editorId' => $field["modelName"],
             'value' => $field['value'],
             'uploadDisk' => 'public',

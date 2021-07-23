@@ -1,6 +1,6 @@
 <div class="flex-1">
 
-        @livewire('backend.widgets.sidemenu')
+        @livewire('backend.livewire.widgets.sidemenu')
 
 
 </div>

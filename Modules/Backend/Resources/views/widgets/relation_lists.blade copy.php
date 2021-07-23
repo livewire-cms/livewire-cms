@@ -2,11 +2,11 @@
 
 <div>
 
-    {{-- @livewire('backend.widgets.search',['widget'=>$widget->{$prefix.'ToolbarSearch'},'prefix'=>$prefix])
+    {{-- @livewire('backend.livewire.widgets.search',['widget'=>$widget->{$prefix.'ToolbarSearch'},'prefix'=>$prefix])
 
 
 
-    @livewire('backend.widgets.items',['widget'=>$widget->{$prefix},'prefix'=>$prefix]) --}}
+    @livewire('backend.livewire.widgets.items',['widget'=>$widget->{$prefix},'prefix'=>$prefix]) --}}
 
 
     @php
@@ -87,7 +87,7 @@
 
 		<div class="mb-4 flex justify-end items-center">
             @isset($listToolbarSearch)
-            @livewire('backend.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+            @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
 
             @endisset
 
@@ -135,11 +135,11 @@
             @foreach ($listFilter->vars['scopes'] as $k=>$scope)
                 @if ($scope->type=='group')
                 {{$scope->label}}
-                @livewire('backend.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
+                @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
                 @endif
                 @if ($scope->type=='text')
                     {{$scope->label}}
-                    @livewire('backend.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                    @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                 @endif
 
 
@@ -186,7 +186,7 @@
                             </label>
                         </td>
                         @foreach ($list->vars['columns'] as $k=>$column)
-                        @livewire('backend.widgets.relation_lists.column',[
+                        @livewire('backend.livewire.widgets.relation_lists.column',[
                             'context' =>$context,
                             'modelId' => $modelId,
                             'manage_id' => $record->getKey(),
