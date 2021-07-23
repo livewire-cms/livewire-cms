@@ -1,6 +1,7 @@
 @php
     $hasError = false;
     if ($name) { $hasError = $errors->has($name); }
+
 @endphp
 
 <div class="@if($disabled) opacity-60 @endif">

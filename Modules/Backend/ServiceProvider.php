@@ -234,7 +234,23 @@ class ServiceProvider extends BaseServiceProvider
 
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('action-message');
-            $this->registerFormComponent('fileupload');
+            $this->registerFormComponent('inputs.default');
+            $this->registerFormComponent('inputs.text');
+            $this->registerFormComponent('inputs.textarea');
+            $this->registerFormComponent('inputs.radio');
+            $this->registerFormComponent('inputs.checkbox');
+            $this->registerFormComponent('inputs.wangeditor');
+            $this->registerFormComponent('inputs.toggle');
+            $this->registerFormComponent('inputs.checkboxlist');
+            $this->registerFormComponent('inputs.dropdown');
+            $this->registerFormComponent('inputs.editorjs');
+            $this->registerFormComponent('inputs.quilleditor');
+            $this->registerFormComponent('inputs.datepicker');
+            $this->registerFormComponent('inputs.datetimepicker');
+            $this->registerFormComponent('inputs.partial');
+            $this->registerFormComponent('inputs.password');
+            $this->registerFormComponent('inputs.email');
+            $this->registerFormComponent('inputs.fileupload');
             $this->registerFormComponent('relation_lists');
         });
     }

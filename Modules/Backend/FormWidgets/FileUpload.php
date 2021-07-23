@@ -177,9 +177,9 @@ class FileUpload extends FormWidgetBase
         }
         $this->formField->vars = $this->vars;
 
-        $this->formField->component = 'back-form-fileupload';
+        // $this->formField->component = 'back-form-fileupload';
 
-        $this->formField->html   = $this->makePartial('fileupload');
+        // $this->formField->html   = $this->makePartial('fileupload');
         $this->vars['field'] = $this->formField;
     }
 

@@ -172,7 +172,7 @@ class Repeater extends FormWidgetBase
 
         $this->vars['useGroups'] = $this->useGroups;
         $this->vars['groupDefinitions'] = $this->groupDefinitions;
-        $this->formField->livewire_component = 'backend.widgets.form.repeater';
+        // $this->formField->livewire_component = 'backend.widgets.form.repeater';
         $this->formField->vars = $this->vars;
         $this->formField->alias = $this->alias;
         $this->vars['field'] = $this->formField;

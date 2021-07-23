@@ -10,7 +10,7 @@ $relation_field = $attributes->get('relation_field',null);
 <div class="flex flex-wrap">
 @foreach ($fields as $k=>$field)
     @php
-
+        $field['relation_field'] = $relation_field;
     // dd($field);
     if($field['span']=='full'){
         $w = 'w-full';
@@ -24,32 +24,8 @@ $relation_field = $attributes->get('relation_field',null);
         $grid = 'grid-cols-2';
 
     }
-    // dd($fields)
-    // if(is_object(trans($field['label']))){
-    //     dd(trans($field['label']));
-    // }
-
      @endphp
-     {{-- <div class="w-full grid grid-cols-1">
-        <div class="text-center">
-            {{$field['label']}}
-        </div>
-     </div>
-     <div class="w-1/2 grid grid-cols-1">
-        <div class="text-center">
-            {{$field['label']}}
-        </div>
-     </div>
-     <div class="w-1/2 grid grid-cols-1">
-        <div class="text-center">
-            {{$field['label']}}
-        </div>
-     </div> --}}
 
-     {{-- @if ($field['span']=='right')
-        <div class="w-full"></div>
-        <div class="w-1/2"></div>
-    @endif --}}
     @if(isset($preField))
         @if($field['span']=='right')
             @if ($preField['span']=='full')
@@ -76,25 +52,40 @@ $relation_field = $attributes->get('relation_field',null);
             </label>
             @if ($field['type']=='widget')
 
-                @if(isset($field['component']))
-                    <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
-                @elseif(isset($field['livewire_component']))
-
-                    {{-- {{dd($widget)}} --}}
+                @if (isset($field['html']))
+                    <div wire:ignore>
+                        {!! $field['html']??'' !!}
+                    </div>
+                @elseif($field['livewireComponent'])
                     <div wire:ignore>
                         @isset($widget)
-                            @livewire($field['livewire_component'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field])
+                            @livewire($field['livewireComponent'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field])
                         @endisset
                     </div>
-
+                @elseif($field['component'])
+                    <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
                 @else
                 <x-back-form-widget>
                     <div wire:ignore>
                         {!! $field['html']??'' !!}
                     </div>
                 </x-back-form-widget>
-                @endisset
+                @endif
+            @elseif(isset($field['html']))
+                <div wire:ignore>
+                    {!! $field['html']??'' !!}
+                </div>
+            @elseif($field['livewireComponent'])
+                <div wire:ignore>
+                    @isset($widget)
+                        @livewire($field['livewireComponent'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field])
+                    @endisset
+                </div>
+            @elseif ($field['component'])
+                <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" :widget="$widget" class="mt-4" />
 
+
+                {{-- 下面进不去 --}}
             @elseif ($field['type']=='partial')
                 <x-back-form-widget>
                     {!! $field['html']??'' !!}
@@ -165,7 +156,8 @@ $relation_field = $attributes->get('relation_field',null);
 
             @elseif ($field['type']=='text')
                 {{-- {{dd($field)}} --}}
-                <x-input wire:model="{{ $field['modelName']}}" :id="$field['id']" :icon="$field['attributes']['field']['icon']??''"  :right-icon="$field['attributes']['field']['right-icon']??''"  :placeholder="$field['placeholder']" :hint="$field['comment']" :prefix="$field['attributes']['field']['prefix']??''" :suffix="$field['attributes']['field']['suffix']??''" :class="$field['cssClass']"/>
+
+                <x-input wire:model="{{ $field['modelName']}}"  :id="$field['id']" :icon="$field['attributes']['field']['icon']??''"  :right-icon="$field['attributes']['field']['right-icon']??''"  :placeholder="$field['placeholder']" :hint="$field['comment']" :prefix="$field['attributes']['field']['prefix']??''" :suffix="$field['attributes']['field']['suffix']??''" :class="$field['cssClass']"/>
             @else
 
                 <input

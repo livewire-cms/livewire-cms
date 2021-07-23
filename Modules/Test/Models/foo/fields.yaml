@@ -43,6 +43,12 @@ tabs:
             span: auto
             imageHeight: 250
             imageWidth: 250
+        extra[partial]:
+            tab: 自定义内容区
+            label: partial
+            span: full
+            type: partial
+
         extra[toggle]:
             tab: 选择框
             label: toggle
@@ -151,6 +157,7 @@ tabs:
             prompt: 添加一条
             span: full
             tab: 数组编辑
+            livewireComponent: backend.widgets.form.repeater
             form:
                 fields:
                     name:

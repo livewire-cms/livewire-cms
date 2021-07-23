@@ -7,11 +7,12 @@ use Route;
 use Modules\LivewireCore\Html\Helper as HtmlHelper;
 use Validator;
 use Livewire\WithFileUploads;
-
+use WireUi\Traits\Actions;
 class Form extends Component
 {
 
     use WithFileUploads;
+    use \WireUi\Traits\Actions;
     // protected $widget;
 
     public $fields = [];
@@ -170,14 +171,8 @@ class Form extends Component
 
         $names = HtmlHelper::nameToArray($field->getName());
 
-        foreach ($names as &$name) {
-            if (is_numeric($name)) {
-                $name = ''.$name.'';
-            }
-        }
-
         $keyName  = implode('.', $names);
-        $field->modelName = 'form.'.implode('.', $names);
+        // $field->modelName = 'form.'.implode('.', $names);
         $field->id = $field->getId();
         // dd($field);
 
@@ -225,7 +220,10 @@ class Form extends Component
             $c->asExtension('FormController')->update_onSave($this->modelId);
         }
 
-        $this->emit('saved');
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Your data was successfull saved'
+        );
     }
 
 

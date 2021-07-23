@@ -12,6 +12,7 @@ class RelationForm extends Component
 {
     // protected $widget;
     use WithFileUploads;
+    use \WireUi\Traits\Actions;
 
     public $fields = [];
     public $tabs = [];
@@ -348,6 +349,10 @@ class RelationForm extends Component
 
 
         }
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Your data was successfull saved'
+        );
 
 
     }

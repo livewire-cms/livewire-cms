@@ -8,10 +8,12 @@ use Modules\LivewireCore\Html\Helper as HtmlHelper;
 use Validator;
 use Livewire\WithFileUploads;
 
+
 class QuickForm extends Component
 {
     use WithFileUploads;
     // protected $widget;
+    use \WireUi\Traits\Actions;
 
     public $fields = [];
     public $tabs = [];
@@ -247,6 +249,11 @@ class QuickForm extends Component
         $this->emitTo('backend.widgets.lists', 'search', ['search'=>'']);
 
         $this->quickFormModal = false;
+
+        $this->notification()->success(
+            $title = 'Success',
+            $description = 'Your data was successfull saved'
+        );
 
     }
 

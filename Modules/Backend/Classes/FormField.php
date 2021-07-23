@@ -14,6 +14,25 @@ use Modules\LivewireCore\Html\Helper as HtmlHelper;
  */
 class FormField
 {
+    public static $fieldTypes = [
+        'text',
+        'checkbox',
+        'radio',
+        'textarea',
+        'wangeditor',
+        'toggle',
+        'checkboxlist',
+        'dropdown',
+        'editorjs',
+        'quilleditor',
+        'datepicker',
+        'datetimepicker',
+        'partial',
+        'password',
+        'email',
+        'fileupload',
+
+    ];
     /**
      * @var int Value returned when the form field should not contribute any save data.
      */
@@ -178,6 +197,11 @@ class FormField
      */
     public $preset;
 
+    public $modelName;
+    public $component;
+    public $livewireComponent;
+
+
     /**
      * Constructor.
      * @param string $fieldName The name of the field
@@ -290,6 +314,8 @@ class FormField
             'trigger',
             'preset',
             'path',
+            'component',
+            'livewireComponent',
         ];
 
         foreach ($applyConfigValues as $value) {
@@ -297,6 +323,20 @@ class FormField
                 $this->{$value} = $config[$value];
             }
         }
+        // dd($this,$config);
+
+        if(!$this->component){//默认 component
+            $type = $config['widget']??$this->type;
+
+            if(in_array($type,self::$fieldTypes)){
+                $this->component = 'back-form-inputs.'.$type;
+            }else{
+                $this->component = 'back-form-inputs.default';
+            }
+        }
+        // if($this->component=='back-form-inputs.widget'){
+        //     dd($this,$config);
+        // }
 
         /*
          * Custom applicators
@@ -340,6 +380,18 @@ class FormField
         else {
             $this->valueFrom = $this->fieldName;
         }
+
+        $names = HtmlHelper::nameToArray($this->getName());
+
+        // foreach ($names as &$name) {
+        //     if (is_numeric($name)) {
+        //         $name = ''.$name.'';
+        //     }
+        // }
+
+        // $keyName  = implode('.', $names);
+        $this->modelName = 'form.'.implode('.', $names);
+
 
         return $config;
     }

@@ -47,31 +47,8 @@
 </head>
 
 <body>
-    @if (session('status') || request()->query('verified'))
-        <div x-data="{alert: true}" x-show="alert" class="fixed z-30 top-5 left-5">
-            <div x-show="alert" @click.away="alert = false"
-                class="border-green-600 bg-green-200  border-t-4 text-green-600 rounded px-4 py-3 shadow-md"
-                role="alert" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0">
-                <div class="flex">
-                    <div>
-                        <p class="font-bold">{{ __('Alert') }}</p>
-                        <p class="text-sm">
-                            {{ request()->query('verified') ? __('Email verified') : session('status') }}
-                        </p>
-                    </div>
-                    <button @click="alert = false" class="flex items-start focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    @endif
+    <x-notifications />
+
 
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
 
