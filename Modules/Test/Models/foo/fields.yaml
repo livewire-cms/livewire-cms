@@ -124,8 +124,6 @@ tabs:
             config:
                 mode: php
                 theme: material-darker
-
-
         extra[markdown]:
             label: markdown
             type: markdown
@@ -205,6 +203,20 @@ tabs:
                             tab: 编辑器
                             config:
                                 theme: snow
+
+                        extra[Codemirror]:
+                            label: Codemirror
+                            type: codemirror
+                            span: full
+                            tab: Codemirror
+                            config:
+                                mode: php
+                                theme: material-darker
+                        extra[markdown]:
+                            label: markdown
+                            type: markdown
+                            span: full
+                            tab: markdown
                         extra[published_at]:
                             label: 日期
                             type: datepicker
