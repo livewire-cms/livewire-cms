@@ -325,15 +325,19 @@ class FormField
         }
         // dd($this,$config);
 
+
+
         if(!$this->component){//默认 component
             $type = $config['widget']??$this->type;
-
-            if(in_array($type,self::$fieldTypes)){
+            if(\Str::startsWith($this->type, 'relation_')){
+                $this->component = 'back-form-relation_lists';
+            }else if(in_array($type,self::$fieldTypes)){
                 $this->component = 'back-form-inputs.'.$type;
             }else{
                 $this->component = 'back-form-inputs.default';
             }
         }
+
         // if($this->component=='back-form-inputs.widget'){
         //     dd($this,$config);
         // }

@@ -1,7 +1,10 @@
 
 @props(['field'=>$field,'form'=>$form,'widget'=>$widget])
 
+<div wire:ignore>
+@if($widget)
 @php
+
     $loadRelation = ltrim($field['type'],'relation_');
     $relationController = $widget->form->getController()->relationRender($loadRelation);
     $vars = $relationController->vars;
@@ -29,3 +32,5 @@
     'prefix' => $loadRelation,
 ])
 
+@endif
+</div>

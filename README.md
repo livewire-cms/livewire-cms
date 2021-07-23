@@ -73,3 +73,10 @@ editor
 ## todo
 
 * 深层验证问题
+
+## 特性
+* partial 更适合前端操作
+
+* component 适合后端操作 （会实时更新）
+
+* livewirecomponent 适合后端操作+前端操作

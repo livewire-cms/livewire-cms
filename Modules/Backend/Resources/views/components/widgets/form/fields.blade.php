@@ -63,7 +63,7 @@ $relation_field = $attributes->get('relation_field',null);
                         @endisset
                     </div>
                 @elseif($field['component'])
-                    <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
+                    <x-dynamic-component :widget="$widget" :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
                 @else
                 <x-back-form-widget>
                     <div wire:ignore>
@@ -82,7 +82,9 @@ $relation_field = $attributes->get('relation_field',null);
                     @endisset
                 </div>
             @elseif ($field['component'])
+
                 <x-dynamic-component :form="$form" :field="$field" :component="$field['component']" :widget="$widget" class="mt-4" />
+
 
 
                 {{-- 下面进不去 --}}
