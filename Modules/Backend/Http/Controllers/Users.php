@@ -87,7 +87,7 @@ class Users extends Controller
      * Add available permission fields to the User form.
      * Mark default groups as checked for new Users.
      */
-    public function formExtendFields($form)
+    public function formExtendFields($form,$fields)
     {
         if ($form->getContext() == 'myaccount') {
             return;
@@ -112,6 +112,16 @@ class Users extends Controller
                 $groupField->value = $defaultGroupIds;
             }
         }
+
+
+        $fieldNames =  array_keys($fields);
+        if(($editFields = post('edit_fields'))&&is_array($editFields)&&!empty($editFields)){
+            foreach($fieldNames as $fieldName){
+                if(!in_array($fieldName,$editFields)){
+                    $form->removeField($fieldName);
+                }
+            }
+        }
     }
 
         /**
@@ -132,4 +142,6 @@ class Users extends Controller
             ]
         ];
     }
+
+
 }

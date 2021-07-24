@@ -9,11 +9,14 @@ columns:
         label: backend::lang.user.first_name
         searchable: true
         invisible: true
+        enableEdit: true
 
     last_name:
         label: backend::lang.user.last_name
         searchable: true
         invisible: true
+        enableEdit: true
+
 
     full_name:
         label: backend::lang.user.full_name

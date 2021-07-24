@@ -9,6 +9,12 @@ columns:
     name:
         label: 名称
         span: auto
+        enableEdit: true
+    avatar:
+        label: 图片
+        span: auto
+        type: image
+        enableEdit: true
     action:
         label: 操作
         searchable: false
