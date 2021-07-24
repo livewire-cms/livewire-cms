@@ -15,7 +15,7 @@ class Repeater extends Component
     public $allFields = [];
 
 
-    public $field; //字段对象
+    // public $field; //字段对象
 
 
     public $form = [];
@@ -24,7 +24,7 @@ class Repeater extends Component
     public $context;
     public $modelId;
 
-
+    public $field;
 
 
     public $relation_field;
@@ -35,6 +35,7 @@ class Repeater extends Component
     public function mount()
     {
         $args = func_get_args();
+        // dd($this->field);
         $widget = $args[1];
         $this->widget = $widget;
         // dd($this->widget, $this->relation_field);
@@ -60,6 +61,7 @@ class Repeater extends Component
         }
         // dd($this->field);
         // dd($args,$widget);
+        // dd($this);
     }
 
     public function init($form,$indexValue)

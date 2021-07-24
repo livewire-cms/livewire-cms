@@ -169,7 +169,7 @@ class QuickForm extends Component
         }
 
 
-
+        unset($field->config['form']);
 
         //设置上传文件
 
@@ -409,6 +409,7 @@ class QuickForm extends Component
         $c->create();
 
         $this->mount($c->widget);
+
         // $this->context = 'create';
 
     }
@@ -429,6 +430,7 @@ class QuickForm extends Component
         $c->update($data['record_id']??$data);
 
         $this->mount($c->widget);
+
 
 
     }

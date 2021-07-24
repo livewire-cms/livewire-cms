@@ -175,6 +175,7 @@ class Repeater extends FormWidgetBase
         // $this->formField->livewire_component = 'backend.livewire.widgets.form.repeater';
         $this->formField->vars = $this->vars;
         $this->formField->alias = $this->alias;
+
         $this->vars['field'] = $this->formField;
         // dd($this,$this->formField);
     }
