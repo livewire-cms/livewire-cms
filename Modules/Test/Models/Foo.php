@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Foo extends Model
 {
     use \Modules\LivewireCore\Database\Traits\Validation;
+    use \Modules\LivewireCore\Database\Traits\SoftDelete;
 
     use HasFactory;
 

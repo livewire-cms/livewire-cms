@@ -19,6 +19,7 @@ class CreateFoosTable extends Migration
             $table->text('desc')->nullable();
             $table->text('content')->nullable();
             $table->text('extra')->nullable();
+            $table->softDelete();
             $table->timestamps();
         });
     }

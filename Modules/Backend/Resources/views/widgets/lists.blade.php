@@ -28,6 +28,13 @@
     </h2>
 
 
+
+
+
+
+
+
+    <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
         @if (isset($listToolbar))
             <div class="grid p-2">
                 {!! $listToolbar->vars['controlPanel'] !!}
@@ -40,12 +47,6 @@
                 @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
             </div>
         @endif
-
-
-
-
-
-    <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
@@ -72,10 +73,7 @@
             </tr>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                 <th class="px-4 py-3">
-                    <label
-                        class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
-                        <input wire:key="{{$id}}" type="checkbox" class="form-checkbox focus:outline-none focus:shadow-outline" x-on:click="selectAllCheckbox($event);">
-                    </label>
+
                 </th>
 
                 @foreach ($list->vars['columns'] as $fie=>$column)
@@ -115,13 +113,9 @@
           >
 
                 @foreach ($list->vars['records'] as $record)
-                    <tr class="text-gray-700 dark:text-gray-400">
+                    <tr class="text-gray-700 dark:text-gray-400" wire:key="{{$record->getKey()}}{{$prefix}}tr">
                         <td class="px-4 py-3">
-                            <label
-                                class="text-teal-500 inline-flex justify-between items-center hover:bg-gray-200 px-2 py-2 rounded-lg cursor-pointer">
-                                <input type="checkbox" class="form-checkbox rowCheckbox{{$prefix}} focus:outline-none focus:shadow-outline" name="{{$record->id}}"
-                                        x-on:click="getRowDetail($event, {{$record->id}})">
-                            </label>
+
                         </td>
                         @foreach ($list->vars['columns'] as $k=>$column)
                             <td class="px-4 py-3  {{$column->cssClass}} {{$k}}{{$prefix}}" x-ref="{{$k}}{{$prefix}}">
@@ -167,7 +161,7 @@
   <script>
       function {{$prefix}}datatables() {
           return {
-              selectedRows: [],
+              selectedRows: @json($selectedRows),
               open: false,
               toggleColumn(key) {
                   // Note: All td must have the same class name as the headings key!
@@ -182,7 +176,25 @@
                       });
                   }
               },
+              itemSelected(item) {
+                console.log(32131)
 
+                return this.selectedRows.indexOf(item) > -1;
+
+                return false
+            },
+            toggleItem(item) {
+
+              if (this.itemSelected(item)) {
+                this.selectedRows = this.selectedRows.filter(i => i != item);
+              }
+              else {
+                this.selectedRows.push(item);
+              }
+
+              console.log(JSON.stringify(this.selectedRows))
+
+            },
               getRowDetail($event, id) {
 
                   let rows = this.selectedRows;
@@ -203,7 +215,7 @@
                   if ($event.target.checked == true) {
                       columns.forEach(column => {
                           column.checked = true
-                          this.selectedRows.push(parseInt(column.name))
+                          this.selectedRows.push(column.name)
                       });
                   } else {
                       columns.forEach(column => {
@@ -211,6 +223,8 @@
                       });
                       this.selectedRows = [];
                   }
+                    console.log(JSON.stringify(this.selectedRows))
+
               }
           }
       }

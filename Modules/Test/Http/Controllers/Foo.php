@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use Modules\Backend\Classes\Controller;
 use BackendMenu;
 use Modules\System\Classes\SideNavManager;
+use Modules\Test\Models\Foo as ModelsFoo;
+
 class Foo extends Controller
 {
     public $implement = [
@@ -120,17 +122,32 @@ class Foo extends Controller
     {
 
         $agreeMethod = $params['agree_method'];
-        unset($params['agree_method']);
+        $title = \Arr::get($params,'title','Are you Sure?');
+
+        $description = \Arr::get($params,'description','Save the information?');
+        $icon = \Arr::get($params,'icon','question');
+        $confirm_label = \Arr::get($params,'confirm_label','Yes, save it');
+        $cancel_label = \Arr::get($params,'cancel_label','No, Cancel');
+
+        // unset($params['agree_method']);
+        // unset($params['title']);
+        // unset($params['description']);
+        // unset($params['icon']);
+        // unset($params['confirm_label']);
+        // unset($params['cancel_label']);
+        $params = \Arr::get($params, 'params', []);
+
         $component->notification()->info(
-            $title = 'Info',
-            $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
+             'Info',
+             '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
         );
+
         $component->dialog()->confirm([
-            'title'       => 'Are you Sure?',
-            'description' => 'Save the information?',
-            'icon'        => 'question',
+            'title'       => $title,
+            'description' => $description,
+            'icon'        => $icon,
             'accept'      => [
-                'label'  => 'Yes, save it',
+                'label'  => $confirm_label,
                 'method' => 'onAction',
                 'params' => [
                     $agreeMethod,
@@ -138,11 +155,28 @@ class Foo extends Controller
                 ],
             ],
             'reject' => [
-                'label'  => 'No, cancel',
+                'label'  => $cancel_label,
                 // 'method' => 'cancel',
             ],
         ]);
         // dd($params);
+    }
+
+    public function onDelete($component,$params)
+    {
+        $checked = \Arr::get($params,'checked');
+
+        foreach($checked as $checkedId)
+        {
+            ModelsFoo::find($checkedId)->delete();
+        }
+        $component->notification()->info(
+            $title = 'Info',
+            $description = '删除成功'
+        );
+        $component->refresh();
+
+
     }
 
     public function formExtendFields($formWidget,$fields)

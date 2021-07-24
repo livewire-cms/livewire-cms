@@ -13,7 +13,7 @@ class Lists extends Component
     public $prefix;
     public $update;
 
-
+   public $selectedRows=[];
 
     protected $listeners = ['search','filter','onApplySetup'];
 
@@ -24,6 +24,19 @@ class Lists extends Component
         // dd($widget, $prefix);
         $this->widget = $widget;
         $this->prefix = $prefix;
+    }
+
+    public function refresh()
+    {
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        $c->asExtension('ListController')->index();
+        $this->widget = $c->widget;
+
+
     }
 
 
