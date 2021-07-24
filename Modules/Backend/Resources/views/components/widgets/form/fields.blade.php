@@ -53,7 +53,7 @@ $relation_field = $attributes->get('relation_field',null);
             @if ($field['type']=='widget')
 
                 @if (isset($field['html']))
-                    <div wire:ignore>
+                    <div wire:ignore key="{{$field['id']}}">
                         {!! $field['html']??'' !!}
                     </div>
                 @elseif($field['livewireComponent'])

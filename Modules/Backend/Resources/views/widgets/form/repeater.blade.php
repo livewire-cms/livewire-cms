@@ -6,6 +6,8 @@
     }
 @endphp
 
+
+
 <div class="p-4  block" >
     @foreach ($allFields as $k=>$allfield)
         <div x-data="{tab:'{{key($allfield['tabs']??[])}}',secondTab:'{{key($allfield['secondTabs']??[])}}'}">

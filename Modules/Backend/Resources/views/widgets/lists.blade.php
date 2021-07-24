@@ -127,15 +127,15 @@
                             <td class="px-4 py-3  {{$column->cssClass}} {{$k}}{{$prefix}}" x-ref="{{$k}}{{$prefix}}">
                                 @if ($column->useLivewireComponent)
 
-                                    @livewire($column->livewireComponent,['record'=>$record,'column'=>$column,'prefix'=>$prefix,'list'=>$list],key($prefix.'-'.$record->id))
+
 
                                 @else
                                     {!!$list->getColumnValue($record,$column)!!}
 
                                 @endif
                                 @if ($column->enableEdit)
-                                    <x-icon name="pencil-alt" class="cursor-pointer w-5 h-5"  x-on:click="$wire.onQuickFormUpdate({record_id:'{{$record->getKey()}}',edit_fields: JSON.parse($refs['{{$prefix}}{{$k}}'].value)})"/>
-                                    <input type="hidden"  x-ref="{{$prefix}}{{$k}}" value="{{json_encode($column->editFields)}}">
+                                    <x-icon name="pencil-alt" class="cursor-pointer w-5 h-5"  x-on:click="$wire.onQuickFormUpdate({record_id:'{{$record->getKey()}}',edit_fields: JSON.parse($refs['{{$prefix}}{{$record->getKey()}}{{$k}}'].value)})"/>
+                                    <input type="hidden"  x-ref="{{$prefix}}{{$record->getKey()}}{{$k}}" value="{{json_encode($column->editFields)}}">
                                 @endif
                             </td>
                          @endforeach
