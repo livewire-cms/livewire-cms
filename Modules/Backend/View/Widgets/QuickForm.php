@@ -258,6 +258,7 @@ class QuickForm extends Component
     }
 
 
+
     public function uploadFinished()
     {
         $this->update = !$this->update;
@@ -429,6 +430,8 @@ class QuickForm extends Component
 
 
     }
+
+
 
 
 

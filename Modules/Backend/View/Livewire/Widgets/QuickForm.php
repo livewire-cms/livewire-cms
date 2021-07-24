@@ -430,7 +430,13 @@ class QuickForm extends Component
 
     }
 
+    public function updatedQuickFormModal($value)
+    {
 
+        // if(!$value){
+        //     $this->resetData();
+        // }
+    }
 
     public function render()
     {
