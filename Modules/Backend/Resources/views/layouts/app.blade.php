@@ -47,7 +47,7 @@
 </head>
 
 <body>
-    <x-notifications />
+    <x-notifications z-index="z-auto"/>
     <x-dialog />
 
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">

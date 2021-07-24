@@ -435,14 +435,32 @@ class QuickForm extends Component
 
     }
 
-    public function updatedQuickFormModal($value)
+
+    public function onAction($method,$params=[])
     {
 
-        // if(!$value){
-        //     $this->resetData();
-        // }
-    }
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
 
+        if(!method_exists($c,$method)){
+            throw new \RuntimeException($method.'do not exist');
+        }
+
+        if(empty($params)){
+            $params = [];
+        }
+
+        if(!is_array($params)){
+            $params = [$params];
+        }
+
+
+
+        call_user_func_array([$c,$method],[$this,$params]);
+
+    }
     public function render()
     {
         // dd($this->form);

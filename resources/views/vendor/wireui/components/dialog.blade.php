@@ -1,4 +1,6 @@
 <div class="fixed inset-0 overflow-y-auto {{ $zIndex }}"
+style="z-index:9999999"
+
 x-data="{
     show: false,
     style: null,
