@@ -15,6 +15,9 @@ columns:
         label: 图像
         type: image
         sortable: false
+        enableEdit: true
+        searchable: false
+
     extra[toggle]:
         label: 是否支持
         type: switch
