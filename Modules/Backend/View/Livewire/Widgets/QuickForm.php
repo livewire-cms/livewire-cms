@@ -395,6 +395,7 @@ class QuickForm extends Component
 
     public function onQuickFormCreate($data)
     {
+
         $this->resetData();
         $this->customData = $data;
 
@@ -413,6 +414,8 @@ class QuickForm extends Component
     }
     public function onQuickFormUpdate($data)
     {
+
+
         $this->resetData();
 
         $this->quickFormModal = true;

@@ -73,6 +73,7 @@ editor
 ## todo
 
 * 深层验证问题
+* repeater 多个数组不能存在的问题
 
 ## 特性
 * partial 更适合前端操作
