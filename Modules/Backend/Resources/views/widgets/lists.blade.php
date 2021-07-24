@@ -133,7 +133,10 @@
                                     {!!$list->getColumnValue($record,$column)!!}
 
                                 @endif
-
+                                @if ($column->enableEdit)
+                                    <x-icon name="pencil-alt" class="cursor-pointer w-5 h-5"  x-on:click="$wire.onQuickFormUpdate({record_id:'{{$record->getKey()}}',edit_fields: JSON.parse($refs['{{$prefix}}{{$k}}'].value)})"/>
+                                    <input type="hidden"  x-ref="{{$prefix}}{{$k}}" value="{{json_encode($column->editFields)}}">
+                                @endif
                             </td>
                          @endforeach
                          <td class="flex border-dashed  border-gray-200">

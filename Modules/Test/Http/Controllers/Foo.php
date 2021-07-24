@@ -145,5 +145,20 @@ class Foo extends Controller
         // dd($params);
     }
 
+    public function formExtendFields($formWidget,$fields)
+    {
+
+        $fieldNames =  array_keys($fields);
+        if(($editFields = post('edit_fields'))&&is_array($editFields)&&!empty($editFields)){
+            foreach($fieldNames as $fieldName){
+                if(!in_array($fieldName,$editFields)){
+                    $formWidget->removeField($fieldName);
+                }
+            }
+        }
+
+
+    }
+
 
 }

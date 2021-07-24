@@ -8,6 +8,9 @@ columns:
         searchable: true
     name:
         label: 名称
+        enableEdit: true
+
+
     avatar:
         label: 图像
         type: image
@@ -23,16 +26,23 @@ columns:
     updated_at:
         label: 更新时间
         type: timesince
-    extra[published_at]:
-        label: 自定义内容
-        type: partial
-        path: extra_published_at
     custom_action:
         label: 自定义action
         searchable: false
         sortable: false
         type: partial
         cssClass:
+    custom_edit:
+        label: 自定义编辑字段
+        searchable: false
+        sortable: false
+        enableEdit: true
+        edit_fields:
+            - name
+            - extra[checkbox-inline]
+            - extra[checkbox]
+            - extra[toggle]
+
 
     action:
         label: 操作

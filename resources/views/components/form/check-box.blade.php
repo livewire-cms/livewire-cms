@@ -10,7 +10,7 @@
         }
     $inline = $attributes->get('inline',false);
 @endphp
-<div class="flex">
+<div class="flex" wire:ignore>
 
     <div
          x-data="
@@ -26,7 +26,9 @@
               }
             },
             itemSelected(item) {
-              return this.selectedItems.indexOf(item) > -1;
+                if(this.selectedItems){
+                    return this.selectedItems.indexOf(item) > -1;
+                }
             },
             toggleItem(item) {
               if (this.itemSelected(item)) {
@@ -57,12 +59,6 @@
                 </span>
             </label>
          @endforeach
-        {{-- <template x-for="item in items">
-          <label class="block">
-            <input type="checkbox" x-bind:checked="itemSelected(item)" x-on:change="toggleItem(item)">
-            <span x-text="item"></span>
-          </label>
-        </template> --}}
 
     </div>
 

@@ -9,7 +9,7 @@
 @endphp
 
 @if (count($tabs)>0)
-<div class="w-full  h-auto my-4">
+<div class="w-full  h-auto my-4 " >
     <ul class="flex">
     @foreach ($tabs as $tab=>$tabFields)
         <li class="cursor-pointer py-2 px-4 text-gray-500 border-b-8"

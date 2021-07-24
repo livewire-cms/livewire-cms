@@ -1,6 +1,6 @@
 <?php namespace Modules\Backend\Classes;
 
-use Winter\Storm\Database\Model;
+use Modules\LivewireCore\Database\Model;
 use Modules\LivewireCore\Html\Helper as HtmlHelper;
 
 /**
@@ -107,6 +107,8 @@ class ListColumn
      */
     public $config;
 
+    public $enableEdit;
+    public $editFields = [];
     public $useLivewireComponent;
     public $livewireComponent;
     /**
@@ -192,6 +194,14 @@ class ListColumn
             }
         }
 
+        if (isset($config['enableEdit'])) {
+            $this->enableEdit = $config['enableEdit'];
+            array_push($this->editFields,$this->columnName);
+            if(isset($config['edit_fields'])){
+                $this->editFields = array_merge($this->editFields, $config['edit_fields']);
+            }
+
+        }
 
 
 

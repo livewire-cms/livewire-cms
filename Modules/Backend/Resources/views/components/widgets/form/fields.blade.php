@@ -7,7 +7,7 @@ $relation_field = $attributes->get('relation_field',null);
 // dd($widget);
 @endphp
 
-<div class="flex flex-wrap">
+<div class="flex flex-wrap" >
 @foreach ($fields as $k=>$field)
     @php
         $field['relation_field'] = $relation_field;
@@ -42,7 +42,7 @@ $relation_field = $attributes->get('relation_field',null);
             <div class="w-1/2"></div>
         @endif
     @endisset
-    <div class="{{$w }}  h-auto p-2">
+    <div class="{{$w }}  h-auto p-2" >
 
         <div class="">
             <label for="{{$field['id']}}" class="block font-medium tracking-tight dark:text-gray-400">
@@ -57,16 +57,18 @@ $relation_field = $attributes->get('relation_field',null);
                         {!! $field['html']??'' !!}
                     </div>
                 @elseif($field['livewireComponent'])
+
                     <div wire:ignore>
                         @isset($widget)
-                            @livewire($field['livewireComponent'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field])
+                            @livewire($field['livewireComponent'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field],key($field['id']))
                         @endisset
                     </div>
+
                 @elseif($field['component'])
                     <x-dynamic-component :widget="$widget" :form="$form" :field="$field" :component="$field['component']" class="mt-4" />
                 @else
                 <x-back-form-widget>
-                    <div wire:ignore>
+                    <div>
                         {!! $field['html']??'' !!}
                     </div>
                 </x-back-form-widget>
@@ -77,8 +79,14 @@ $relation_field = $attributes->get('relation_field',null);
                 </div>
             @elseif($field['livewireComponent'])
                 <div wire:ignore>
+
                     @isset($widget)
-                        @livewire($field['livewireComponent'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field])
+
+                        @livewire($field['livewireComponent'],['field'=>$field,'widget'=>$widget,'form'=>$form,'relation_field'=>$relation_field],key($field['id']))
+
+                    @else
+
+
                     @endisset
                 </div>
             @elseif ($field['component'])
