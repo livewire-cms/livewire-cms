@@ -33,7 +33,9 @@ trait Hashable
          */
         static::extend(function ($model) {
             $model->bindEvent('model.beforeSetAttribute', function ($key, $value) use ($model) {
+
                 $hashable = $model->getHashableAttributes();
+                // dd($hashable,$key);
                 if (in_array($key, $hashable) && !empty($value)) {
                     return $model->makeHashValue($key, $value);
                 }

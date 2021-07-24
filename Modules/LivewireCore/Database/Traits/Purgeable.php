@@ -70,12 +70,14 @@ trait Purgeable
         $cleanAttributes = array_diff_key($attributes, array_flip($purgeable));
         $originalAttributes = array_diff_key($attributes, $cleanAttributes);
 
+
         if (is_array($this->originalPurgeableValues)) {
             $this->originalPurgeableValues = array_merge($this->originalPurgeableValues, $originalAttributes);
         }
         else {
             $this->originalPurgeableValues = $originalAttributes;
         }
+        // dd($this->attributes);
 
         return $this->attributes = $cleanAttributes;
     }

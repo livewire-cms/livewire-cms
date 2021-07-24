@@ -4,7 +4,7 @@ use Mail;
 use Event;
 use Backend;
 use BackendAuth;
-// use Modules\LivewireCore\Auth\Models\User as UserBase;
+use Modules\LivewireCore\Auth\Models\User as UserBase;
 use Modules\LivewireCore\Database\Model;
 
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -34,6 +34,7 @@ class User extends Model implements
 {
     use Authenticatable, Authorizable, CanResetPassword, MustVerifyEmail;
 
+    use \Modules\LivewireCore\Database\Traits\Hashable;
     use \Modules\LivewireCore\Database\Traits\SoftDelete;
     use \Modules\LivewireCore\Database\Traits\Purgeable;
     use \Modules\LivewireCore\Database\Traits\Validation;
@@ -69,7 +70,7 @@ class User extends Model implements
         'login',
         'email',
         'password',
-        'password_confirmation'
+        // 'password_confirmation'
     ];
 
     /**
@@ -90,6 +91,11 @@ class User extends Model implements
     public $attachMany = [
         'avatars' => \Modules\System\Models\File::class
     ];
+
+    protected $hidden = ['password', 'reset_password_code', 'activation_code', 'persist_code'];
+    protected $guarded = ['is_superuser', 'reset_password_code', 'activation_code', 'persist_code', 'role_id'];
+
+    protected $hashable = ['password', 'persist_code'];
 
     /**
      * Purge attributes from data set.
@@ -277,7 +283,21 @@ class User extends Model implements
         BackendAuth::findThrottleByUserId($this->id)->unsuspend();
     }
 
+        /**
+     * Protects the password from being reset to null.
+     */
+    public function setPasswordAttribute($value)
+    {
+        if ($this->exists && empty($value)) {
+            unset($this->attributes['password']);
+        }
+        else {
+            $this->attributes['password'] = $value;
 
+            // Password has changed, log out all users
+            $this->attributes['persist_code'] = null;
+        }
+    }
 
         //
     // Permissions, Groups & Role

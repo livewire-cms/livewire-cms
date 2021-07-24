@@ -15,6 +15,7 @@ columns:
     extra[toggle]:
         label: 是否支持
         type: switch
+
     created_at:
         label: 创建时间
         type: datetime
@@ -22,4 +23,8 @@ columns:
     updated_at:
         label: 更新时间
         type: timesince
+    extra[published_at]:
+        label: 自定义内容
+        type: partial
+        path: extra_published_at
 
