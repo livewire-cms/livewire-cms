@@ -32,6 +32,11 @@ use Modules\Backend\View\Livewire\Widgets\Form\Repeater as LivewireWidgetFormRep
 use Modules\Backend\View\Livewire\Widgets\Form\EditorJs as LivewireWidgetFormEditorJs;
 use Modules\Backend\View\Livewire\Widgets\Form\Text as LivewireWidgetFormText;
 
+
+use Modules\Backend\View\Livewire\Widgets\Lists\Action as LivewireWidgetListsAction;
+
+
+
 use BackendMenu;
 use Backend;
 use Modules\Backend\Classes\WidgetManager;
@@ -92,6 +97,8 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.livewire.widgets.form.repeater', LivewireWidgetFormRepeater::class);
                 Livewire::component('backend.livewire.widgets.form.editorjs', LivewireWidgetFormEditorJs::class);
                 Livewire::component('backend.livewire.widgets.form.text', LivewireWidgetFormText::class);
+
+                Livewire::component('backend.livewire.widgets.lists.action', LivewireWidgetListsAction::class);
 
         // });
     }

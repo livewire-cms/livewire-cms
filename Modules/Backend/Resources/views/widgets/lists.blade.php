@@ -96,14 +96,14 @@
                         @endif
                     </th>
                     @else
-                    <th  class="px-4 py-3 {{$fie}}{{$prefix}}" x-ref="{{$fie.$prefix}}" >
+                    <th  class="px-4 py-3  {{$column->cssClass}} {{$fie}}{{$prefix}}" x-ref="{{$fie.$prefix}}" >
                         {{ __($column->label) }}
                     </th>
                     @endif
 
                 @endforeach
                 <th class="px-4 py-3">
-                    操作
+
 
                     <span class="cursor-pointer float-right" wire:click="$emitTo('backend.livewire.widgets.listapplysetup','onApplySetup_{{$prefix}}')">{{__('Setup')}}</span>
 
@@ -124,20 +124,20 @@
                             </label>
                         </td>
                         @foreach ($list->vars['columns'] as $k=>$column)
-                            <td class="px-4 py-3 {{$k}}{{$prefix}}" x-ref="{{$k}}{{$prefix}}">
-                                {!!$list->getColumnValue($record,$column)!!}
+                            <td class="px-4 py-3  {{$column->cssClass}} {{$k}}{{$prefix}}" x-ref="{{$k}}{{$prefix}}">
+                                @if ($column->useLivewireComponent)
+
+                                    @livewire($column->livewireComponent,['record'=>$record,'column'=>$column,'prefix'=>$prefix,'list'=>$list],key($prefix.'-'.$record->id))
+
+                                @else
+                                    {!!$list->getColumnValue($record,$column)!!}
+
+                                @endif
+
                             </td>
                          @endforeach
                          <td class="flex border-dashed  border-gray-200">
-                             <span class="text-gray-700 px-6 py-3 flex items-center">
-                                <a class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" href="<?= $list->getRecordUrl($record) ?>">编辑</a>
-                             </span>
-                             <span class="text-gray-700 px-6 py-3 flex items-center">
-                                <a class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onQuickFormUpdate({record_id:'{{$record->id}}'})">快速编辑</a>
-                             </span>
-                             <span class="text-gray-700 px-6 py-3 flex items-center">
-                                <a class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onQuickFormUpdate({record_id:'{{$record->id}}',custome_form:'test'})">编辑一部分</a>
-                             </span>
+
                          </td>
                     </tr>
                 @endforeach

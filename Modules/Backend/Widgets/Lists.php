@@ -1292,7 +1292,8 @@ class Lists extends WidgetBase
             'listValue'  => $value,
             'column'     => $column,
             'record'     => $record,
-            'value'      => $value
+            'value'      => $value,
+            'list'      => $this,
         ]);
     }
 

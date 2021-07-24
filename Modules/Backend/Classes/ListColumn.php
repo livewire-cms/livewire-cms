@@ -12,6 +12,7 @@ use Modules\LivewireCore\Html\Helper as HtmlHelper;
  */
 class ListColumn
 {
+
     /**
      * @var string List column name.
      */
@@ -106,6 +107,8 @@ class ListColumn
      */
     public $config;
 
+    public $useLivewireComponent;
+    public $livewireComponent;
     /**
      * Constructor.
      * @param string $columnName
@@ -179,6 +182,19 @@ class ListColumn
         if (isset($config['align']) && \in_array($config['align'], ['left', 'right', 'center'])) {
             $this->align = $config['align'];
         }
+
+        if(isset($config['useLivewireComponent'])&&$config['useLivewireComponent']){
+            $this->useLivewireComponent = true;
+            if(isset($config['livewireComponent'])){
+                $this->livewireComponent = $config['livewireComponent'];
+            }else{
+                $this->livewireComponent = 'backend.livewire.widgets.lists.'.$this->type;
+            }
+        }
+
+
+
+
 
         return $config;
     }

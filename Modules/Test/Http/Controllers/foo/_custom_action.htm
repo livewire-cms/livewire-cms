@@ -1,0 +1,81 @@
+
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onSuccess',{record_id:'<?=$record->id ?>',custome_form:'test'})">onSuccess</a>
+ </span>
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onError',{record_id:'<?=$record->id ?>',custome_form:'test'})">onError</a>
+ </span>
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onInfo',{record_id:'<?=$record->id ?>',custome_form:'test'})">onInfo</a>
+ </span>
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onConfirm',{agree_method:'onSuccess',record_id:'<?=$record->id ?>',custome_form:'test'})">onConfirm</a>
+ </span>
+
+
+ <div class="flex flex-col gap-y-2 lg:flex-row lg:gap-x-2">
+    <button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+        transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+        hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-positive-500 text-white bg-positive-500 hover:bg-positive-600
+                dark:ring-offset-secondary-800 dark:bg-positive-700 dark:ring-positive-700" type="button" onclick="$wireui.dialog({
+            title: 'Success Dialog',
+            description: 'This is a description',
+            icon: 'success',
+        })" wire:loading.attr="disabled">
+
+Success Dialog
+
+
+</button>
+
+    <button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+        transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+        hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-negative-600 text-white bg-negative-500 hover:bg-negative-600
+                dark:ring-offset-secondary-800 dark:bg-negative-700 dark:ring-negative-700" type="button" onclick="$wireui.dialog({
+            title: 'Error Dialog',
+            description: 'Woops, its an error',
+            icon: 'error',
+        })" wire:loading.attr="disabled">
+
+Error Dialog
+
+
+</button>
+
+    <button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+        transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+        hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-info-600 text-white bg-info-500 hover:bg-info-600
+                dark:ring-offset-secondary-800 dark:bg-info-700 dark:ring-info-700" type="button" onclick="$wireui.dialog({
+            title: 'Info Dialog',
+            description: 'This is a description',
+            icon: 'info',
+        })" wire:loading.attr="disabled">
+
+Info Dialog
+
+
+</button>
+
+<button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-info-600 text-white bg-info-500 hover:bg-info-600
+        dark:ring-offset-secondary-800 dark:bg-info-700 dark:ring-info-700" type="button"  wire:loading.attr="disabled">
+
+        <x-button label="onConfirm"
+        x-on:confirm="{
+            title: 'Sure Save?',
+            icon: 'warning',
+            method: 'onAction',
+            params: [
+                'onSuccess',
+                {
+                    custome_form:'test'
+                }
+            ]
+        }"
+    >
+        onConfirm
+    </x-button>
+
+</button>
+</div>

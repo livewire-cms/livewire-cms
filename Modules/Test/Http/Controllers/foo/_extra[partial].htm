@@ -1,17 +1,105 @@
 
+<div class=" prose max-w-none prose-indigo leading-6 rounded-b-md shadow-sm border border-gray-300 p-5 bg-white overflow-y-auto">
+    <h1 class="p-2">
 
-<h1 class="p-2">
-
-    这里是自定义区域,可以是任何内容
-
-</h1>
+        这里是自定义区域,可以是任何内容,可以使用参数
 
 
-<button wire:click.prevent="onAction('onTest',{abc:'abc'})"
-class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
->
-点我
+    </h1>
+
+    <pre>
+        <code>
+    $model
+    $field
+    $value
+        </code>
+    </pre>
+</div>
+
+
+
+
+
+
+
+<span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onSuccess',{record_id:'1',custome_form:'test'})">onSuccess</a>
+ </span>
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onError',{record_id:'2',custome_form:'test'})">onError</a>
+ </span>
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onInfo',{record_id:'3',custome_form:'test'})">onInfo</a>
+ </span>
+ <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onConfirm',{agree_method:'onSuccess',record_id:'11',custome_form:'test'})">onConfirm</a>
+ </span>
+ <div class="flex  gap-y-2 lg:flex-row lg:gap-x-2">
+    <button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+        transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+        hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-positive-500 text-white bg-positive-500 hover:bg-positive-600
+                dark:ring-offset-secondary-800 dark:bg-positive-700 dark:ring-positive-700" type="button" onclick="$wireui.dialog({
+            title: 'Success Dialog',
+            description: 'This is a description',
+            icon: 'success',
+        })" wire:loading.attr="disabled">
+
+Success Dialog
+
+
 </button>
+
+    <button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+        transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+        hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-negative-600 text-white bg-negative-500 hover:bg-negative-600
+                dark:ring-offset-secondary-800 dark:bg-negative-700 dark:ring-negative-700" type="button" onclick="$wireui.dialog({
+            title: 'Error Dialog',
+            description: 'Woops, its an error',
+            icon: 'error',
+        })" wire:loading.attr="disabled">
+
+Error Dialog
+
+
+</button>
+
+    <button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+        transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+        hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-info-600 text-white bg-info-500 hover:bg-info-600
+                dark:ring-offset-secondary-800 dark:bg-info-700 dark:ring-info-700" type="button" onclick="$wireui.dialog({
+            title: 'Info Dialog',
+            description: 'This is a description',
+            icon: 'info',
+        })" wire:loading.attr="disabled">
+
+Info Dialog
+
+
+</button>
+
+<button class="focus:outline-none px-2.5 py-1.5 flex justify-center gap-x-2 items-center
+transition-all ease-in duration-75 focus:ring-2 focus:ring-offset-2
+hover:shadow-sm disabled:opacity-60 disabled:cursor-not-allowed rounded-md text-sm ring-info-600 text-white bg-info-500 hover:bg-info-600
+        dark:ring-offset-secondary-800 dark:bg-info-700 dark:ring-info-700" type="button"  wire:loading.attr="disabled">
+
+        <x-button label="onConfirm"
+        x-on:confirm="{
+            title: 'Sure Save?',
+            icon: 'warning',
+            method: 'onAction',
+            params: [
+                'onSuccess',
+                {
+                    custome_form:'test'
+                }
+            ]
+        }"
+    >
+        onConfirm
+    </x-button>
+
+</button>
+</div>
 
 <div class="container px-6 mx-auto grid">
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">

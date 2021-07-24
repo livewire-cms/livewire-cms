@@ -331,7 +331,7 @@ class FormField
 
         if(!$this->component){//默认 component
             $type = $config['widget']??$this->type;
-            if(\Str::startsWith($this->type, 'relation_')){
+            if(\Str::startsWith($this->type, 'relation_')){//关系component
                 $this->component = 'back-form-relation_lists';
             }else if(in_array($type,self::$fieldTypes)){
                 $this->component = 'back-form-inputs.'.$type;

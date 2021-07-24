@@ -58,6 +58,92 @@ class Foo extends Controller
             $title = 'Success',
             $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
         );
+        $component->dialog()->success(
+            $title = 'Profile saved',
+            $description = 'Your profile was successfull saved'
+        );
+        $component->dialog()->error(
+            $title = 'Error !!!',
+            $description = 'Your profile was not saved'
+        );
+
+        // or use a full syntax
+        $component->dialog()->show([
+            'title'       => 'Profile saved!',
+            'description' => 'Your profile was successfull saved',
+            'icon'        => 'success'
+        ]);
         // dd($params);
     }
+    public function onSuccess($component,$params)
+    {
+
+        $component->notification()->success(
+            $title = 'Success',
+            $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
+        );
+        $component->dialog()->success(
+            $title = 'Profile saved',
+            $description = 'Your profile was successfull saved'
+        );
+
+    }
+    public function onError($component,$params)
+    {
+
+        $component->notification()->error(
+            $title = 'Error',
+            $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
+        );
+
+        $component->dialog()->error(
+            $title = 'Error !!!',
+            $description = 'Your profile was not saved'
+        );
+        // dd($params);
+    }
+    public function onInfo($component,$params)
+    {
+
+        $component->notification()->info(
+            $title = 'Info',
+            $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
+        );
+
+        $component->dialog()->info(
+            $title = 'Info !!!',
+            $description = 'Your profile was not saved'
+        );
+        // dd($params);
+    }
+    public function onConfirm($component,$params)
+    {
+
+        $agreeMethod = $params['agree_method'];
+        unset($params['agree_method']);
+        $component->notification()->info(
+            $title = 'Info',
+            $description = '我执行了'.__METHOD__.'传的参数是'.json_encode($params)
+        );
+        $component->dialog()->confirm([
+            'title'       => 'Are you Sure?',
+            'description' => 'Save the information?',
+            'icon'        => 'question',
+            'accept'      => [
+                'label'  => 'Yes, save it',
+                'method' => 'onAction',
+                'params' => [
+                    $agreeMethod,
+                    $params
+                ],
+            ],
+            'reject' => [
+                'label'  => 'No, cancel',
+                // 'method' => 'cancel',
+            ],
+        ]);
+        // dd($params);
+    }
+
+
 }
