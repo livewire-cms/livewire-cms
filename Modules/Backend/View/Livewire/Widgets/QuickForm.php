@@ -169,7 +169,6 @@ class QuickForm extends Component
         }
 
 
-        unset($field->config['form']);
 
         //设置上传文件
 
@@ -219,6 +218,10 @@ class QuickForm extends Component
 
             // $this->form[$field->arrayName][$field->fieldName] = $field->value;
         }
+
+
+        unset($field->config['form']);
+        unset($field->vars['formWidgets']);
 
         if ($tab) {
             $this->{$type}[$tab][] = (array)$field;
