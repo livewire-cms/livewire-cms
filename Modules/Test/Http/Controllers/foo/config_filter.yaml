@@ -3,6 +3,20 @@
 # ===================================
 
 scopes:
+    id:
+        label: id
+        type: group
+        conditions: id in (:filtered)
+        options:
+            1: 1
+            2: 1
 
+    # toggle:
+    #     label: toggle
+    #     type: toggle
 
-
+    name:
+        label: 标题
+        type: text
+        conditions: name = :value
+        size: 2

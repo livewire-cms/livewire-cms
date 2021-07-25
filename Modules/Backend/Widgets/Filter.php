@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Modules\Backend\Classes\WidgetBase;
 use Modules\Backend\Classes\FilterScope;
 use Modules\LivewireCore\Exception\ApplicationException;
-// use BackendAuth;
+use BackendAuth;
 
 /**
  * Filter Widget
@@ -222,6 +222,11 @@ class Filter extends WidgetBase
 
             case 'switch':
                 $value = request('value');
+                $this->setScopeValue($scope, $value);
+                break;
+            case 'toggle':
+                // dd(321,request('value'));
+                $value = request('value') ?1:0;
                 $this->setScopeValue($scope, $value);
                 break;
 
@@ -593,7 +598,7 @@ class Filter extends WidgetBase
              * Check if user has permissions to show this filter
              */
             $permissions = \Arr::get($config, 'permissions');
-            if (!empty($permissions) && !request()->user()->hasAccess($permissions, false)) {
+            if (!empty($permissions) && !BackendAuth::getUser()->hasAccess($permissions, false)) {
                 continue;
             }
 

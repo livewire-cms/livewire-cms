@@ -21,6 +21,7 @@ use Modules\Backend\View\Livewire\Widgets\Search as LivewireWidgetSearch;
 use Modules\Backend\View\Livewire\Widgets\Filter as LivewireWidgetFilter;
 use Modules\Backend\View\Livewire\Widgets\Filter\Select as LivewireWidgetFilterSelect;
 use Modules\Backend\View\Livewire\Widgets\Filter\Input as LivewireWidgetFilterInput;
+use Modules\Backend\View\Livewire\Widgets\Filter\Toggle as LivewireWidgetFilterToggle;
 use Modules\Backend\View\Livewire\Widgets\Items as LivewireWidgetItems;
 use Modules\Backend\View\Livewire\Widgets\MainMenu as LivewireWidgetMainMenu;
 use Modules\Backend\View\Livewire\Widgets\SideMenu as LivewireWidgetSideMenu;
@@ -83,6 +84,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.livewire.widgets.filter', LivewireWidgetFilter::class);
                 Livewire::component('backend.livewire.widgets.filter.select', LivewireWidgetFilterSelect::class);
                 Livewire::component('backend.livewire.widgets.filter.input', LivewireWidgetFilterInput::class);
+                Livewire::component('backend.livewire.widgets.filter.toggle', LivewireWidgetFilterToggle::class);
                 Livewire::component('backend.livewire.widgets.lists', LivewireWidgetLists::class);
                 Livewire::component('backend.livewire.widgets.listapplysetup', LivewireWidgetListApplySetup::class);
                 Livewire::component('backend.livewire.widgets.relation_lists', LivewireWidgetRelationLists::class);

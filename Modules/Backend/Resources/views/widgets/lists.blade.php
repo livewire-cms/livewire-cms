@@ -35,41 +35,47 @@
 
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
-        @if (isset($listToolbar))
-            <div class="grid p-2">
-                {!! $listToolbar->vars['controlPanel'] !!}
-            </div>
-        @endif
+
         @if (isset($listToolbarSearch))
             <div class="grid p-2 grid-cols-3">
-                <div></div>
+                <div>
+                    @if (isset($listToolbar))
+                        {!! $listToolbar->vars['controlPanel'] !!}
+                    @endif
+                </div>
                 <div></div>
                 @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
             </div>
         @endif
+        @if (isset($listFilter)&&false)
+        <div class="p-2">
+            <h1>Filter</h1>
+        </div>
+        <div class="flex p-2">
+                @foreach ($listFilter->vars['scopes'] as $k=>$scope)
+                    <div class="flex justify-center items-center" wire:ignore>
+                        <div class="p-2">
+                            {{__($scope->label)}}
+                        </div>
+                        @if ($scope->type=='group')
+                            @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
+                        @elseif ($scope->type=='text')
+                            @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                        @elseif ($scope->type=='toggle')
+                            @livewire('backend.livewire.widgets.filter.toggle',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                        @else
+                            @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
+                        @endif
+                    </div>
+                @endforeach
+        </div>
+        @endif
+
       <div class="w-full overflow-x-auto">
         <table class="w-full whitespace-no-wrap">
           <thead>
             <tr class="flex items-center  dark:text-gray-400">
-                @if (isset($listFilter))
 
-
-                    @foreach ($listFilter->vars['scopes'] as $k=>$scope)
-                        <td class="px-2 max-w-xs" wire:ignore>
-                            @if ($scope->type=='group')
-                                {{__($scope->label)}}
-                            @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
-
-                            @elseif ($scope->type=='text')
-                                {{__($scope->label)}}
-                                @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
-                            @else
-                                {{__($scope->label)}}
-                                @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
-                            @endif
-                        </td>
-                    @endforeach
-            @endif
             </tr>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                 <th class="px-4 py-3">

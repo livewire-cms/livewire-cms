@@ -4,7 +4,7 @@ namespace Modules\Backend\View\Livewire\Widgets\Filter;
 
 use Livewire\Component;
 
-class Input extends Component
+class Toggle extends Component
 {
 
 
@@ -38,6 +38,6 @@ class Input extends Component
 
     public function render()
     {
-        return view('backend::widgets.filter.input');
+        return view('backend::widgets.filter.toggle');
     }
 }
