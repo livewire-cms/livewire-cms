@@ -51,18 +51,14 @@ $relation_field = $attributes->get('relation_field',null);
         triggerCondition:'',
         triggerConditionValue:[],
         trigger_show_or_hide(){
-            this.triggerAction = data_get(this.field, 'trigger.action','');
-            this.triggerCondition = data_get(this.field, 'trigger.condition','');
+            //this.triggerAction = data_get(this.field, 'trigger.action','');
+            //this.triggerCondition = data_get(this.field, 'trigger.condition','');
             if(this.field.trigger){
                 triggerField = data_get(this.field, 'trigger.modelName');
                 triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
-                console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
+                //console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
             }
-            if (this.triggerCondition.indexOf('value') == 0) {
-                var match = this.triggerCondition.match(/[^[\]]+(?=])/g)
-                this.triggerCondition = 'value'
-                this.triggerConditionValue = (match) ? match : ['']
-            }
+
 
             if(['show','hide'].indexOf(this.triggerAction)>-1){
                 if(this.triggerAction=='show'){
@@ -114,11 +110,21 @@ $relation_field = $attributes->get('relation_field',null);
                     }).length>0
                 }
             }
+        },
+        init(){
+            this.field=JSON.parse(this.$refs['field'].value);
+            this.triggerAction = data_get(this.field, 'trigger.action','');
+            this.triggerCondition = data_get(this.field, 'trigger.condition','');
+            if (this.triggerCondition.indexOf('value') == 0) {
+                var match = this.triggerCondition.match(/[^[\]]+(?=])/g)
+                this.triggerCondition = 'value'
+                this.triggerConditionValue = (match) ? match : ['']
+            }
         }
 
 
     }" x-init="
-    field=JSON.parse($refs['field'].value);
+    init()
     //form=JSON.parse($refs['form'].value);
     ">
         <input x-ref="form" type="hidden" value="{{json_encode($form)}}">

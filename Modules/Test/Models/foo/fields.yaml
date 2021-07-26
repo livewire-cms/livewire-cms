@@ -34,7 +34,7 @@ fields:
         trigger:
             action: show
             field: published
-            condition: checked
+            condition: value[1]
 
 
 
