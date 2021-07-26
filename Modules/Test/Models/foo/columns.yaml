@@ -22,7 +22,8 @@ columns:
         label: 是否发布
         type: switch
         enableEdit: true
-
+        edit_fields:
+            - published_at
     created_at:
         label: 创建时间
         type: datetime

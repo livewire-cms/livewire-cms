@@ -38,6 +38,7 @@ class QuickForm extends Component
 
 
     protected $widget;
+    public $alias;
 
 
     public $customData = [];
@@ -72,6 +73,7 @@ class QuickForm extends Component
         $widget->form->render();
 
         $this->widget = $widget;
+        $this->alias = $widget->form->alias;
 
         $this->form['_session_key'] = $widget->form->getSessionKey();
 
@@ -463,6 +465,12 @@ class QuickForm extends Component
 
         call_user_func_array([$c,$method],[$this,$params]);
 
+    }
+
+    public function updatedForm()
+    {
+        // dd($this->alias.'_'.'setForm');
+        $this->emit($this->alias.'_'.'setForm',$this->form);
     }
     public function render()
     {

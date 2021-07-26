@@ -26,6 +26,7 @@ fields:
         label: 发布
         span: auto
         type: toggle
+
     published_at:
         label: 发布时间
         type: datepicker
