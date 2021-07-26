@@ -14,7 +14,8 @@
 
 
 <div  wire:ignore x-data="
-{
+init_field({
+    form:@entangle('form'),
     options: [],
     selected: [],
     value:@entangle($attributes->wire('model')),
@@ -82,9 +83,12 @@
         return this.selected.map((option)=>{
             return this.options[option].value;
         })
+    },
+    extend_init(){
+        this.loadOptions();
     }
-}
-" {{$attributes->wire('model')}} x-init="loadOptions()" class="flex flex-col">
+})
+" {{$attributes->wire('model')}} x-init="init()" class="flex flex-col">
     <select  x-ref="{{$id}}" style="display:none">
         @foreach ($o as $k1=>$v1)
         <option value="{{$v1['id']}}"
@@ -93,6 +97,8 @@
     </select>
 
     <form>
+    <input x-ref="field" type="hidden" value="{{json_encode($attributes->get('field',[]))}}">
+
       <input name="values" type="hidden" x-bind:value="selectedValues()">
       <div class="w-full inline-block relative ">
           <div class="w-full flex flex-col  relative">
@@ -118,8 +124,8 @@
                               </div>
                           </template>
                           <div class="flex-1">
-                              <input placeholder="Select a option"
-                                  class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
+                              <input :disabled="trigger_endable_or_disable()" placeholder="Select a option"
+                                  class="disabled:bg-gray-200 bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800"
                                   {{-- x-bind:value="selectedValues()" --}}
                                   x-model="search"
 
@@ -150,7 +156,7 @@
                       </div>
                   </div>
               </div>
-              <div class="w-full px-4">
+              <div class="w-full px-4" x-show="!trigger_endable_or_disable()">
                   <div x-show.transition.origin.top="isOpen()"
                       class="absolute shadow top-100 bg-white z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj"
                       x-on:click.away="close">

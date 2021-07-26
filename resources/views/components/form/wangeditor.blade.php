@@ -14,6 +14,7 @@ editor.txt.html('{!!$attributes->get('value','')!!}')
 
 "
 {{$attributes->wire('model')}}
+
 wire:ignore
 >
 

@@ -14,19 +14,23 @@
 
 @endphp
 
-<div x-data="
-{
+<div x-data="init_field({
+    form:@entangle('form'),
     options: [],
-    value:@entangle($attributes->wire('model')),
-}
-" class="bg-gray-200">
+    value:@entangle($attributes->wire('model'))
+})
+"
+x-init="init()"
+
+class="bg-gray-200">
     <div class="flex flex-col  ml-5">
+        <input x-ref="field" type="hidden" value="{{json_encode($attributes->get('field',[]))}}">
 
         <div class="flex {{$inline?'':'flex-col'}}">
             @foreach ($o as $ov)
 
                 <label class="inline-flex items-center my-3 " >
-                    <input type="radio" x-model="value" class="form-radio h-5 w-5 text-green-600" value="{{$ov['id']}}"><span class="ml-2 text-gray-700">{{$ov['option'][0]}}</span>
+                    <input x-bind:disabled="trigger_endable_or_disable()" type="radio"  x-model="value" class="form-radio h-5 w-5 text-green-600 disabled:bg-gray-200" value="{{$ov['id']}}"><span class="ml-2 text-gray-700">{{$ov['option'][0]}}</span>
                 </label>
                 @isset($ov['option'][1])
                      <p class="text-xs">{{__($ov['option'][1])}}</p>
@@ -39,13 +43,4 @@
     </div>
 </div>
 
-@push('scripts')
-<script>
-  function {{$prefix}}radio() {
-      return {
-          options: [],
-          value:@entangle($attributes->wire('model')),
-      }
-  }
-</script>
-@endpush
+

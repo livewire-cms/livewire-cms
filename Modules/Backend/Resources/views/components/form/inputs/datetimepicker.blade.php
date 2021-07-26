@@ -6,7 +6,7 @@
 @endphp
 <div>
 
-    <x-form.datetimepicker wire:model.lazy="{{ $field['modelName']}}" ></x-form.datetimepicker>
+    <x-form.datetimepicker wire:model.lazy="{{ $field['modelName']}}" :field="$field"></x-form.datetimepicker>
 
 
 </div>

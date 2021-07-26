@@ -13,6 +13,8 @@ class Lists extends Component
     public $prefix;
     public $update;
 
+    public $form;
+
    public $selectedRows=[];
 
     protected $listeners = ['search','filter','onApplySetup'];

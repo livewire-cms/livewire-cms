@@ -9,6 +9,7 @@ class Input extends Component
 
 
 
+    public $form;
 
     public $scopeName;
     public $value;

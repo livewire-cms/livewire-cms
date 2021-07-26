@@ -17,6 +17,7 @@ class Select extends Component
     //     $this->widget = $widget;
     //     $this->prefix = $prefix;
     // }
+    public $form;
 
     public $scopeName;
     public $value;

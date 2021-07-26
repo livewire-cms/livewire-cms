@@ -7901,6 +7901,21 @@ span.CodeMirror-selectedtext { background: none; }
 	cursor: not-allowed;
 }
 
+.disabled\:bg-gray-500:disabled {
+	--tw-bg-opacity: 1;
+	background-color: rgba(107, 114, 128, var(--tw-bg-opacity));
+}
+
+.disabled\:bg-gray-400:disabled {
+	--tw-bg-opacity: 1;
+	background-color: rgba(159, 166, 178, var(--tw-bg-opacity));
+}
+
+.disabled\:bg-gray-200:disabled {
+	--tw-bg-opacity: 1;
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
+
 .disabled\:opacity-25:disabled {
 	opacity: 0.25;
 }

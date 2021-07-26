@@ -20023,6 +20023,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! codemirror/mode/markdown/markdown */ "./node_modules/codemirror/mode/markdown/markdown.js");
 /* harmony import */ var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_9__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 window.data_get = (get_value__WEBPACK_IMPORTED_MODULE_0___default());
 
@@ -20030,7 +20036,96 @@ __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js
 
 
 window.Quill = __webpack_require__(/*! Quill */ "./node_modules/Quill/dist/quill.js"); //
-//todo 定制
+//enable Disable
+
+window.init_field = function (data) {
+  return _objectSpread({
+    show: true,
+    field: {},
+    triggerAction: '',
+    triggerCondition: '',
+    triggerConditionValue: [],
+    trigger_endable_or_disable: function trigger_endable_or_disable() {
+      //this.triggerAction = data_get(this.field, 'trigger.action','');
+      //this.triggerCondition = data_get(this.field, 'trigger.condition','');
+      if (this.field.trigger) {
+        triggerField = data_get(this.field, 'trigger.modelName');
+        triggerFieldValue = data_get(JSON.parse(JSON.stringify(this.form)), triggerField, '');
+        console.log(JSON.parse(JSON.stringify(this.form)), this.field.modelName, this.triggerAction, triggerField, this.triggerCondition, triggerFieldValue);
+      }
+
+      if (['enable', 'disable'].indexOf(this.triggerAction) > -1) {
+        if (this.triggerAction == 'enable') {
+          return !this.onConditionChanged();
+        } else if (this.triggerAction == 'disable') {
+          return this.onConditionChanged();
+        }
+
+        return false;
+      }
+
+      return false;
+    },
+    onConditionChanged: function onConditionChanged() {
+      var _this = this;
+
+      triggerField = data_get(this.field, 'trigger.modelName');
+      triggerFieldValue = data_get(this.form, triggerField);
+
+      if (this.triggerCondition == 'checked') {
+        if (Array.isArray(triggerFieldValue)) {
+          return triggerFieldValue.length > 0;
+        } else {
+          if (triggerFieldValue) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        return false;
+      } else if (this.triggerCondition == 'unchecked') {
+        if (Array.isArray(triggerFieldValue)) {
+          return triggerFieldValue.length == 0;
+        } else {
+          if (triggerFieldValue) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+
+        return false;
+      } else if (this.triggerCondition == 'value') {
+        if (Array.isArray(triggerFieldValue)) {
+          return triggerFieldValue.filter(function (item) {
+            return _this.triggerConditionValue.indexOf(item) > -1;
+          }).length > 0;
+        } else {
+          return this.triggerConditionValue.filter(function (item) {
+            return item == triggerFieldValue;
+          }).length > 0;
+        }
+      }
+    },
+    init: function init() {
+      this.field = JSON.parse(this.$refs['field'].value);
+      this.triggerAction = data_get(this.field, 'trigger.action', '');
+      this.triggerCondition = data_get(this.field, 'trigger.condition', '');
+
+      if (this.triggerCondition.indexOf('value') == 0) {
+        var match = this.triggerCondition.match(/[^[\]]+(?=])/g);
+        this.triggerCondition = 'value';
+        this.triggerConditionValue = match ? match : [''];
+      }
+
+      if (this.extend_init) {
+        this.extend_init();
+      }
+    }
+  }, data);
+}; //todo 定制
+
 
 
 
@@ -20043,7 +20138,7 @@ window.setupEditor = function (content) {
     editor: null,
     content: content,
     init: function init(element) {
-      var _this = this;
+      var _this2 = this;
 
       this.editor = new _tiptap_core__WEBPACK_IMPORTED_MODULE_1__.Editor({
         element: element,
@@ -20051,12 +20146,12 @@ window.setupEditor = function (content) {
         content: this.content,
         onUpdate: function onUpdate(_ref) {
           var editor = _ref.editor;
-          _this.content = editor.getHTML();
+          _this2.content = editor.getHTML();
         }
       });
       this.$watch('content', function (content) {
         // If the new content matches TipTap's then we just skip.
-        if (content === _this.editor.getHTML()) return;
+        if (content === _this2.editor.getHTML()) return;
         /*
           Otherwise, it means that a force external to TipTap
           is modifying the data on this Alpine component,
@@ -20067,7 +20162,7 @@ window.setupEditor = function (content) {
             https://www.tiptap.dev/api/commands/set-content
         */
 
-        _this.editor.commands.setContent(content, false);
+        _this2.editor.commands.setContent(content, false);
       });
     }
   };

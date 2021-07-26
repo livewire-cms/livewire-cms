@@ -14,7 +14,8 @@
 
     <div
          x-data="
-          {
+         init_field({
+            form:@entangle('form'),
             items: [],
             selectedItems: @entangle($attributes->wire('model')),
             buttonLabel() {
@@ -40,15 +41,16 @@
 
             },
             showCheckboxes: false
-          }
-         "
-         x-init="items = ['Banana', 'Apple', 'Pear', 'Orange']"
-         class="relative">
+        })
 
+         "
+         x-init="init()"
+         class="relative">
+         <input x-ref="field" type="hidden" value="{{json_encode($attributes->get('field',[]))}}">
 
          @foreach ($o as $v1)
             <label class="{{$inline?'':'block'}}">
-                <input type="checkbox" x-bind:checked="itemSelected('{{$v1['id']}}')" x-on:change="toggleItem('{{$v1['id']}}')">
+                <input class="disabled:bg-gray-200" :disabled="trigger_endable_or_disable()" type="checkbox" x-bind:checked="itemSelected('{{$v1['id']}}')" x-on:change="toggleItem('{{$v1['id']}}')">
                 <span >
                     @if (is_array($v1['name']))
                     {{$v1['name'][0]}}

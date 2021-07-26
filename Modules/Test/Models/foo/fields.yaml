@@ -22,6 +22,10 @@ fields:
         label: 描述
         span: auto
         type: textarea
+        trigger:
+            action: enable
+            field: published
+            condition: checked
     published:
         label: 发布
         span: auto
@@ -32,9 +36,9 @@ fields:
         type: datepicker
         span: auto
         trigger:
-            action: hide
+            action: enable
             field: published
-            condition: value[1]
+            condition: checked
 
 
 
@@ -73,6 +77,10 @@ tabs:
             span: auto
             type: toggle
             size: lg
+            trigger:
+                action: enable
+                field: published
+                condition: checked
         extra[radio]:
             tab: 选择框
             label: 单选框
@@ -81,6 +89,10 @@ tabs:
             options:
                 1: 男
                 2: 女
+            trigger:
+                action: enable
+                field: published
+                condition: checked
         extra[radio-inline]:
             tab: 选择框
             label: 单选框
@@ -91,6 +103,10 @@ tabs:
                 2: 女
             attributes:
                 inline: true
+            trigger:
+                action: enable
+                field: published
+                condition: checked
         extra[checkbox]:
             tab: 选择框
             label: checkbox
@@ -99,6 +115,10 @@ tabs:
             options:
                 1: 红色
                 2: 黄色
+            trigger:
+                action: enable
+                field: published
+                condition: checked
         extra[checkbox-inline]:
             tab: 选择框
             label: checkbox-inline
@@ -110,6 +130,10 @@ tabs:
             options:
                 1: 红色
                 2: 黄色
+            trigger:
+                action: enable
+                field: published
+                condition: checked
 
         extra[checkboxlist]:
             label: 多选
@@ -120,6 +144,10 @@ tabs:
                 2: def
                 3: ghi
             tab: 下拉选择
+            trigger:
+                action: enable
+                field: published
+                condition: checked
         extra[dropdown]:
             label: 单选
             type: dropdown
@@ -129,6 +157,10 @@ tabs:
                 2: def
                 3: ghi
             tab: 下拉选择
+            trigger:
+                action: enable
+                field: published
+                condition: checked
         extra[wangeditor]:
             label: wangeditor
             type: wangeditor
@@ -164,12 +196,20 @@ tabs:
             type: datepicker
             span: auto
             tab: 日期
+            trigger:
+                action: enable
+                field: published
+                condition: checked
 
         extra[publishedtime_at]:
             label: 时间
             type: datetimepicker
             span: auto
             tab: 日期
+            trigger:
+                action: enable
+                field: published
+                condition: checked
 
         extra[name]:
             label: 名称

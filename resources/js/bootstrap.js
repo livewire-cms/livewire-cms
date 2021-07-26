@@ -8,6 +8,99 @@ require("flatpickr");//日期时间选择器
 window.Quill = require("Quill");//
 
 
+//enable Disable
+
+
+window.init_field = function(data){
+
+    return {
+        show:true,
+        field:{},
+        triggerAction:'',
+        triggerCondition:'',
+        triggerConditionValue:[],
+        trigger_endable_or_disable(){
+            //this.triggerAction = data_get(this.field, 'trigger.action','');
+            //this.triggerCondition = data_get(this.field, 'trigger.condition','');
+            if(this.field.trigger){
+                triggerField = data_get(this.field, 'trigger.modelName');
+                triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
+                console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
+            }
+
+
+            if(['enable','disable'].indexOf(this.triggerAction)>-1){
+                if(this.triggerAction=='enable'){
+                    return !this.onConditionChanged();
+                }else if(this.triggerAction=='disable'){
+                    return this.onConditionChanged();
+                }
+                return false
+            }
+
+            return false;
+        },
+        onConditionChanged(){
+            triggerField = data_get(this.field, 'trigger.modelName');
+            triggerFieldValue =  data_get(this.form, triggerField);
+
+            if (this.triggerCondition == 'checked') {
+                if(Array.isArray(triggerFieldValue)){
+                    return triggerFieldValue.length>0;
+                }else{
+                    if(triggerFieldValue){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+                return false;
+            }
+            else if (this.triggerCondition == 'unchecked') {
+                if(Array.isArray(triggerFieldValue)){
+                    return triggerFieldValue.length==0;
+                }else{
+                    if(triggerFieldValue){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else if (this.triggerCondition == 'value') {
+                if(Array.isArray(triggerFieldValue)){
+                    return triggerFieldValue.filter(item=>{
+                        return this.triggerConditionValue.indexOf(item)>-1
+                    }).length>0
+                }else{
+                    return this.triggerConditionValue.filter(item=>{
+                        return item==triggerFieldValue
+                    }).length>0
+                }
+            }
+        },
+        init(){
+            this.field=JSON.parse(this.$refs['field'].value);
+            this.triggerAction = data_get(this.field, 'trigger.action','');
+            this.triggerCondition = data_get(this.field, 'trigger.condition','');
+            if (this.triggerCondition.indexOf('value') == 0) {
+                var match = this.triggerCondition.match(/[^[\]]+(?=])/g)
+                this.triggerCondition = 'value'
+                this.triggerConditionValue = (match) ? match : ['']
+            }
+
+            if(this.extend_init){
+                this.extend_init()
+            }
+
+
+
+        },
+        ...data
+    }
+}
+
 
 
 

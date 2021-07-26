@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class ListApplySetup extends Component
 {
+    public $form;
+
     public $allColumns = [];
     public $column_order=[];
     public $visible_columns=[];

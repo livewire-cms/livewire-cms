@@ -9,6 +9,7 @@ class Toggle extends Component
 
 
 
+    public $form;
 
     public $scopeName;
     public $value;
