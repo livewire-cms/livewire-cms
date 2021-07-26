@@ -21,6 +21,7 @@ columns:
     published:
         label: 是否发布
         type: switch
+        enableEdit: true
 
     created_at:
         label: 创建时间
