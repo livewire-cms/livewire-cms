@@ -42,9 +42,88 @@ $relation_field = $attributes->get('relation_field',null);
             <div class="w-1/2"></div>
         @endif
     @endisset
-    <div class="{{$w }}  h-auto p-2" >
+    {{-- {{dd($field)}} --}}
+    <div class="{{$w }}  h-auto p-2" x-data="{
+        show:true,
+        field:{},
+        form: @entangle('form'),
+        triggerAction:'',
+        triggerCondition:'',
+        triggerConditionValue:[],
+        trigger_show_or_hide(){
+            this.triggerAction = data_get(this.field, 'trigger.action','');
+            this.triggerCondition = data_get(this.field, 'trigger.condition','');
+            if(this.field.trigger){
+                triggerField = data_get(this.field, 'trigger.modelName');
+                triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
+                console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
+            }
+            if (this.triggerCondition.indexOf('value') == 0) {
+                var match = this.triggerCondition.match(/[^[\]]+(?=])/g)
+                this.triggerCondition = 'value'
+                this.triggerConditionValue = (match) ? match : ['']
+            }
 
-        <div class="">
+            if(['show','hide'].indexOf(this.triggerAction)>-1){
+                if(this.triggerAction=='show'){
+                    return this.onConditionChanged();
+                }else if(this.triggerAction=='hide'){
+                    return !this.onConditionChanged();
+                }
+                return true
+            }
+
+            return true;
+        },
+        onConditionChanged(){
+            triggerField = data_get(this.field, 'trigger.modelName');
+            triggerFieldValue =  data_get(this.form, triggerField);
+
+            if (this.triggerCondition == 'checked') {
+                if(Array.isArray(triggerFieldValue)){
+                    return triggerFieldValue.length>0;
+                }else{
+                    if(triggerFieldValue){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+                return false;
+            }
+            else if (this.triggerCondition == 'unchecked') {
+                if(Array.isArray(triggerFieldValue)){
+                    return triggerFieldValue.length==0;
+                }else{
+                    if(triggerFieldValue){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else if (this.triggerCondition == 'value') {
+                if(Array.isArray(triggerFieldValue)){
+                    return triggerFieldValue.filter(item=>{
+                        return this.triggerConditionValue.indexOf(item)>-1
+                    }).length>0
+                }else{
+                    return this.triggerConditionValue.filter(item=>{
+                        return item==triggerFieldValue
+                    }).length>0
+                }
+            }
+        }
+
+
+    }" x-init="
+    field=JSON.parse($refs['field'].value);
+    //form=JSON.parse($refs['form'].value);
+    ">
+        <input x-ref="form" type="hidden" value="{{json_encode($form)}}">
+        <input x-ref="field" type="hidden" value="{{json_encode($field)}}">
+        <div class="" x-show="trigger_show_or_hide()">
             <label for="{{$field['id']}}" class="block font-medium tracking-tight dark:text-gray-400">
                 @if ($field['label'])
                     {{__($field['label'])}}

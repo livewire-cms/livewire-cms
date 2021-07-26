@@ -6,6 +6,6 @@
 
 @endphp
 <div >
-    <x-toggle  lg   wire:model.defer="{{$field['modelName']}}" :label="$field['label']?__($field['label']):''"/>
+    <x-toggle  lg   wire:model="{{$field['modelName']}}" :label="$field['label']?__($field['label']):''"/>
 
 </div>

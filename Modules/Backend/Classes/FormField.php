@@ -399,6 +399,41 @@ class FormField
         $this->modelName = 'form.'.implode('.', $names);
 
 
+
+        // if($this->fieldName=='extra[array]'){
+        //     dd($this);
+        // }
+        if($this->trigger&&!empty($this->trigger)){
+            $triggerAction = \Arr::get($this->trigger, 'action');
+
+
+            if (in_array($triggerAction, ['hide', 'show'])) {
+                $position = 'container';
+                $triggerFilter = $this->filterTriggerAttributes([],$position);
+                $fullTriggerField = $triggerFilter['fullTriggerField'];
+                $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
+                array_unshift($fullTriggerFieldNames);
+                $this->trigger['modelName'] =implode('.',$fullTriggerFieldNames);
+            }elseif(in_array($triggerAction, ['enable', 'disable', 'empty'])){
+                $position = 'field';
+                $triggerFilter = $this->filterTriggerAttributes([],$position);
+
+                $fullTriggerField = $triggerFilter['fullTriggerField'];
+
+                $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
+
+                array_unshift($fullTriggerFieldNames);
+                $this->trigger['modelName'] =implode('.',$fullTriggerFieldNames);
+            }
+
+            // dd($this->trigger);
+
+
+
+
+        }
+
+
         return $config;
     }
 
@@ -583,6 +618,10 @@ class FormField
             'data-trigger-action' => $triggerAction,
             'data-trigger-condition' => $triggerCondition,
             'data-trigger-closest-parent' => 'form, div[data-control="formwidget"]'
+        ];
+
+        return [
+            'fullTriggerField' => $fullTriggerField,
         ];
 
         return $attributes + $newAttributes;

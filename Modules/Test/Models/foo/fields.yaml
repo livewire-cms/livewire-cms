@@ -6,6 +6,7 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
+
     name:
         label: 名称
         span: auto
@@ -25,6 +26,15 @@ fields:
         label: 发布
         span: auto
         type: toggle
+    published_at:
+        label: 发布时间
+        type: datepicker
+        span: auto
+        trigger:
+            action: show
+            field: published
+            condition: checked
+
 
 
 tabs:
@@ -54,6 +64,7 @@ tabs:
             label: partial
             span: full
             type: partial
+
 
         extra[toggle]:
             tab: 选择框
@@ -152,6 +163,7 @@ tabs:
             type: datepicker
             span: auto
             tab: 日期
+
         extra[publishedtime_at]:
             label: 时间
             type: datetimepicker
@@ -186,6 +198,18 @@ tabs:
                         label: 描述
                         span: auto
                         type: textarea
+                    published:
+                        label: 发布
+                        span: auto
+                        type: toggle
+                    published_at:
+                        label: 发布时间
+                        type: datepicker
+                        span: auto
+                        trigger:
+                            action: show
+                            field: published
+                            condition: checked
                 tabs:
                     fields:
                         content:

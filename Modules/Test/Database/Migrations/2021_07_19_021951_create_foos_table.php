@@ -20,6 +20,7 @@ class CreateFoosTable extends Migration
             $table->text('content')->nullable();
             $table->boolean('published')->default(0);
             $table->text('extra')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->softDelete();
             $table->timestamps();
         });

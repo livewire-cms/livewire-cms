@@ -1,5 +1,9 @@
 
 
+import get from 'get-value'
+
+window.data_get = get
+
 require("flatpickr");//日期时间选择器
 window.Quill = require("Quill");//
 

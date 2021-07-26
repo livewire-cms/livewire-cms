@@ -38,6 +38,7 @@ class Form extends Component
     protected $widget;
 
 
+    public $alias;
 
     protected $listeners = ['upload:finished' => 'uploadFinished','setFormProperty'];
 
@@ -50,7 +51,7 @@ class Form extends Component
         $widget->form->render();
 
         $this->widget = $widget;
-
+        $this->alias = $widget->form->alias;
         $this->form['_session_key'] = $widget->form->getSessionKey();
 
 
@@ -388,7 +389,11 @@ class Form extends Component
 
     }
 
-
+    public function updatedForm()
+    {
+        // dd($this->alias.'_'.'setForm');
+        $this->emit($this->alias.'_'.'setForm',$this->form);
+    }
 
     public function render()
     {

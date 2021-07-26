@@ -20008,19 +20008,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _tiptap_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @tiptap/core */ "./node_modules/@tiptap/core/dist/tiptap-core.esm.js");
-/* harmony import */ var _tiptap_starter_kit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tiptap/starter-kit */ "./node_modules/@tiptap/starter-kit/dist/tiptap-starter-kit.esm.js");
-/* harmony import */ var _tiptap_extension_document__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @tiptap/extension-document */ "./node_modules/@tiptap/extension-document/dist/tiptap-extension-document.esm.js");
-/* harmony import */ var _tiptap_extension_paragraph__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @tiptap/extension-paragraph */ "./node_modules/@tiptap/extension-paragraph/dist/tiptap-extension-paragraph.esm.js");
-/* harmony import */ var _tiptap_extension_text__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tiptap/extension-text */ "./node_modules/@tiptap/extension-text/dist/tiptap-extension-text.esm.js");
-/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! wangeditor */ "./node_modules/wangeditor/dist/wangEditor.js");
-/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(wangeditor__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! codemirror/lib/codemirror.js */ "./node_modules/codemirror/lib/codemirror.js");
-/* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! codemirror/mode/php/php */ "./node_modules/codemirror/mode/php/php.js");
-/* harmony import */ var codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! codemirror/mode/markdown/markdown */ "./node_modules/codemirror/mode/markdown/markdown.js");
-/* harmony import */ var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var get_value__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! get-value */ "./node_modules/get-value/index.js");
+/* harmony import */ var get_value__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(get_value__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tiptap_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tiptap/core */ "./node_modules/@tiptap/core/dist/tiptap-core.esm.js");
+/* harmony import */ var _tiptap_starter_kit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @tiptap/starter-kit */ "./node_modules/@tiptap/starter-kit/dist/tiptap-starter-kit.esm.js");
+/* harmony import */ var _tiptap_extension_document__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @tiptap/extension-document */ "./node_modules/@tiptap/extension-document/dist/tiptap-extension-document.esm.js");
+/* harmony import */ var _tiptap_extension_paragraph__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tiptap/extension-paragraph */ "./node_modules/@tiptap/extension-paragraph/dist/tiptap-extension-paragraph.esm.js");
+/* harmony import */ var _tiptap_extension_text__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @tiptap/extension-text */ "./node_modules/@tiptap/extension-text/dist/tiptap-extension-text.esm.js");
+/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! wangeditor */ "./node_modules/wangeditor/dist/wangEditor.js");
+/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(wangeditor__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! codemirror/lib/codemirror.js */ "./node_modules/codemirror/lib/codemirror.js");
+/* harmony import */ var codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! codemirror/mode/php/php */ "./node_modules/codemirror/mode/php/php.js");
+/* harmony import */ var codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_php_php__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! codemirror/mode/markdown/markdown */ "./node_modules/codemirror/mode/markdown/markdown.js");
+/* harmony import */ var codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(codemirror_mode_markdown_markdown__WEBPACK_IMPORTED_MODULE_9__);
+
+window.data_get = (get_value__WEBPACK_IMPORTED_MODULE_0___default());
+
 __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js"); //日期时间选择器
 
 
@@ -20040,9 +20045,9 @@ window.setupEditor = function (content) {
     init: function init(element) {
       var _this = this;
 
-      this.editor = new _tiptap_core__WEBPACK_IMPORTED_MODULE_0__.Editor({
+      this.editor = new _tiptap_core__WEBPACK_IMPORTED_MODULE_1__.Editor({
         element: element,
-        extensions: [_tiptap_starter_kit__WEBPACK_IMPORTED_MODULE_1__.default, _tiptap_extension_document__WEBPACK_IMPORTED_MODULE_2__.default, _tiptap_extension_paragraph__WEBPACK_IMPORTED_MODULE_3__.default, _tiptap_extension_text__WEBPACK_IMPORTED_MODULE_4__.default],
+        extensions: [_tiptap_starter_kit__WEBPACK_IMPORTED_MODULE_2__.default, _tiptap_extension_document__WEBPACK_IMPORTED_MODULE_3__.default, _tiptap_extension_paragraph__WEBPACK_IMPORTED_MODULE_4__.default, _tiptap_extension_text__WEBPACK_IMPORTED_MODULE_5__.default],
         content: this.content,
         onUpdate: function onUpdate(_ref) {
           var editor = _ref.editor;
@@ -20069,12 +20074,12 @@ window.setupEditor = function (content) {
 };
 
 
-window.wangeditor = (wangeditor__WEBPACK_IMPORTED_MODULE_5___default());
+window.wangeditor = (wangeditor__WEBPACK_IMPORTED_MODULE_6___default());
 window.marked = __webpack_require__(/*! marked */ "./node_modules/marked/lib/marked.js");
 
 
 
-window.codemirror = (codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_6___default());
+window.codemirror = (codemirror_lib_codemirror_js__WEBPACK_IMPORTED_MODULE_7___default());
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -39224,6 +39229,126 @@ if (typeof Object.assign !== "function") {
 
 /***/ }),
 
+/***/ "./node_modules/get-value/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/get-value/index.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/*!
+ * get-value <https://github.com/jonschlinkert/get-value>
+ *
+ * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+const isObject = __webpack_require__(/*! isobject */ "./node_modules/isobject/index.js");
+
+module.exports = function(target, path, options) {
+  if (!isObject(options)) {
+    options = { default: options };
+  }
+
+  if (!isValidObject(target)) {
+    return typeof options.default !== 'undefined' ? options.default : target;
+  }
+
+  if (typeof path === 'number') {
+    path = String(path);
+  }
+
+  const isArray = Array.isArray(path);
+  const isString = typeof path === 'string';
+  const splitChar = options.separator || '.';
+  const joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
+
+  if (!isString && !isArray) {
+    return target;
+  }
+
+  if (isString && path in target) {
+    return isValid(path, target, options) ? target[path] : options.default;
+  }
+
+  let segs = isArray ? path : split(path, splitChar, options);
+  let len = segs.length;
+  let idx = 0;
+
+  do {
+    let prop = segs[idx];
+    if (typeof prop === 'number') {
+      prop = String(prop);
+    }
+
+    while (prop && prop.slice(-1) === '\\') {
+      prop = join([prop.slice(0, -1), segs[++idx] || ''], joinChar, options);
+    }
+
+    if (prop in target) {
+      if (!isValid(prop, target, options)) {
+        return options.default;
+      }
+
+      target = target[prop];
+    } else {
+      let hasProp = false;
+      let n = idx + 1;
+
+      while (n < len) {
+        prop = join([prop, segs[n++]], joinChar, options);
+
+        if ((hasProp = prop in target)) {
+          if (!isValid(prop, target, options)) {
+            return options.default;
+          }
+
+          target = target[prop];
+          idx = n - 1;
+          break;
+        }
+      }
+
+      if (!hasProp) {
+        return options.default;
+      }
+    }
+  } while (++idx < len && isValidObject(target));
+
+  if (idx === len) {
+    return target;
+  }
+
+  return options.default;
+};
+
+function join(segs, joinChar, options) {
+  if (typeof options.join === 'function') {
+    return options.join(segs);
+  }
+  return segs[0] + joinChar + segs[1];
+}
+
+function split(path, splitChar, options) {
+  if (typeof options.split === 'function') {
+    return options.split(path);
+  }
+  return path.split(splitChar);
+}
+
+function isValid(key, target, options) {
+  if (typeof options.isValid === 'function') {
+    return options.isValid(key, target);
+  }
+  return true;
+}
+
+function isValidObject(val) {
+  return isObject(val) || Array.isArray(val) || typeof val === 'function';
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/ieee754/index.js":
 /*!***************************************!*\
   !*** ./node_modules/ieee754/index.js ***!
@@ -39329,6 +39454,29 @@ var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/isobject/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/isobject/index.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+"use strict";
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+
+
+module.exports = function isObject(val) {
+  return val != null && typeof val === 'object' && Array.isArray(val) === false;
 };
 
 

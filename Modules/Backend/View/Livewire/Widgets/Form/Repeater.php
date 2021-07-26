@@ -29,6 +29,8 @@ class Repeater extends Component
 
     public $relation_field;
 
+    public $formAlias;
+
     protected $widget;
 
 
@@ -42,6 +44,9 @@ class Repeater extends Component
         // $widget = $this->widget;
         $this->parentContext = $widget->form->getContext();
         $this->modelId = $widget->form->model->getKey();
+        $this->formAlias = $this->widget->form->alias;
+
+
         // dd($this->modelId);
         $this->form[$this->field['alias'].'_loaded'] = 1;
         // $this->form['formExtraForm0PointEvidence'.'_loaded'] = 1;
@@ -62,6 +67,8 @@ class Repeater extends Component
         // dd($this->field);
         // dd($args,$widget);
         // dd($this);
+        // dd($this->allFields);
+
     }
 
     public function init($form,$indexValue)
@@ -357,7 +364,18 @@ class Repeater extends Component
         }
     }
 
+    public function setForm($form)
+    {
 
+        $this->form = $form;
+    }
+
+    protected function getListeners()
+    {
+        return [
+            $this->formAlias.'_setForm' =>'setForm'
+        ];
+    }
 
 
 

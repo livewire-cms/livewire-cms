@@ -29,6 +29,8 @@ class Repeater extends Component
 
     protected $widget;
 
+    public $formAlias;
+
 
 
 
@@ -37,6 +39,8 @@ class Repeater extends Component
         $args = func_get_args();
         $widget = $args[1];
         $this->widget = $widget;
+        $this->formAlias = $this->widget->form->alias;
+
         // dd($this->widget, $this->relation_field);
         // $widget = $this->widget;
         $this->parentContext = $widget->form->getContext();
@@ -60,6 +64,7 @@ class Repeater extends Component
         }
         // dd($this->field);
         // dd($args,$widget);
+        // dd($this->allFields);
     }
 
     public function init($form,$indexValue)
@@ -354,6 +359,14 @@ class Repeater extends Component
             $this->emit('setFormProperty', ['name'=>$name,'value'=>$value]);
         }
     }
+
+    public function setForm($form)
+    {
+
+        $this->form = $form;
+    }
+
+
 
 
 
