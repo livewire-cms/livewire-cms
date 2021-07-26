@@ -47,7 +47,7 @@
                 @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
             </div>
         @endif
-        @if (isset($listFilter)&&false)
+        @if (isset($listFilter))
         <div class="p-2">
             <h1>Filter</h1>
         </div>
@@ -55,13 +55,13 @@
                 @foreach ($listFilter->vars['scopes'] as $k=>$scope)
                     <div class="flex justify-center items-center" wire:ignore>
                         <div class="p-2">
-                            {{__($scope->label)}}
+                            {{__($scope->label)}}:
                         </div>
                         @if ($scope->type=='group')
                             @livewire('backend.livewire.widgets.filter.select',['scopeName'=>$scope->scopeName,'options'=>$scope->options,'value'=>$scope->value,'prefix'=>$prefix])
                         @elseif ($scope->type=='text')
                             @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
-                        @elseif ($scope->type=='toggle')
+                        @elseif (in_array($scope->type,['toggle','switch']))
                             @livewire('backend.livewire.widgets.filter.toggle',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])
                         @else
                             @livewire('backend.livewire.widgets.filter.input',['scopeName'=>$scope->scopeName,'value'=>$scope->value,'prefix'=>$prefix])

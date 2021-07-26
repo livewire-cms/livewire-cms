@@ -202,11 +202,13 @@ class Filter extends WidgetBase
     {
         $this->defineFilterScopes();
 
+
         if (!$scope = request('scopeName')) {
             return;
         }
 
         $scope = $this->getScope($scope);
+        // dd(request()->all(),$scope);
 
         switch ($scope->type) {
             case 'group':
@@ -218,11 +220,14 @@ class Filter extends WidgetBase
             case 'checkbox':
                 $checked = request('value') == 'true';
                 $this->setScopeValue($scope, $checked);
+
+
                 break;
 
             case 'switch':
                 $value = request('value');
                 $this->setScopeValue($scope, $value);
+                // dd(request()->all(),$value,$scope);
                 break;
             case 'toggle':
                 // dd(321,request('value'));
@@ -700,7 +705,14 @@ class Filter extends WidgetBase
         foreach ($this->allScopes as $scope) {
             // Ensure that only valid values are set scopes of type: group
             if ($scope->type === 'group') {
-                $activeKeys = $scope->value ? array_keys($scope->value) : [];
+                if(!is_array($scope->value)&&$scope->value){
+                    $activeKeys = [$scope->value];
+
+                }else{
+                    $activeKeys = $scope->value ? array_keys($scope->value) : [];
+
+                }
+                // $activeKeys = $scope->value ? array_keys($scope->value) : [];
                 $available = $this->getAvailableOptions($scope);
                 $active = $this->filterActiveOptions($activeKeys, $available);
                 $value = !empty($active) ? $active : null;

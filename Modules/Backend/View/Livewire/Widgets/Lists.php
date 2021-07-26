@@ -124,6 +124,7 @@ class Lists extends Component
         $this->update = !$this->update;
         // dd(request()->all(),$data);
         // dd($data);
+        // dd($data);
         request()->merge($data);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
 

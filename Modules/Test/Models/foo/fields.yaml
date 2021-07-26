@@ -21,6 +21,12 @@ fields:
         label: 描述
         span: auto
         type: textarea
+    published:
+        label: 发布
+        span: auto
+        type: toggle
+
+
 tabs:
     fields:
         content:

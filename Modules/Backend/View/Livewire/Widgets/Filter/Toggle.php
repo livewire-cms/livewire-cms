@@ -27,11 +27,7 @@ class Toggle extends Component
 
         $this->emitUp('filter',[
             'scopeName' => $this->scopeName,
-            'options' => [
-                'value' => [
-                    $this->scopeName=>$value
-                ]
-            ],
+            'value' => $value?1:0,
 
         ]);
     }

@@ -3,20 +3,20 @@
 # ===================================
 
 scopes:
-    id:
-        label: id
+    published:
+        label: 是否发布
         type: group
-        conditions: id in (:filtered)
+        conditions: published in (:filtered)
         options:
-            1: 1
-            2: 1
-
-    # toggle:
+            0: 否
+            1: 是
+    # published:
     #     label: toggle
-    #     type: toggle
-
+    #     type: switch
+    #     default: 1
+    #     conditions:
+    #         - published = 1
     name:
-        label: 标题
+        label: 名称
         type: text
         conditions: name = :value
-        size: 2

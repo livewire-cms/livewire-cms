@@ -52,6 +52,24 @@ class Foo extends Controller
         return view('test::foo.update', ['widget'=>$this->widget]);
 
     }
+    /**
+     * Extends the list query to hide superusers if the current user is not a superuser themselves
+     */
+    public function listExtendQuery($query)
+    {
+        $query->withTrashed();
+
+    }
+      /**
+     * Extends the form query to prevent non-superusers from accessing superusers at all
+     */
+    public function formExtendQuery($query)
+    {
+
+
+        // Ensure soft-deleted records can still be managed
+        $query->withTrashed();
+    }
 
     public function onTest($component,$params)
     {

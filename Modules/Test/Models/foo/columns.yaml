@@ -18,8 +18,8 @@ columns:
         enableEdit: true
         searchable: false
 
-    extra[toggle]:
-        label: 是否支持
+    published:
+        label: 是否发布
         type: switch
 
     created_at:

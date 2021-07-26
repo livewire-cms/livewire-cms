@@ -2,7 +2,9 @@
 @props(['field','form','widget'])
 
 @php
-$config = json_encode($field['config']['config']??[]);
+$config = json_encode($field['config']['config']??[
+    ''
+]);
 
 @endphp
 <div wire:ignore class="h-full">
