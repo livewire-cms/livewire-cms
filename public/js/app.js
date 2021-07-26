@@ -20050,8 +20050,7 @@ window.init_field = function (data) {
       //this.triggerCondition = data_get(this.field, 'trigger.condition','');
       if (this.field.trigger) {
         triggerField = data_get(this.field, 'trigger.modelName');
-        triggerFieldValue = data_get(JSON.parse(JSON.stringify(this.form)), triggerField, '');
-        console.log(JSON.parse(JSON.stringify(this.form)), this.field.modelName, this.triggerAction, triggerField, this.triggerCondition, triggerFieldValue);
+        triggerFieldValue = data_get(JSON.parse(JSON.stringify(this.form)), triggerField, ''); //console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
       }
 
       if (['enable', 'disable'].indexOf(this.triggerAction) > -1) {

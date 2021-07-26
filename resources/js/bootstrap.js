@@ -25,7 +25,7 @@ window.init_field = function(data){
             if(this.field.trigger){
                 triggerField = data_get(this.field, 'trigger.modelName');
                 triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
-                console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
+                //console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
             }
 
 
