@@ -47,8 +47,9 @@ class RelationForm extends Component
 
     public function onRelationButtonCreate($data)
     {
-        // dd($data);
         $this->resetData();
+
+        // dd($data);
         $this->relationFormModal=true;
 
         $this->update = !$this->update;
@@ -57,7 +58,10 @@ class RelationForm extends Component
         $this->parentContext = $data['context'];
         $this->modelId = $data['modelId'];
         $this->parentSessionKey = $data['_relation_session_key'];
+        $this->form['_relation_field'] = $data['_relation_field'];
         // $data['_relation_mode'] = 'form';
+        $this->form = array_merge($this->form,$data);
+
         request()->merge($data);
         $pre = 'relation'.ucfirst(\Str::camel($this->relation_field));
 
@@ -76,17 +80,18 @@ class RelationForm extends Component
 
         // $c->widget->{$pre.'ManageForm'}->render();
 
-        $this->sessionKey = $c->widget->{$pre.'ManageForm'}->getSessionKey();
-        $this->form['_session_key'] = $this->sessionKey;
+
         // dd($c->widget);
 
         $this->prepareVars($c->widget, $pre);
-        $this->widget = $c->widget;
 
     }
 
     public function onRelationClickViewList($data)
     {
+
+        $this->resetData();
+
         $this->relationFormModal=true;
 
         $this->relation_field = $data['_relation_field'];
@@ -94,6 +99,11 @@ class RelationForm extends Component
         $this->parentContext = $data['context'];
         $this->modelId = $data['modelId'];
         $this->manageId = $data['manage_id'];
+
+        $this->form['_relation_field'] = $data['_relation_field'];
+
+        $this->form = array_merge($this->form,$data);
+
         // $this->parentSessionKey = $data['_relation_session_key'];
         $data['_session_key'] = $this->sessionKey;//更新的时候用自己的sessionKey
 
@@ -112,17 +122,23 @@ class RelationForm extends Component
         $c->onRelationClickViewList();
         // dd($c);
 
-        $c->widget->{$pre.'ManageForm'}->render();
-        $this->sessionKey = $c->widget->{$pre.'ManageForm'}->getSessionKey();
-        $this->form['_session_key'] = $this->sessionKey;
+        // $c->widget->{$pre.'ManageForm'}->render();
+        // $this->sessionKey = $c->widget->{$pre.'ManageForm'}->getSessionKey();
+        // $this->form['_session_key'] = $this->sessionKey;
         $this->prepareVars($c->widget, $pre);
-        $this->widget = $c->widget;
+        // $this->widget = $c->widget;
 
     }
 
 
     public function prepareVars($widget,$pre)
     {
+        $this->widget = $widget;
+
+        $this->sessionKey = $widget->{$pre.'ManageForm'}->getSessionKey();
+
+        $this->form['_session_key'] = $this->sessionKey;
+
         $widget->{$pre.'ManageForm'}->render();
 
         // dd($widget);
@@ -519,7 +535,6 @@ class RelationForm extends Component
         $this->sessionKey = null;
         $this->relationFormModal = false;
 
-
     }
 
 
@@ -543,8 +558,15 @@ class RelationForm extends Component
 
 
 
+    /**
+     * 同步child-component 到自己
+     *
+     * @param [type] $data
+     * @return void
+     */
     public function setRelationFormProperty($data)
     {
+
         $name = $data['name'];
         $value = $data['value'];
 
@@ -559,27 +581,49 @@ class RelationForm extends Component
 
     public function onRefresh($data)
     {
+
+        // $this->form['manage_id'] = $this->manageId;
+
         request()->merge($data)->merge($this->form);
+        $pre = 'relation'.ucfirst(\Str::camel($this->relation_field));
+
+
+
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if ($this->context=='create') {
+        if($this->context=='create'){
 
-            $c->create();
+            if($this->parentContext=='create'){
+                $c->asExtension('FormController')->create();
+            }else if($this->parentContext=='update'){
+                $c->asExtension('FormController')->update($this->modelId);
+            }
 
-        } elseif ($this->context=='update') {
-            // dd($this->form);
-            // dd($c);
-            $c->update($this->modelId);
+        }elseif($this->context=='update'){
+            if($this->parentContext=='create'){
+                $c->asExtension('FormController')->create();
+            }else if($this->parentContext=='update'){
+                $c->asExtension('FormController')->update($this->modelId);
+            }
         }
 
-        $c->widget->form->onRefresh();
+        $c->widget->{$pre.'ManageForm'}->onRefresh();
 
-        $this->mount($c->widget);
+        $this->resetFieldData();
+
+        $this->prepareVars($c->widget,$pre);
 
 
 
+    }
+
+    public function resetFieldData()
+    {
+        $this->fields = [];
+        $this->tabs = [];
+        $this->secondTabs = [];
     }
 
     public function trigger()

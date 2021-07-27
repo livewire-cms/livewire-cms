@@ -75,4 +75,27 @@ class Comment extends Model
 
     ];
     public $attachMany = [];
+
+
+    public function getCountryOptions()
+    {
+        return ['au' => 'Australia', 'ca' => 'Canada'];
+    }
+
+    public function getStateOptions()
+    {
+
+
+        if($this->country){
+            if ($this->country=='au') {
+                return ['bc' => 'Capital Territory', 'on' => 'Queensland'];
+            }
+            elseif ($this->country == 'ca') {
+                return ['bc' => 'British Columbia', 'on' => 'Ontario'];
+            }
+        }
+
+        return ['bc' => 'first Columbia', 'on' => 'two'];
+
+    }
 }

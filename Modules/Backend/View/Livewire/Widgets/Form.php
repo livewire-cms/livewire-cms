@@ -402,7 +402,7 @@ class Form extends Component
         $this->trigger();
 
 
-        $this->emit($this->alias.'_'.'setForm',$this->form);
+        $this->emit($this->alias.'_'.'setForm',$this->form);//同步数据到child component
 
     }
 
