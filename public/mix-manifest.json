@@ -1,6 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/init-alpine.js": "/js/init-alpine.js",
-    "/js/focus-trap.js": "/js/focus-trap.js"
+    "/js/app.js": "/js/app.js?id=b2fa1e87de2f2c148db9",
+    "/css/app.css": "/css/app.css?id=2adfa6b5265c87a93852",
+    "/js/init-alpine.js": "/js/init-alpine.js?id=3c98fbef4873652e5c3b",
+    "/js/focus-trap.js": "/js/focus-trap.js?id=88cc74d732b5460c8028"
 }
