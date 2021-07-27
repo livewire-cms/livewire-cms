@@ -16,6 +16,10 @@
          x-data="
          init_field({
             form:@entangle('form'),
+            wire:null,
+            extend_init(){
+                this.wire = @this
+            },
             items: [],
             selectedItems: @entangle($attributes->wire('model')),
             buttonLabel() {

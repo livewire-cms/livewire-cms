@@ -200,6 +200,7 @@ class FormField
     public $preset;
 
     public $modelName;
+    public $modelNameNotFirst;
     public $component;
     public $livewireComponent;
 
@@ -397,6 +398,7 @@ class FormField
 
         // $keyName  = implode('.', $names);
         $this->modelName = 'form.'.implode('.', $names);
+        $this->modelNameNotFirst = implode('.', $names);
 
 
 
@@ -404,27 +406,13 @@ class FormField
         //     dd($this);
         // }
         if($this->trigger&&!empty($this->trigger)){
-            $triggerAction = \Arr::get($this->trigger, 'action');
 
+            $triggerFilter = $this->filterLivewireTriggerAttributes([]);
+            $fullTriggerField = $triggerFilter['fullTriggerField'];
+            $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
+            array_unshift($fullTriggerFieldNames);
 
-            if (in_array($triggerAction, ['hide', 'show'])) {
-                $position = 'container';
-                $triggerFilter = $this->filterTriggerAttributes([],$position);
-                $fullTriggerField = $triggerFilter['fullTriggerField'];
-                $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
-                array_unshift($fullTriggerFieldNames);
-                $this->trigger['modelName'] =implode('.',$fullTriggerFieldNames);
-            }elseif(in_array($triggerAction, ['enable', 'disable', 'empty'])){
-                $position = 'field';
-                $triggerFilter = $this->filterTriggerAttributes([],$position);
-
-                $fullTriggerField = $triggerFilter['fullTriggerField'];
-
-                $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
-
-                array_unshift($fullTriggerFieldNames);
-                $this->trigger['modelName'] =implode('.',$fullTriggerFieldNames);
-            }
+            $this->trigger['modelName'] = implode('.', $fullTriggerFieldNames);
 
             // dd($this->trigger);
 
@@ -590,6 +578,70 @@ class FormField
         if (in_array($triggerAction, ['enable', 'disable', 'empty']) && $position != 'field') {
             return $attributes;
         }
+
+        // Reduce the field reference for the trigger condition field
+        $triggerFieldParentLevel = Str::getPrecedingSymbols($triggerField, self::HIERARCHY_UP);
+        if ($triggerFieldParentLevel > 0) {
+            // Remove the preceding symbols from the trigger field name
+            $triggerField = substr($triggerField, $triggerFieldParentLevel);
+            $triggerForm = HtmlHelper::reduceNameHierarchy($triggerForm, $triggerFieldParentLevel);
+        }
+
+        // Preserve multi field types
+        if (Str::endsWith($triggerField, '[]')) {
+            $triggerField = substr($triggerField, 0, -2);
+            $triggerMulti = '[]';
+        }
+
+        // Final compilation
+        if ($this->arrayName) {
+            $fullTriggerField = $triggerForm.'['.implode('][', HtmlHelper::nameToArray($triggerField)).']'.$triggerMulti;
+        }
+        else {
+            $fullTriggerField = $triggerField.$triggerMulti;
+        }
+
+        $newAttributes = [
+            'data-trigger' => '[name="'.$fullTriggerField.'"]',
+            'data-trigger-action' => $triggerAction,
+            'data-trigger-condition' => $triggerCondition,
+            'data-trigger-closest-parent' => 'form, div[data-control="formwidget"]'
+        ];
+
+        return [
+            'fullTriggerField' => $fullTriggerField,
+        ];
+
+        return $attributes + $newAttributes;
+    }
+
+        /**
+     * Adds attributes used specifically by the Trigger API
+     * @param  array $attributes
+     * @param  string $position
+     * @return array
+     */
+    protected function filterLivewireTriggerAttributes($attributes, $position = 'field')
+    {
+        if (!$this->trigger || !is_array($this->trigger)) {
+            return $attributes;
+        }
+
+        $triggerAction = \Arr::get($this->trigger, 'action');
+        $triggerField = \Arr::get($this->trigger, 'field');
+        $triggerCondition = \Arr::get($this->trigger, 'condition');
+        $triggerForm = $this->arrayName;
+        $triggerMulti = '';
+
+        // // Apply these to container
+        // if (in_array($triggerAction, ['hide', 'show']) && $position != 'container') {
+        //     return $attributes;
+        // }
+
+        // // Apply these to field/input
+        // if (in_array($triggerAction, ['enable', 'disable', 'empty']) && $position != 'field') {
+        //     return $attributes;
+        // }
 
         // Reduce the field reference for the trigger condition field
         $triggerFieldParentLevel = Str::getPrecedingSymbols($triggerField, self::HIERARCHY_UP);

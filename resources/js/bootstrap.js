@@ -1,8 +1,10 @@
 
 
 import get from 'get-value'
+import set from 'get-value'
 
 window.data_get = get
+window.data_set = set
 
 require("flatpickr");//日期时间选择器
 window.Quill = require("Quill");//
@@ -28,15 +30,46 @@ window.init_field = function(data){
                 //console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
             }
 
+            var actions = this.triggerAction.split('|');
 
-            if(['enable','disable'].indexOf(this.triggerAction)>-1){
-                if(this.triggerAction=='enable'){
-                    return !this.onConditionChanged();
-                }else if(this.triggerAction=='disable'){
-                    return this.onConditionChanged();
+
+            // for(let index = 0; index < actions.length; index++){
+            //     if(['empty'].indexOf(actions[index])>-1){
+            //         if(actions[index]=='empty'){
+            //             console.log(231321,actions[index])
+            //             let fieldModelName = data_get(this.field, 'modelName');
+            //             var names = fieldModelName.split('.');
+            //             names.shift()
+            //             var fieldValue = data_get(this.form, names);
+
+            //             if(this.onConditionChanged()){
+
+            //                 if(Array.isArray(fieldValue)){
+            //                     if(fieldValue.length>0){
+            //                         this.wire.set(fieldModelName,[])
+            //                     }
+            //                 }else{
+            //                     if(fieldValue){
+            //                         this.wire.set(fieldModelName,'')
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+
+            for(let index = 0; index < actions.length; index++){
+                if(['enable','disable','empty'].indexOf(actions[index])>-1){
+                    if(actions[index]=='enable'){
+                        return !this.onConditionChanged();
+                    }else if(actions[index]=='disable'){
+                        return this.onConditionChanged();
+                    }
+                    return false
                 }
-                return false
             }
+
+
 
             return false;
         },
@@ -83,6 +116,7 @@ window.init_field = function(data){
         init(){
             this.field=JSON.parse(this.$refs['field'].value);
             this.triggerAction = data_get(this.field, 'trigger.action','');
+
             this.triggerCondition = data_get(this.field, 'trigger.condition','');
             if (this.triggerCondition.indexOf('value') == 0) {
                 var match = this.triggerCondition.match(/[^[\]]+(?=])/g)

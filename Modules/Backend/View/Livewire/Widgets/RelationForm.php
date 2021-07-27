@@ -156,6 +156,7 @@ class RelationForm extends Component
              }
 
          }
+         $this->trigger();
 
 
     }
@@ -354,6 +355,9 @@ class RelationForm extends Component
             $description = 'Your data was successfull saved'
         );
 
+        $this->trigger();
+
+
 
     }
     public function uploadFinished()
@@ -444,6 +448,9 @@ class RelationForm extends Component
 
             // dd(request()->hasFile('file_data'),3213);
         }
+
+        $this->trigger();
+
     }
 
     //删除文件
@@ -478,6 +485,10 @@ class RelationForm extends Component
         $this->form['fileList'][$arrayName[0]][$arrayName[1]] = array_filter($files,function($file)use($id){
             return $file['id']!=$id;
         });
+
+
+        $this->trigger();
+
 
 
     }
@@ -517,11 +528,100 @@ class RelationForm extends Component
             $name = substr_replace($name,'',strpos($name,'form.'),strlen('form.'));
         };
         \Arr::set($this->form, $name,$value);
+        $this->trigger();
 
 
     }
 
+    public function trigger()
+    {
+        $this->filterTriggerAttributes($this->fields);
+        array_map(function($tab){
+            foreach($tab as $fields){
+                $this->filterTriggerAttributes($fields);
+            }
+        },$this->tabs);
+        array_map(function($tab){
+            foreach($tab as $fields){
+                $this->filterTriggerAttributes($fields);
+            }
+        },$this->secondTabs);
+    }
 
+
+
+
+    protected function filterTriggerAttributes($fields)
+    {
+
+        foreach($fields as $field){
+            $triggerAction = \Arr::get($field, 'trigger.action');
+            $triggerField = \Arr::get($field, 'trigger.field');
+            $triggerCondition = \Arr::get($field, 'trigger.condition');
+            $triggerFieldModelName = \Arr::get($field, 'trigger.modelName');
+
+            $actions = explode('|', $triggerAction);
+
+            foreach($actions as $action){
+                if($action=='empty'){
+                    $triggerFieldValue = \Arr::get($this->form, $triggerFieldModelName);
+
+                    $fieldValue = \Arr::get($this->form, $field['modelNameNotFirst']);
+
+                    if($this->onConditionChanged($triggerFieldValue,$triggerCondition)){
+                        if(!$fieldValue|| empty($fieldValue)){
+                        }else{
+                            if(is_array($triggerFieldValue)){
+                                \Arr::set($this->form, $field['modelNameNotFirst'], []);
+                            }else{
+                                \Arr::set($this->form, $field['modelNameNotFirst'], '');
+                            }
+                        }
+
+                    }
+
+
+                }
+            }
+
+
+        }
+
+    }
+    protected function onConditionChanged($fieldValue,$triggerCondition)
+    {
+
+        if(\Str::contains($triggerCondition, 'value')){
+            preg_match_all('/[^[\]]+(?=])/',$triggerCondition,$matches);
+            $triggerCondition = 'value';
+            $triggerConditionValue = $matches[0]??[];
+            if(!$triggerConditionValue){
+                $triggerConditionValue = [];
+            }
+        }
+        if($triggerCondition=='checked'){
+            if($fieldValue&&!empty($fieldValue)){
+                return true;
+            }
+        }elseif($triggerCondition=='unchecked'){
+            if(!$fieldValue||empty($fieldValue)){
+                return true;
+            }
+        }elseif($triggerCondition=='value'){
+            if(is_array($fieldValue)){
+                if(!empty(array_intersect($fieldValue,$triggerConditionValue))){
+                    return true;
+                }
+            }else{
+                foreach ($triggerConditionValue as $val){
+                    if($val==$fieldValue){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     public function render()
     {
 

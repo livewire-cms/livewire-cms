@@ -104,7 +104,9 @@ init_field({
             return this.options[option].value;
         })
     },
+    wire:null,
     extend_init(){
+        this.wire = @this
         this.loadOptions();
     }
 })

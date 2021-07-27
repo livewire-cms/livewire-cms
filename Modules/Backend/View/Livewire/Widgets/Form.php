@@ -19,6 +19,8 @@ class Form extends Component
     public $tabs = [];
     public $secondTabs = [];
 
+
+
     public $form = [];
 
 
@@ -83,6 +85,7 @@ class Form extends Component
                 $this->parseField($widget, $secondaryTabField, 'secondTabs', $secondaryTab);
             }
         }
+        $this->trigger();
 
         // dd($this->form,$this->fields);
         // dd($this->form,$this->fields,$this->tabs,$this->secondTabs);
@@ -361,6 +364,10 @@ class Form extends Component
         \Arr::set($this->form, $name,$value);
 
 
+        $this->trigger();
+
+
+
     }
 
     public function onAction($method,$params=[])
@@ -393,7 +400,99 @@ class Form extends Component
     {
         // dd($this->alias.'_'.'setForm');
         $this->emit($this->alias.'_'.'setForm',$this->form);
+        $this->trigger();
     }
+
+    public function trigger()
+    {
+        $this->filterTriggerAttributes($this->fields);
+        array_map(function($tab){
+            foreach($tab as $fields){
+                $this->filterTriggerAttributes($fields);
+            }
+        },$this->tabs);
+        array_map(function($tab){
+            foreach($tab as $fields){
+                $this->filterTriggerAttributes($fields);
+            }
+        },$this->secondTabs);
+    }
+
+    protected function filterTriggerAttributes($fields)
+    {
+
+        foreach($fields as $field){
+            $triggerAction = \Arr::get($field, 'trigger.action');
+            $triggerField = \Arr::get($field, 'trigger.field');
+            $triggerCondition = \Arr::get($field, 'trigger.condition');
+            $triggerFieldModelName = \Arr::get($field, 'trigger.modelName');
+
+            $actions = explode('|', $triggerAction);
+
+            foreach($actions as $action){
+                if($action=='empty'){
+                    $triggerFieldValue = \Arr::get($this->form, $triggerFieldModelName);
+
+                    $fieldValue = \Arr::get($this->form, $field['modelNameNotFirst']);
+
+                    if($this->onConditionChanged($triggerFieldValue,$triggerCondition)){
+                        if(!$fieldValue|| empty($fieldValue)){
+                        }else{
+                            if(is_array($triggerFieldValue)){
+                                \Arr::set($this->form, $field['modelNameNotFirst'], []);
+                            }else{
+                                \Arr::set($this->form, $field['modelNameNotFirst'], '');
+                            }
+                        }
+
+                    }
+
+
+                }
+            }
+
+
+        }
+
+    }
+
+
+    protected function onConditionChanged($fieldValue,$triggerCondition)
+    {
+
+        if(\Str::contains($triggerCondition, 'value')){
+            preg_match_all('/[^[\]]+(?=])/',$triggerCondition,$matches);
+            $triggerCondition = 'value';
+            $triggerConditionValue = $matches[0]??[];
+            if(!$triggerConditionValue){
+                $triggerConditionValue = [];
+            }
+        }
+        if($triggerCondition=='checked'){
+            if($fieldValue&&!empty($fieldValue)){
+                return true;
+            }
+        }elseif($triggerCondition=='unchecked'){
+            if(!$fieldValue||empty($fieldValue)){
+                return true;
+            }
+        }elseif($triggerCondition=='value'){
+            if(is_array($fieldValue)){
+                if(!empty(array_intersect($fieldValue,$triggerConditionValue))){
+                    return true;
+                }
+            }else{
+                foreach ($triggerConditionValue as $val){
+                    if($val==$fieldValue){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
 
     public function render()
     {

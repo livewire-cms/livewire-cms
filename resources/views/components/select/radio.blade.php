@@ -16,6 +16,10 @@
 
 <div x-data="init_field({
     form:@entangle('form'),
+    wire:null,
+    extend_init(){
+        this.wire = @this
+    },
     options: [],
     value:@entangle($attributes->wire('model'))
 })

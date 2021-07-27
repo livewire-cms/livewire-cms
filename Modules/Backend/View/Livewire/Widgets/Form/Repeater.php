@@ -68,6 +68,7 @@ class Repeater extends Component
         // dd($args,$widget);
         // dd($this);
         // dd($this->allFields);
+        $this->trigger();
 
     }
 
@@ -108,6 +109,7 @@ class Repeater extends Component
                 $this->parseField($form, $secondaryTabField, 'secondTabs', $secondaryTab,$indexValue);
             }
         }
+
 
     }
 
@@ -179,6 +181,7 @@ class Repeater extends Component
         $this->widget = $c->widget;
         // dd($this->form);
 
+        $this->trigger();
 
         if($this->relation_field){
             $this->emit('setRelationFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
@@ -199,6 +202,9 @@ class Repeater extends Component
         }
         unset($this->allFields[$index]);
         $this->allFields = array_values($this->allFields);
+
+        $this->trigger();
+
 
         if($this->relation_field){
             $this->emit('setRelationFormProperty', ['name'=>$this->getKeyName(),'value'=>\Arr::get($this->form, $this->getKeyName())]);
@@ -324,8 +330,8 @@ class Repeater extends Component
                 // $name = $name;
             }
         }
-        $field->modelName = 'form.'.implode('.', $names);
-        $field->modelName = str_replace(['.['], ['['], $field->modelName);
+        // $field->modelName = 'form.'.implode('.', $names);
+        // $field->modelName = str_replace(['.['], ['['], $field->modelName);
         $field->id = $field->getId();
 
         $keyName = implode('.', $names);
@@ -357,17 +363,113 @@ class Repeater extends Component
 
     public function updated($name, $value)
     {
+        $this->trigger();
+
+
+        $names = explode('.', $name);
+        array_shift($names);
+
         if($this->relation_field){
-            $this->emit('setRelationFormProperty', ['name'=>$name,'value'=>$value]);
+            $this->emit('setRelationFormProperty', ['name'=>$name,'value'=>\Arr::get($this->form,implode('.', $names))]);
         }else{
-            $this->emit('setFormProperty', ['name'=>$name,'value'=>$value]);
+            $this->emit('setFormProperty', ['name'=>$name,'value'=>\Arr::get($this->form,implode('.', $names))]);
         }
     }
 
+
+
     public function setForm($form)
     {
-
         $this->form = $form;
+        $this->trigger();
+
+    }
+
+    public function trigger()
+    {
+        $this->filterTriggerAttributes($this->fields);
+        array_map(function($tab){
+            foreach($tab as $fields){
+                $this->filterTriggerAttributes($fields);
+            }
+        },$this->tabs);
+        array_map(function($tab){
+            foreach($tab as $fields){
+                $this->filterTriggerAttributes($fields);
+            }
+        },$this->secondTabs);
+    }
+
+    protected function filterTriggerAttributes($fields)
+    {
+
+        foreach($fields as $field){
+            $triggerAction = \Arr::get($field, 'trigger.action');
+            $triggerField = \Arr::get($field, 'trigger.field');
+            $triggerCondition = \Arr::get($field, 'trigger.condition');
+            $triggerFieldModelName = \Arr::get($field, 'trigger.modelName');
+
+            $actions = explode('|', $triggerAction);
+
+            foreach($actions as $action){
+                if($action=='empty'){
+                    $triggerFieldValue = \Arr::get($this->form, $triggerFieldModelName);
+
+                    $fieldValue = \Arr::get($this->form, $field['modelNameNotFirst']);
+
+                    if($this->onConditionChanged($triggerFieldValue,$triggerCondition)){
+                        if(!$fieldValue|| empty($fieldValue)){
+                        }else{
+                            if(is_array($triggerFieldValue)){
+                                \Arr::set($this->form, $field['modelNameNotFirst'], []);
+                            }else{
+                                \Arr::set($this->form, $field['modelNameNotFirst'], '');
+                            }
+                        }
+
+                    }
+
+
+                }
+            }
+
+
+        }
+
+    }
+    protected function onConditionChanged($fieldValue,$triggerCondition)
+    {
+
+        if(\Str::contains($triggerCondition, 'value')){
+            preg_match_all('/[^[\]]+(?=])/',$triggerCondition,$matches);
+            $triggerCondition = 'value';
+            $triggerConditionValue = $matches[0]??[];
+            if(!$triggerConditionValue){
+                $triggerConditionValue = [];
+            }
+        }
+        if($triggerCondition=='checked'){
+            if($fieldValue&&!empty($fieldValue)){
+                return true;
+            }
+        }elseif($triggerCondition=='unchecked'){
+            if(!$fieldValue||empty($fieldValue)){
+                return true;
+            }
+        }elseif($triggerCondition=='value'){
+            if(is_array($fieldValue)){
+                if(!empty(array_intersect($fieldValue,$triggerConditionValue))){
+                    return true;
+                }
+            }else{
+                foreach ($triggerConditionValue as $val){
+                    if($val==$fieldValue){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     protected function getListeners()

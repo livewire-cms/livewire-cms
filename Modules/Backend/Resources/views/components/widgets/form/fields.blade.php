@@ -43,7 +43,7 @@ $relation_field = $attributes->get('relation_field',null);
         @endif
     @endisset
     {{-- {{dd($field)}} --}}
-    <div class="{{$w }}  h-auto p-2" x-data="{
+    <div class="{{$w }}  h-auto p-2 " x-data="{
         show:true,
         field:{},
         form: @entangle('form'),
@@ -56,18 +56,24 @@ $relation_field = $attributes->get('relation_field',null);
             if(this.field.trigger){
                 triggerField = data_get(this.field, 'trigger.modelName');
                 triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
-                //console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
+               //JSON.parse(JSON.stringify(this.form))
+                //console.log( 55555,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
             }
 
+            var actions = this.triggerAction.split('|');
 
-            if(['show','hide'].indexOf(this.triggerAction)>-1){
-                if(this.triggerAction=='show'){
-                    return this.onConditionChanged();
-                }else if(this.triggerAction=='hide'){
-                    return !this.onConditionChanged();
+            for(let index = 0; index < actions.length; index++){
+                if(['show','hide'].indexOf(actions[index])>-1){
+                    if(actions[index]=='show'){
+                        return this.onConditionChanged();
+                    }else if(actions[index]=='hide'){
+                        return !this.onConditionChanged();
+                    }
+                    return true
                 }
-                return true
             }
+
+
 
             return true;
         },
@@ -125,11 +131,9 @@ $relation_field = $attributes->get('relation_field',null);
 
     }" x-init="
     init()
-    //form=JSON.parse($refs['form'].value);
     ">
-        <input x-ref="form" type="hidden" value="{{json_encode($form)}}">
-        <input x-ref="field" type="hidden" value="{{json_encode($field)}}">
-        <div class="" x-show="trigger_show_or_hide()">
+        <input x-ref="field" type="hidden" class="hidden" value="{{json_encode($field)}}">
+        <div  x-show="trigger_show_or_hide()" class=" @if ($field['hidden']) hidden @endif">
             <label for="{{$field['id']}}" class="block font-medium tracking-tight dark:text-gray-400">
                 @if ($field['label'])
                     {{__($field['label'])}}

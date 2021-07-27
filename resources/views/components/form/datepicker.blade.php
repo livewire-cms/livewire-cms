@@ -3,7 +3,11 @@
 <div x-data="
 init_field({
     form:@entangle('form'),
+    wire:null,
+
     extend_init:function(){
+        this.wire = @this
+
         flatpickr(this.$refs.input1,{
             dateFormat: 'Y-m-d',
         })

@@ -23,7 +23,7 @@ fields:
         span: auto
         type: textarea
         trigger:
-            action: enable
+            action: enable|empty
             field: published
             condition: checked
     published:
@@ -36,7 +36,7 @@ fields:
         type: datepicker
         span: auto
         trigger:
-            action: enable
+            action: show
             field: published
             condition: checked
 
