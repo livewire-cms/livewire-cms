@@ -36,7 +36,7 @@ fields:
         type: datepicker
         span: auto
         trigger:
-            action: show
+            action: enable
             field: published
             condition: checked
 
