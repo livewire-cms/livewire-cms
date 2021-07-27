@@ -23,14 +23,24 @@ fields:
         span: auto
         type: textarea
         trigger:
-            action: enable
+            action: show
             field: published
             condition: checked
     published:
         label: 发布
         span: auto
         type: toggle
-
+    country:
+        label: Country
+        type: dropdown
+    state:
+        label: State
+        type: dropdown
+        dependsOn: country
+    extra[onrefresh]:
+        label: partial
+        type: partial
+        span: right
     published_at:
         label: 发布时间
         type: datepicker

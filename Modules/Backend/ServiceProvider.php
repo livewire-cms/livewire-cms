@@ -55,6 +55,20 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+
+        \Event::listen('backend.form.refreshFields', function ( $formWidget,  $allFields) {
+            if (($updateFields = post('refresh_fields')) && is_array($updateFields)) {
+                foreach ($updateFields as $field) {
+                    if (!isset($allFields[$field])) {
+                        continue;
+                    }
+
+                    $fieldObject = $allFields[$field];
+                    $fieldObject->update = post('refresh_fields_'.$field);
+                    // dd($fieldObject);
+                }
+            }
+        });
         Request::macro('setConvertedFiles', function ($files) {
             $this->convertedFiles = $files;
             return $this;

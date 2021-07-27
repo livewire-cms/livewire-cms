@@ -21,42 +21,35 @@ window.init_field = function(data){
         triggerAction:'',
         triggerCondition:'',
         triggerConditionValue:[],
-        trigger_endable_or_disable(){
-            //this.triggerAction = data_get(this.field, 'trigger.action','');
-            //this.triggerCondition = data_get(this.field, 'trigger.condition','');
+        trigger_show_or_hide(){
             if(this.field.trigger){
-                triggerField = data_get(this.field, 'trigger.modelName');
-                triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
+                //triggerField = data_get(this.field, 'trigger.modelNameNotFirst');
+                //triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
+               //JSON.parse(JSON.stringify(this.form))
+                //console.log( 55555,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
+            }
+            var actions = this.triggerAction.split('|');
+            for(let index = 0; index < actions.length; index++){
+                if(['show','hide'].indexOf(actions[index])>-1){
+                    if(actions[index]=='show'){
+                        return this.onConditionChanged();
+                    }else if(actions[index]=='hide'){
+                        return !this.onConditionChanged();
+                    }
+                    return true
+                }
+            }
+            return true;
+        },
+        trigger_endable_or_disable(){
+            if(this.field.trigger){
+                //var triggerField = data_get(this.field, 'trigger.modelName');
+               // var triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
                 //console.log(JSON.parse(JSON.stringify(this.form)) ,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
             }
 
             var actions = this.triggerAction.split('|');
 
-
-            // for(let index = 0; index < actions.length; index++){
-            //     if(['empty'].indexOf(actions[index])>-1){
-            //         if(actions[index]=='empty'){
-            //             console.log(231321,actions[index])
-            //             let fieldModelName = data_get(this.field, 'modelName');
-            //             var names = fieldModelName.split('.');
-            //             names.shift()
-            //             var fieldValue = data_get(this.form, names);
-
-            //             if(this.onConditionChanged()){
-
-            //                 if(Array.isArray(fieldValue)){
-            //                     if(fieldValue.length>0){
-            //                         this.wire.set(fieldModelName,[])
-            //                     }
-            //                 }else{
-            //                     if(fieldValue){
-            //                         this.wire.set(fieldModelName,'')
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
 
             for(let index = 0; index < actions.length; index++){
                 if(['enable','disable','empty'].indexOf(actions[index])>-1){
@@ -74,8 +67,8 @@ window.init_field = function(data){
             return false;
         },
         onConditionChanged(){
-            triggerField = data_get(this.field, 'trigger.modelName');
-            triggerFieldValue =  data_get(this.form, triggerField);
+            var triggerField = data_get(this.field, 'trigger.modelNameNotFirst');
+            var triggerFieldValue =  data_get(this.form, triggerField);
 
             if (this.triggerCondition == 'checked') {
                 if(Array.isArray(triggerFieldValue)){

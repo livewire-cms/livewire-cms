@@ -49,9 +49,17 @@ class Form extends Component
 
 
 
+    protected function resetData()
+    {
+        $this->fields = [];
+        $this->tabs = [];
+        $this->secondTabs = [];
+        $this->form = [];
+    }
 
     public function mount($widget)
     {
+        $this->resetData();
 
         $widget->form->render();
 
@@ -137,30 +145,8 @@ class Form extends Component
 
 
         //设置options
-        if ($field->type =='radio') {
-            if (is_callable($field->options)) {
-                $field->options = $field->options();
-            }
-            // dd($primaryTabField);
-        } elseif ($field->type =='dropdown') {
-            if (is_callable($field->options)) {
-                $field->options = $field->options();
-            }
+        $field->options = $field->options();
 
-        } elseif ($field->type =='checkboxlist') {
-            if (is_callable($field->options)) {
-                $field->options = $field->options();
-            }
-        }
-
-
-
-
-        //设置上传文件
-
-        // if(!isset($field->config['type'])){
-        //     dd($field);
-        // }
         if (\Arr::get($field->config,'type')=='fileupload') {
 
             //todo 过滤$field->vars['fileList']
@@ -171,8 +157,6 @@ class Form extends Component
                     'path' => $file->pathUrl
                 ];
             })->toArray();
-            // dd($widget->form->getFormWidgets());
-            // $field = $widget->form->getFormWidgets()[$field->valueFrom]->render();
         }
 
 
@@ -199,12 +183,15 @@ class Form extends Component
             // $this->form[$field->arrayName][$field->fieldName] = $field->value;
         }
 
+        unset($field->config['form']);
+        unset($field->vars['formWidgets']);
         if ($tab) {
             $this->{$type}[$tab][] = (array)$field;
         } else {
             $this->{$type}[] = (array)$field;
         }
     }
+
 
     public function save($data)
     {
@@ -236,7 +223,7 @@ class Form extends Component
 
     public function uploadFinished()
     {
-        $this->update = !$this->update;
+        // $this->update = !$this->update;
 
 
         $params = func_get_args();
@@ -399,26 +386,69 @@ class Form extends Component
 
     }
 
+    public function updated($name, $value)
+    {
+        // dd($name);
+
+        $this->seeDependsOn($name);
+    }
+
     public function updatedForm()
     {
         // dd($this->alias.'_'.'setForm');
-        $this->emit($this->alias.'_'.'setForm',$this->form);
+        // dd(post('refresh_fields'));
+        $this->dependsOn();
+
         $this->trigger();
+
+
+        $this->emit($this->alias.'_'.'setForm',$this->form);
+
     }
+
+    public function onRefresh($data)
+    {
+        request()->merge($data)->merge($this->form);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        if ($this->context=='create') {
+
+            $c->create();
+
+        } elseif ($this->context=='update') {
+            // dd($this->form);
+            // dd($c);
+            $c->update($this->modelId);
+        }
+
+        $c->widget->form->onRefresh();
+
+        $this->mount($c->widget);
+
+
+
+    }
+
+
+
+
 
     public function trigger()
     {
+
+
         $this->filterTriggerAttributes($this->fields);
-        array_map(function($tab){
-            foreach($tab as $fields){
-                $this->filterTriggerAttributes($fields);
-            }
+        array_map(function($fields){
+            $this->filterTriggerAttributes($fields);
         },$this->tabs);
-        array_map(function($tab){
-            foreach($tab as $fields){
-                $this->filterTriggerAttributes($fields);
-            }
+        array_map(function($fields){
+            $this->filterTriggerAttributes($fields);
         },$this->secondTabs);
+
+
+
     }
 
     protected function filterTriggerAttributes($fields)
@@ -428,7 +458,7 @@ class Form extends Component
             $triggerAction = \Arr::get($field, 'trigger.action');
             $triggerField = \Arr::get($field, 'trigger.field');
             $triggerCondition = \Arr::get($field, 'trigger.condition');
-            $triggerFieldModelName = \Arr::get($field, 'trigger.modelName');
+            $triggerFieldModelName = \Arr::get($field, 'trigger.modelNameNotFirst');
 
             $actions = explode('|', $triggerAction);
 
@@ -493,6 +523,43 @@ class Form extends Component
             }
         }
         return false;
+    }
+
+    protected function dependsOn()
+    {
+
+
+        if(!empty(post('refresh_fields'))){
+            // $this->onRefresh([]);//todo onRefresh
+        }
+
+    }
+
+    protected function seeDependsOn($name)
+    {
+
+        $this->dependsOnContainName($this->fields,$name);
+        array_map(function($fields)use($name){
+            $this->dependsOnContainName($fields,$name);
+        },$this->tabs);
+        array_map(function($fields)use($name){
+            $this->dependsOnContainName($fields,$name);
+        },$this->secondTabs);
+    }
+
+    protected function dependsOnContainName($fields,$name)
+    {
+        $refreshFields = post('refresh_fields');
+
+        foreach ($fields as $field){
+            if (in_array($name, $field['dependsFieldModelNames'])){
+                $refreshFields[]=$field['fieldName'];
+                request()->merge(['refresh_fields_'.$field['fieldName']=>!$field['update']]);
+            }
+        }
+        if(!empty($refreshFields)){
+            request()->merge(['refresh_fields'=>$refreshFields]);
+        }
     }
 
 

@@ -43,95 +43,16 @@ $relation_field = $attributes->get('relation_field',null);
         @endif
     @endisset
     {{-- {{dd($field)}} --}}
-    <div class="{{$w }}  h-auto p-2 " x-data="{
-        show:true,
+    <div class="{{$w }}  h-auto p-2 " x-data="init_field({
         field:{},
         form: @entangle('form'),
-        triggerAction:'',
-        triggerCondition:'',
-        triggerConditionValue:[],
-        trigger_show_or_hide(){
-            //this.triggerAction = data_get(this.field, 'trigger.action','');
-            //this.triggerCondition = data_get(this.field, 'trigger.condition','');
-            if(this.field.trigger){
-                triggerField = data_get(this.field, 'trigger.modelName');
-                triggerFieldValue =  data_get(JSON.parse(JSON.stringify(this.form)), triggerField,'');
-               //JSON.parse(JSON.stringify(this.form))
-                //console.log( 55555,this.field.modelName,this.triggerAction,triggerField,this.triggerCondition,triggerFieldValue)
-            }
 
-            var actions = this.triggerAction.split('|');
-
-            for(let index = 0; index < actions.length; index++){
-                if(['show','hide'].indexOf(actions[index])>-1){
-                    if(actions[index]=='show'){
-                        return this.onConditionChanged();
-                    }else if(actions[index]=='hide'){
-                        return !this.onConditionChanged();
-                    }
-                    return true
-                }
-            }
-
-
-
-            return true;
-        },
-        onConditionChanged(){
-            triggerField = data_get(this.field, 'trigger.modelName');
-            triggerFieldValue =  data_get(this.form, triggerField);
-
-            if (this.triggerCondition == 'checked') {
-                if(Array.isArray(triggerFieldValue)){
-                    return triggerFieldValue.length>0;
-                }else{
-                    if(triggerFieldValue){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }
-                return false;
-            }
-            else if (this.triggerCondition == 'unchecked') {
-                if(Array.isArray(triggerFieldValue)){
-                    return triggerFieldValue.length==0;
-                }else{
-                    if(triggerFieldValue){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                }
-                return false;
-            }
-            else if (this.triggerCondition == 'value') {
-                if(Array.isArray(triggerFieldValue)){
-                    return triggerFieldValue.filter(item=>{
-                        return this.triggerConditionValue.indexOf(item)>-1
-                    }).length>0
-                }else{
-                    return this.triggerConditionValue.filter(item=>{
-                        return item==triggerFieldValue
-                    }).length>0
-                }
-            }
-        },
-        init(){
-            this.field=JSON.parse(this.$refs['field'].value);
-            this.triggerAction = data_get(this.field, 'trigger.action','');
-            this.triggerCondition = data_get(this.field, 'trigger.condition','');
-            if (this.triggerCondition.indexOf('value') == 0) {
-                var match = this.triggerCondition.match(/[^[\]]+(?=])/g)
-                this.triggerCondition = 'value'
-                this.triggerConditionValue = (match) ? match : ['']
-            }
-        }
-
-
-    }" x-init="
+    })" x-init="
     init()
     ">
+    @if ($field['update'])
+        <form key="{{\Str::random(10)}}" class="dddd">
+    @endif
         <input x-ref="field" type="hidden" class="hidden" value="{{json_encode($field)}}">
         <div  x-show="trigger_show_or_hide()" class=" @if ($field['hidden']) hidden @endif">
             <label for="{{$field['id']}}" class="block font-medium tracking-tight dark:text-gray-400">
@@ -201,7 +122,7 @@ $relation_field = $attributes->get('relation_field',null);
             @elseif ($field['type']=='toggle')
                 {{-- {{dd($field)}} --}}
                 {{-- <x-form.check-box wire:model.lazy="{{ $field['modelName']}}"  :prefix="str_replace('-','_',$field['id'])"></x-form.check-box> --}}
-                <x-toggle :id="$field['id']" lg   wire:model.defer="{{$field['modelName']}}" :label="$field['label']?__($field['label']):''"/>
+                <x-toggle :id="$field['id']" lg   wire:model="{{$field['modelName']}}" :label="$field['label']?__($field['label']):''"/>
             @elseif ($field['type']=='dropdown')
                 <x-select.single wire:model.lazy="{{ $field['modelName']}}" :options="$field['options']" :prefix="str_replace('-','_',$field['id'])"></x-select.single>
             @elseif ($field['type']=='datepicker')
@@ -272,7 +193,10 @@ $relation_field = $attributes->get('relation_field',null);
                 <span class="text-xs text-red-500">{{$message}}</span>
             @enderror
         </div>
+        @if ($field['update'])
 
+        </form>
+        @endif
 
     </div>
 

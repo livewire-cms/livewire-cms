@@ -45,6 +45,8 @@ class FormField
      */
     const HIERARCHY_UP = '^';
 
+    public $name;
+
     /**
      * @var string Form field name.
      */
@@ -199,10 +201,16 @@ class FormField
      */
     public $preset;
 
+    public $update;
+
+
     public $modelName;
     public $modelNameNotFirst;
     public $component;
     public $livewireComponent;
+
+    public $dependsFieldModelNames=[];
+    public $dependsFields=[];
 
 
     /**
@@ -255,8 +263,7 @@ class FormField
         if ($value === null) {
             if (is_array($this->options)) {
                 return $this->options;
-            }
-            elseif (is_callable($this->options)) {
+            } elseif (is_callable($this->options)) {
                 $callable = $this->options;
                 return $callable();
             }
@@ -330,13 +337,13 @@ class FormField
 
 
 
-        if(!$this->component){//默认 component
+        if (!$this->component) {//默认 component
             $type = $config['widget']??$this->type;
-            if(\Str::startsWith($this->type, 'relation_')){//关系component
+            if (\Str::startsWith($this->type, 'relation_')) {//关系component
                 $this->component = 'back-form-relation_lists';
-            }else if(in_array($type,self::$fieldTypes)){
+            } elseif (in_array($type, self::$fieldTypes)) {
                 $this->component = 'back-form-inputs.'.$type;
-            }else{
+            } else {
                 $this->component = 'back-form-inputs.default';
             }
         }
@@ -375,7 +382,6 @@ class FormField
         if (isset($config['attributes'])) {
             $this->attributes($config['attributes']);
             $this->attributeHtml = $this->getAttributes();
-
         }
         if (isset($config['containerAttributes'])) {
             $this->attributes($config['containerAttributes'], 'container');
@@ -383,20 +389,13 @@ class FormField
 
         if (isset($config['valueFrom'])) {
             $this->valueFrom = $config['valueFrom'];
-        }
-        else {
+        } else {
             $this->valueFrom = $this->fieldName;
         }
 
+
+        $this->name = $this->getName();
         $names = HtmlHelper::nameToArray($this->getName());
-
-        // foreach ($names as &$name) {
-        //     if (is_numeric($name)) {
-        //         $name = ''.$name.'';
-        //     }
-        // }
-
-        // $keyName  = implode('.', $names);
         $this->modelName = 'form.'.implode('.', $names);
         $this->modelNameNotFirst = implode('.', $names);
 
@@ -405,21 +404,20 @@ class FormField
         // if($this->fieldName=='extra[array]'){
         //     dd($this);
         // }
-        if($this->trigger&&!empty($this->trigger)){
+        // if ($this->trigger&&!empty($this->trigger)) {
+        $this->filterLivewireTriggerAttributes([]);
+        //     $fullTriggerField = $triggerFilter['fullTriggerField'];
+        //     $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
+        //     array_unshift($fullTriggerFieldNames);
 
-            $triggerFilter = $this->filterLivewireTriggerAttributes([]);
-            $fullTriggerField = $triggerFilter['fullTriggerField'];
-            $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
-            array_unshift($fullTriggerFieldNames);
-
-            $this->trigger['modelName'] = implode('.', $fullTriggerFieldNames);
-
-            // dd($this->trigger);
-
+        //     $this->trigger['modelName'] = implode('.', $fullTriggerFieldNames);
+        //     // dd($this->trigger);
+        // }
 
 
 
-        }
+
+        $this->filterDependField();
 
 
         return $config;
@@ -596,8 +594,7 @@ class FormField
         // Final compilation
         if ($this->arrayName) {
             $fullTriggerField = $triggerForm.'['.implode('][', HtmlHelper::nameToArray($triggerField)).']'.$triggerMulti;
-        }
-        else {
+        } else {
             $fullTriggerField = $triggerField.$triggerMulti;
         }
 
@@ -615,7 +612,47 @@ class FormField
         return $attributes + $newAttributes;
     }
 
-        /**
+    protected function filterDependField()
+    {
+        if (!$this->dependsOn) {
+            return [];
+        }
+        // dd(321);
+        $triggerForm = $this->arrayName;
+        $triggerMulti = '';
+        $dependsOns = is_array($this->dependsOn) ? $this->dependsOn : [$this->dependsOn];
+        $dependsFields = [];
+        foreach ($dependsOns as $dependsOn) {
+            $triggerField = $dependsOn;
+
+            // Reduce the field reference for the trigger condition field
+            $triggerFieldParentLevel = Str::getPrecedingSymbols($triggerField, self::HIERARCHY_UP);
+            if ($triggerFieldParentLevel > 0) {
+                // Remove the preceding symbols from the trigger field name
+                $triggerField = substr($triggerField, $triggerFieldParentLevel);
+                $triggerForm = HtmlHelper::reduceNameHierarchy($triggerForm, $triggerFieldParentLevel);
+            }
+
+            // Preserve multi field types
+            if (Str::endsWith($triggerField, '[]')) {
+                $triggerField = substr($triggerField, 0, -2);
+                $triggerMulti = '[]';
+            }
+
+            // Final compilation
+            if ($this->arrayName) {
+                $fullTriggerField = $triggerForm.'['.implode('][', HtmlHelper::nameToArray($triggerField)).']'.$triggerMulti;
+            } else {
+                $fullTriggerField = $triggerField.$triggerMulti;
+            }
+            $this->dependsFields[] = $fullTriggerField;
+            $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
+            $this->dependsFieldModelNames[] = 'form.'.implode('.',$fullTriggerFieldNames);
+        }
+
+    }
+
+    /**
      * Adds attributes used specifically by the Trigger API
      * @param  array $attributes
      * @param  string $position
@@ -660,8 +697,7 @@ class FormField
         // Final compilation
         if ($this->arrayName) {
             $fullTriggerField = $triggerForm.'['.implode('][', HtmlHelper::nameToArray($triggerField)).']'.$triggerMulti;
-        }
-        else {
+        } else {
             $fullTriggerField = $triggerField.$triggerMulti;
         }
 
@@ -671,6 +707,11 @@ class FormField
             'data-trigger-condition' => $triggerCondition,
             'data-trigger-closest-parent' => 'form, div[data-control="formwidget"]'
         ];
+
+
+        $fullTriggerFieldNames = HtmlHelper::nameToArray($fullTriggerField);
+
+        $this->trigger['modelNameNotFirst'] = implode('.', $fullTriggerFieldNames);
 
         return [
             'fullTriggerField' => $fullTriggerField,
@@ -700,8 +741,7 @@ class FormField
 
         if ($this->arrayName) {
             $fullPresetField = $this->arrayName.'['.implode('][', HtmlHelper::nameToArray($presetField)).']';
-        }
-        else {
+        } else {
             $fullPresetField = $presetField;
         }
 
@@ -853,18 +893,15 @@ class FormField
             if ($result instanceof Model && $result->hasRelation($key)) {
                 if ($key == $lastField) {
                     $result = $result->getRelationValue($key) ?: $default;
-                }
-                else {
+                } else {
                     $result = $result->{$key};
                 }
-            }
-            elseif (is_array($result)) {
+            } elseif (is_array($result)) {
                 if (!array_key_exists($key, $result)) {
                     return $default;
                 }
                 $result = $result[$key];
-            }
-            else {
+            } else {
                 if (!isset($result->{$key})) {
                     return $default;
                 }

@@ -85,6 +85,9 @@ class Form extends WidgetBase
      */
     protected $fieldsDefined = false;
 
+
+    protected $applyFiltered = false;
+
     /**
      * @var array Collection of all fields used in this form.
      * @see Backend\Classes\FormField
@@ -404,6 +407,7 @@ class Form extends WidgetBase
          */
         $this->fireSystemEvent('backend.form.refreshFields', [$this->allFields]);
 
+        return $this;
         /*
          * If an array of fields is supplied, update specified fields individually.
          */
@@ -1262,6 +1266,10 @@ class Form extends WidgetBase
      */
     protected function applyFiltersFromModel()
     {
+
+        if ($this->applyFiltered) {
+            return;
+        }
         /*
          * Standard usage
          */
@@ -1295,6 +1303,8 @@ class Form extends WidgetBase
              */
             $this->model->fireEvent('model.form.filterFields', [$this, (object) $this->allFields, $this->getContext()]);
         }
+
+        $this->applyFiltered = true;
     }
 
     /**
@@ -1320,6 +1330,7 @@ class Form extends WidgetBase
         if (!is_array($fieldOptions) && !$fieldOptions) {
             try {
                 list($model, $attribute) = $field->resolveModelAttribute($this->model, $field->fieldName);
+                // dd($this->model,$model);
                 if (!$model) {
                     throw new Exception();
                 }
@@ -1332,12 +1343,13 @@ class Form extends WidgetBase
             }
 
             $methodName = 'get'.\Str::studly($attribute).'Options';
-            // dd($methodName,$attribute, $field->value, $this->data,$field);
+            // dd($methodName,$attribute, $field->value, $this->data,$field,$model);
 
             if (
                 !$this->objectMethodExists($model, $methodName) &&
                 !$this->objectMethodExists($model, 'getDropdownOptions')
             ) {
+                // dd($model,$methodName);
                 throw new ApplicationException(Lang::get('backend::lang.field.options_method_not_exists', [
                     'model'  => get_class($model),
                     'method' => $methodName,

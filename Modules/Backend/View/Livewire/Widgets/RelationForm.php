@@ -74,7 +74,7 @@ class RelationForm extends Component
         $c->onRelationButtonCreate();
         // dd($c);
 
-        $c->widget->{$pre.'ManageForm'}->render();
+        // $c->widget->{$pre.'ManageForm'}->render();
 
         $this->sessionKey = $c->widget->{$pre.'ManageForm'}->getSessionKey();
         $this->form['_session_key'] = $this->sessionKey;
@@ -201,21 +201,23 @@ class RelationForm extends Component
 
 
         //设置options
-        if ($field->type =='radio') {
-            if (is_callable($field->options)) {
-                $field->options = $field->options();
-            }
-            // dd($primaryTabField);
-        }elseif ($field->type =='dropdown') {
-            if (is_callable($field->options)) {
-                $field->options = $field->options();
-            }
+        $field->options = $field->options();
 
-        } elseif ($field->type =='checkboxlist') {
-            if (is_callable($field->options)) {
-                $field->options = $field->options();
-            }
-        }
+        // if ($field->type =='radio') {
+        //     if (is_callable($field->options)) {
+        //         $field->options = $field->options();
+        //     }
+        //     // dd($primaryTabField);
+        // }elseif ($field->type =='dropdown') {
+        //     if (is_callable($field->options)) {
+        //         $field->options = $field->options();
+        //     }
+
+        // } elseif ($field->type =='checkboxlist') {
+        //     if (is_callable($field->options)) {
+        //         $field->options = $field->options();
+        //     }
+        // }
 
 
 
@@ -268,6 +270,10 @@ class RelationForm extends Component
 
             // $this->form[$field->arrayName][$field->fieldName] = $field->value;
         }
+
+        unset($field->config['form']);
+        unset($field->vars['formWidgets']);
+
         if ($tab) {
             $this->{$type}[$tab][] = (array)$field;
         } else {
@@ -517,6 +523,24 @@ class RelationForm extends Component
     }
 
 
+    public function updated($name, $value)
+    {
+
+
+        $this->seeDependsOn($name);
+    }
+
+    public function updatedForm()
+    {
+        // dd($this->alias.'_'.'setForm');
+        // dd(post('refresh_fields'));
+        $this->dependsOn();
+
+        $this->trigger();
+
+
+    }
+
 
 
     public function setRelationFormProperty($data)
@@ -533,19 +557,42 @@ class RelationForm extends Component
 
     }
 
+    public function onRefresh($data)
+    {
+        request()->merge($data)->merge($this->form);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        if ($this->context=='create') {
+
+            $c->create();
+
+        } elseif ($this->context=='update') {
+            // dd($this->form);
+            // dd($c);
+            $c->update($this->modelId);
+        }
+
+        $c->widget->form->onRefresh();
+
+        $this->mount($c->widget);
+
+
+
+    }
+
     public function trigger()
     {
+
         $this->filterTriggerAttributes($this->fields);
-        array_map(function($tab){
-            foreach($tab as $fields){
-                $this->filterTriggerAttributes($fields);
-            }
+        array_map(function($fields){
+            $this->filterTriggerAttributes($fields);
         },$this->tabs);
-        array_map(function($tab){
-            foreach($tab as $fields){
-                $this->filterTriggerAttributes($fields);
-            }
+        array_map(function($fields){
+            $this->filterTriggerAttributes($fields);
         },$this->secondTabs);
+
     }
 
 
@@ -558,7 +605,7 @@ class RelationForm extends Component
             $triggerAction = \Arr::get($field, 'trigger.action');
             $triggerField = \Arr::get($field, 'trigger.field');
             $triggerCondition = \Arr::get($field, 'trigger.condition');
-            $triggerFieldModelName = \Arr::get($field, 'trigger.modelName');
+            $triggerFieldModelName = \Arr::get($field, 'trigger.modelNameNotFirst');
 
             $actions = explode('|', $triggerAction);
 
@@ -622,6 +669,45 @@ class RelationForm extends Component
         }
         return false;
     }
+
+
+    protected function dependsOn()
+    {
+
+
+        if(!empty(post('refresh_fields'))){
+            $this->onRefresh([]);
+        }
+
+    }
+
+    protected function seeDependsOn($name)
+    {
+
+        $this->dependsOnContainName($this->fields,$name);
+        array_map(function($fields)use($name){
+            $this->dependsOnContainName($fields,$name);
+        },$this->tabs);
+        array_map(function($fields)use($name){
+            $this->dependsOnContainName($fields,$name);
+        },$this->secondTabs);
+    }
+
+    protected function dependsOnContainName($fields,$name)
+    {
+        $refreshFields = post('refresh_fields');
+
+        foreach ($fields as $field){
+            if (in_array($name, $field['dependsFieldModelNames'])){
+                $refreshFields[]=$field['fieldName'];
+                request()->merge(['refresh_fields_'.$field['fieldName']=>!$field['update']]);
+            }
+        }
+        if(!empty($refreshFields)){
+            request()->merge(['refresh_fields'=>$refreshFields]);
+        }
+    }
+
     public function render()
     {
 
