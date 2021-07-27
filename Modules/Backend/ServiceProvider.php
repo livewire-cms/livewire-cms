@@ -57,6 +57,7 @@ class ServiceProvider extends BaseServiceProvider
     {
 
         \Event::listen('backend.form.refreshFields', function ( $formWidget,  $allFields) {
+            // dd(post('refresh_fields'));
             if (($updateFields = post('refresh_fields')) && is_array($updateFields)) {
                 foreach ($updateFields as $field) {
                     if (!isset($allFields[$field])) {

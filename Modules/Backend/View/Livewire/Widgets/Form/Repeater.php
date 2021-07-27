@@ -71,9 +71,12 @@ class Repeater extends Component
         $this->trigger();
     }
 
-    public function init($form, $indexValue)
+    protected function init($form, $indexValue)
     {
+        unset($this->allFields[$indexValue]);
         $form->render();
+
+
 
 
 
@@ -368,9 +371,42 @@ class Repeater extends Component
         }
     }
 
-    public function updatedFrom()
+    public function updatedForm()
     {
+
+        // dd(post('refresh_fields'));
         $this->dependsOn();
+
+    }
+
+    public function onRefresh($data)
+    {
+        request()->merge($data)->merge($this->form);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+
+        if (!$this->modelId) {
+            $c->create();
+        } else {
+            // dd($this->form);
+            // dd($c);
+            $c->update($this->modelId);
+        }
+        $ww = $c->widget->{$this->field['alias']};
+        $ww->onRefresh();
+
+
+        $formWidgets = $ww->getFormWidgets();
+
+
+        foreach ($formWidgets as $indexValue=>$formWidget) {
+            $this->init($formWidget, $indexValue);
+        }
+
+        $this->trigger();
+
 
     }
 
@@ -468,9 +504,10 @@ class Repeater extends Component
     protected function dependsOn()
     {
         if (!empty(post('refresh_fields'))) {
-            // $this->onRefresh([]);//todo
+            $this->onRefresh([]);//todo
         }
     }
+
 
     protected function seeDependsOn($name)
     {
@@ -493,9 +530,12 @@ class Repeater extends Component
         $refreshFields = post('refresh_fields');
 
         foreach ($fields as $field) {
+
             if (in_array($name, $field['dependsFieldModelNames'])) {
                 $refreshFields[]=$field['fieldName'];
                 request()->merge(['refresh_fields_'.$field['fieldName']=>!$field['update']]);
+
+                request()->merge(['_repeater_index'=>explode('.',str_replace($this->field['modelName'], '', $name))[1]]);
             }
         }
         if (!empty($refreshFields)) {

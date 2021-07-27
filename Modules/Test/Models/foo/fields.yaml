@@ -30,13 +30,7 @@ fields:
         label: 发布
         span: auto
         type: toggle
-    country:
-        label: Country
-        type: dropdown
-    state:
-        label: State
-        type: dropdown
-        dependsOn: country
+
     extra[onrefresh]:
         label: partial
         type: partial
@@ -253,6 +247,13 @@ tabs:
                         label: 描述
                         span: auto
                         type: textarea
+                    country:
+                      label: Country
+                      type: dropdown
+                    state:
+                        label: State
+                        type: dropdown
+                        dependsOn: country
                     published:
                         label: 发布
                         span: auto

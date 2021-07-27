@@ -301,6 +301,11 @@ class Repeater extends FormWidgetBase
         });
     }
 
+    public function getFormWidgets()
+    {
+        return $this->formWidgets;
+    }
+
     /**
      * Creates a form widget based on a field index and optional group code.
      * @param int $index
@@ -382,7 +387,9 @@ class Repeater extends FormWidgetBase
         $index = post('_repeater_index');
         $group = post('_repeater_group');
 
+
         $widget = $this->makeItemFormWidget($index, $group);
+
 
         return $widget->onRefresh();
     }
