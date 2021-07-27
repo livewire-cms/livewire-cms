@@ -252,7 +252,7 @@ tabs:
                         type: datepicker
                         span: auto
                         trigger:
-                            action: disable|empty
+                            action: disable
                             field: published
                             condition: unchecked
                 tabs:
