@@ -390,8 +390,6 @@ class Repeater extends Component
         if (!$this->modelId) {
             $c->create();
         } else {
-            // dd($this->form);
-            // dd($c);
             $c->update($this->modelId);
         }
         $ww = $c->widget->{$this->field['alias']};
