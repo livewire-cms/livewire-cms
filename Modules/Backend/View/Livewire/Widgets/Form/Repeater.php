@@ -387,17 +387,26 @@ class Repeater extends Component
 
     public function trigger()
     {
-        $this->filterTriggerAttributes($this->fields);
-        array_map(function($tab){
-            foreach($tab as $fields){
-                $this->filterTriggerAttributes($fields);
-            }
-        },$this->tabs);
-        array_map(function($tab){
-            foreach($tab as $fields){
-                $this->filterTriggerAttributes($fields);
-            }
-        },$this->secondTabs);
+
+
+        foreach ($this->allFields as $allField){
+            $fields = $allField['fields']??[];
+            $tabs = $allField['tabs']??[];
+            $secondTabs = $allField['secondTabs']??[];
+            $this->filterTriggerAttributes($fields);
+            array_map(function($tab){
+                foreach($tab as $fields){
+                    $this->filterTriggerAttributes($fields);
+                }
+            },$tabs);
+            array_map(function($tab){
+                foreach($tab as $fields){
+                    $this->filterTriggerAttributes($fields);
+                }
+            },$secondTabs);
+        }
+
+
     }
 
     protected function filterTriggerAttributes($fields)
