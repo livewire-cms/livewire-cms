@@ -87,6 +87,7 @@
     x-init="function() {
         Wireui.dispatchHook('notifications:load')
     }"
+    x-cloak
     wire:ignore>
     <div class="max-w-sm w-full space-y-2 pointer-events-auto flex flex-col-reverse">
         <template x-for="notification in notifications" :key="`notification-${notification.id}`">

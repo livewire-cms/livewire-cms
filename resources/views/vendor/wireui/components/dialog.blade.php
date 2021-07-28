@@ -132,7 +132,7 @@ x-show="show"
 x-on:wireui:{{ $dialog }}.window="showDialog($event.detail)"
 x-on:wireui:confirm-{{ $dialog }}.window="confirmDialog($event.detail)"
 x-on:keydown.escape.window="handleEscape"
-style="display: none">
+style="display: none" x-cloak>
     <div class="flex items-end {{ $align }} sm:pt-16 min-h-screen justify-center">
         <div class="fixed inset-0 bg-secondary-400 bg-opacity-60 transform transition-opacity
             {{ $dialog }}-backdrop @if($blur) backdrop-filter {{ $blur }} @endif
