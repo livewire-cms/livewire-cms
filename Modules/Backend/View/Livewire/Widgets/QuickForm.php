@@ -66,7 +66,7 @@ class QuickForm extends Component
     public function mount($widget=null)
     {
 
-        // $this->resetData();
+        $this->resetData();
         if(!$widget){
             return ;
         }
@@ -268,7 +268,7 @@ class QuickForm extends Component
 
     public function uploadFinished()
     {
-        $this->update = !$this->update;
+
 
 
         $params = func_get_args();
