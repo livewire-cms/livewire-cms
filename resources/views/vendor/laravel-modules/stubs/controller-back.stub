@@ -35,15 +35,15 @@ class $CLASS$ extends Controller
         return view('$LOWER_NAME$::$CLASSNOCONTROLLERL$.index',['widget'=>$this->widget]);
 
     }
-    public function create()
+    public function create($context='')
     {
-        $this->asExtension('FormController')->create();
+        $this->asExtension('FormController')->create($context);
         return view('$LOWER_NAME$::$CLASSNOCONTROLLERL$.create',['widget'=>$this->widget]);
 
     }
-    public function update($id)
+    public function update($id,$context='')
     {
-        $this->asExtension('FormController')->update($id);
+        $this->asExtension('FormController')->update($id,$context);
         return view('$LOWER_NAME$::$CLASSNOCONTROLLERL$.update', ['widget'=>$this->widget]);
 
     }

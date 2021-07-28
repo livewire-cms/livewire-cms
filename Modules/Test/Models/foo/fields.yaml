@@ -6,7 +6,6 @@ fields:
     # id:
     #     label: ID
     #     disabled: true
-
     name:
         label: 名称
         span: auto
@@ -30,11 +29,6 @@ fields:
         label: 发布
         span: auto
         type: toggle
-
-    extra[onrefresh]:
-        label: partial
-        type: partial
-        span: full
     published_at:
         label: 发布时间
         type: datepicker
@@ -43,6 +37,11 @@ fields:
             action: enable
             field: published
             condition: checked
+    extra[onrefresh]:
+        label: partial
+        type: partial
+        span: full
+
 
 
 

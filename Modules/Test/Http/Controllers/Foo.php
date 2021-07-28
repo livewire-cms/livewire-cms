@@ -40,15 +40,15 @@ class Foo extends Controller
         return view('test::foo.index',['widget'=>$this->widget]);
 
     }
-    public function create()
+    public function create($context='')
     {
-        $this->asExtension('FormController')->create();
+        $this->asExtension('FormController')->create($context);
         return view('test::foo.create',['widget'=>$this->widget]);
 
     }
-    public function update($id)
+    public function update($id,$context='')
     {
-        $this->asExtension('FormController')->update($id);
+        $this->asExtension('FormController')->update($id,$context);
         return view('test::foo.update', ['widget'=>$this->widget]);
 
     }

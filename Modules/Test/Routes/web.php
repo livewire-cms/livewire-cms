@@ -58,8 +58,8 @@ Route::group([
         'middleware' =>[]
     ],function () {
         Route::get('', 'Post@index')->name('');
-        Route::get('create', 'Post@create')->name('create');
-        Route::get('update/{id}', 'Post@update')->name('update');
+        Route::get('create/{context?}', 'Post@create')->name('create');
+        Route::get('update/{id}/{context?}', 'Post@update')->name('update');
     });
 });Route::group([
     'prefix' => 'backend/test',
@@ -100,7 +100,7 @@ Route::group([
         'middleware' =>[]
     ],function () {
         Route::get('', 'Foo@index')->name('');
-        Route::get('create', 'Foo@create')->name('create');
-        Route::get('update/{id}', 'Foo@update')->name('update');
+        Route::get('create/{context?}', 'Foo@create')->name('create');
+        Route::get('update/{id}/{context}', 'Foo@update')->name('update');
     });
 });

@@ -271,9 +271,9 @@ class ControllerMakeCommand extends GeneratorCommand
         'as' =>'{$l}.',
         'middleware' =>[]
     ],function () {
-        Route::get('', '{$u}@index')->name('');
-        Route::get('create', '{$u}@create')->name('create');
-        Route::get('update/{id}', '{$u}@update')->name('update');
+        Route::get('', '{$u}@index')->name('index');
+        Route::get('create/{context?}', '{$u}@create')->name('create');
+        Route::get('update/{id}/{context?}', '{$u}@update')->name('update');
     });
 });";
 

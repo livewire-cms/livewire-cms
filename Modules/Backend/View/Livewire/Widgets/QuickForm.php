@@ -410,6 +410,15 @@ class QuickForm extends Component
         $this->resetData();
         $this->customData = $data;
 
+        $applyConfigValues = [
+            'context',
+        ];
+        foreach ($applyConfigValues as $value) {
+            if (array_key_exists($value, $data)) {
+                $this->{$value} = $data[$value];
+            }
+        }
+
         $this->quickFormModal = true;
         request()->merge($data);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
@@ -429,6 +438,15 @@ class QuickForm extends Component
 
 
         $this->resetData();
+
+        $applyConfigValues = [
+            'context',
+        ];
+        foreach ($applyConfigValues as $value) {
+            if (array_key_exists($value, $data)) {
+                $this->{$value} = $data[$value];
+            }
+        }
 
         $this->quickFormModal = true;
         $this->customData = $data;
