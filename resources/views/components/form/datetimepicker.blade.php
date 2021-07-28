@@ -25,7 +25,7 @@ x-init="init()"
     x-ref="input1"
     type="text"
     :disabled="trigger_endable_or_disable()"
-    class="w-full border border-gray-400 text-gray-800 placeholder-gray-400 rounded focus:border-transparent focus:outline-none focus:shadow-outline px-3 py-2 disabled:bg-gray-200"
+    class="w-full border border-gray-400 text-gray-800 placeholder-gray-400 rounded focus:border-transparent focus:outline-none focus:shadow-outline px-3 py-2 disabled:bg-gray-200 dark:disabled:bg-gray-600 dark:text-gray-400 dark:bg-secondary-800"
     {{$attributes->wire('model')}}
 
 >

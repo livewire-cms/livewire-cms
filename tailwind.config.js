@@ -2,6 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
 const Color = require('color')
 const colors = require('./colors')
+const tailcolors = require('tailwindcss/colors')
 
 module.exports = {
 
@@ -29,6 +30,15 @@ module.exports = {
     }),
     ...colors,
     extend: {
+        colors: {
+            blueGray: tailcolors.blueGray,
+            primary: tailcolors.indigo,
+            secondary: tailcolors.gray,
+            positive: tailcolors.emerald,
+            negative: tailcolors.red,
+            warning: tailcolors.amber,
+            info: tailcolors.blue
+        },
       maxHeight: {
         0: '0',
         xl: '36rem',
@@ -51,6 +61,7 @@ module.exports = {
       'dark:focus',
       'dark:active',
       'dark:odd',
+      'dark:disabled',
     ],
     display: ['responsive', 'dark'],
     textColor: [

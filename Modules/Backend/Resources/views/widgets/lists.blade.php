@@ -48,13 +48,13 @@
             </div>
         @endif
         @if (isset($listFilter))
-        <div class="p-2">
+        <div class="p-2 dark:text-gray-400">
             <h1>Filter</h1>
         </div>
         <div class="flex p-2">
                 @foreach ($listFilter->vars['scopes'] as $k=>$scope)
                     <div class="flex justify-center items-center" wire:ignore>
-                        <div class="p-2">
+                        <div class="p-2 dark:text-gray-400">
                             {{__($scope->label)}}:
                         </div>
                         @if ($scope->type=='group')
