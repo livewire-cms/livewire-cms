@@ -4,10 +4,9 @@ const Color = require('color')
 const colors = require('./colors')
 
 module.exports = {
-    presets: [
 
-        require('./vendor/ph7jack/wireui/tailwind.config.js')
-    ],
+  mode: 'jit',
+
   purge: [
       './Modules/*/Resources/views/**/*.blade.php',
       './resources/views/**/*.blade.php',
@@ -15,6 +14,7 @@ module.exports = {
        './vendor/ph7jack/wireui/resources/**/*.blade.php',
         './vendor/ph7jack/wireui/ts/**/*.ts',
         './vendor/ph7jack/wireui/src/View/**/*.php'
+
     ],
   theme: {
     themeVariants: ['dark'],
@@ -87,5 +87,18 @@ module.exports = {
 
       addUtilities(newUtilities, variants('boxShadow'))
     }),
+    plugin(function ({ addUtilities }) {
+        const utility = {
+          '.hide-scrollbar::-webkit-scrollbar': {
+            'display': 'none'
+          },
+          '.hide-scrollbar': {
+            '-ms-overflow-style': 'none',
+            'scrollbar-width': 'none'
+          }
+        }
+
+        addUtilities(utility, ['responsive'])
+    })
   ],
 }
