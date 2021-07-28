@@ -205,7 +205,7 @@ class Form extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if ($this->context=='create') {
+        if (!$this->modelId) {
 
             $c->asExtension('FormController')->create_onSave();
         } elseif ($this->context=='update') {
@@ -261,11 +261,11 @@ class Form extends Component
 
         $c->asExtension('FormController')->create();
 
-        if($this->context=='create'){
+        if(!$this->modelId){
 
             $c->asExtension('FormController')->create();
 
-        }elseif($this->context=='update'){
+        }else{
             $c->asExtension('FormController')->update($this->modelId);
 
         }
@@ -413,11 +413,11 @@ class Form extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if ($this->context=='create') {
+        if (!$this->modelId) {
 
             $c->create();
 
-        } elseif ($this->context=='update') {
+        } else {
             // dd($this->form);
             // dd($c);
             $c->update($this->modelId);

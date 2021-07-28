@@ -34,7 +34,7 @@ fields:
     extra[onrefresh]:
         label: partial
         type: partial
-        span: right
+        span: full
     published_at:
         label: 发布时间
         type: datepicker

@@ -247,7 +247,7 @@ class QuickForm extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if ($this->context=='create') {
+        if (!$this->modelId) {
             $c->asExtension('FormController')->create_onSave();
         } elseif ($this->context=='update') {
             // dd($this->form);
@@ -306,11 +306,11 @@ class QuickForm extends Component
 
         $c->asExtension('FormController')->create();
 
-        if($this->context=='create'){
+        if (!$this->modelId) {
 
             $c->asExtension('FormController')->create();
 
-        }elseif($this->context=='update'){
+        }else{
             $c->asExtension('FormController')->update($this->modelId);
 
         }
@@ -490,22 +490,22 @@ class QuickForm extends Component
 
     public function onRefresh($data)
     {
+        // dd($this->modelId);
         request()->merge($data)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if ($this->context=='create') {
-
+        if (!$this->modelId) {
             $c->create();
-
-        } elseif ($this->context=='update') {
-            // dd($this->form);
-            // dd($c);
+        } else {
             $c->update($this->modelId);
         }
 
+
         $c->widget->form->onRefresh();
+
+        // dd($c->widget->form);
 
         $this->mount($c->widget);
 

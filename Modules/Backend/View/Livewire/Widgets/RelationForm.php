@@ -326,16 +326,14 @@ class RelationForm extends Component
         request()->merge($this->form);
 
         // dd($this->context,$this->parentContext);
-        if($this->context=='create'){
-
-
+        if(!$this->modelId){
 
             // $c->asExtension('FormController')->create_onSave();
             $c = find_controller_by_url(request()->input('fingerprint.path'));
             if(!$c){
                 throw new \RuntimeException('Could not find controller');
             }
-            $c->setAction($this->parentContext);
+            $c->setAction('action');
             $c->setParams([$this->modelId]);
             // $c->asExtension('FormController')->update($this->modelId);
             // dd($this->modelId,$this->relation_field);
@@ -346,17 +344,15 @@ class RelationForm extends Component
                 '_session_key' => $this->parentSessionKey
             ]);
             $this->resetData();
-
         // dd($c);
-
-        }elseif($this->context=='update'){
+        }else{
             $c = find_controller_by_url(request()->input('fingerprint.path'));
 
             if(!$c){
                 throw new \RuntimeException('Could not find controller');
             }
             // $c->asExtension('FormController')->update($this->modelId);
-            $c->setAction($this->parentContext);
+            $c->setAction('update');
             $c->setParams([$this->modelId]);
 
             $c->onRelationManageUpdate();
@@ -427,18 +423,17 @@ class RelationForm extends Component
         $c->asExtension('FormController')->create();
 
 
-        if($this->context=='create'){
+        if(!$this->manageId){
 
-            if($this->parentContext=='create'){
+            if(!$this->modelId){
                 $c->asExtension('FormController')->create();
-            }else if($this->parentContext=='update'){
+            }else{
                 $c->asExtension('FormController')->update($this->modelId);
             }
-
-        }elseif($this->context=='update'){
-            if($this->parentContext=='create'){
+        }else{
+            if(!$this->modelId){
                 $c->asExtension('FormController')->create();
-            }else if($this->parentContext=='update'){
+            }else{
                 $c->asExtension('FormController')->update($this->modelId);
             }
         }
@@ -593,18 +588,18 @@ class RelationForm extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-        if($this->context=='create'){
+        if(!$this->manageId){
 
-            if($this->parentContext=='create'){
+            if(!$this->modelId){
                 $c->asExtension('FormController')->create();
-            }else if($this->parentContext=='update'){
+            }else {
                 $c->asExtension('FormController')->update($this->modelId);
             }
 
-        }elseif($this->context=='update'){
+        }else{
             if($this->parentContext=='create'){
                 $c->asExtension('FormController')->create();
-            }else if($this->parentContext=='update'){
+            }else{
                 $c->asExtension('FormController')->update($this->modelId);
             }
         }
@@ -715,6 +710,11 @@ class RelationForm extends Component
     }
 
 
+    /**
+     * 下拉框联动 调用之前 先seeDependsOn
+     *
+     * @return void
+     */
     protected function dependsOn()
     {
 
