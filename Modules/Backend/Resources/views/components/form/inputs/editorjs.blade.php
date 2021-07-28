@@ -13,7 +13,7 @@
             'value' => $field['value'],
             'uploadDisk' => 'public',
             'downloadDisk' => 'public',
-            'class' => '',
+            'class' => "bg-white dark:text-gray-400 dark:bg-gray-800",
             'style' => '',
             'readOnly' => false,
             'placeholder' => $field['placeholder'],

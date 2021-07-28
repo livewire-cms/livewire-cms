@@ -7929,6 +7929,16 @@ span.CodeMirror-selectedtext { background: none; }
 	background-color: rgba(228, 228, 231, var(--tw-bg-opacity));
 }
 
+.theme-dark .dark\:bg-gray-600 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(75, 85, 99, var(--tw-bg-opacity));
+}
+
+.theme-dark .dark\:bg-gray-400 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(159, 166, 178, var(--tw-bg-opacity));
+}
+
 .theme-dark .dark\:bg-opacity-60 {
 	--tw-bg-opacity: 0.6;
 }

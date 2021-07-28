@@ -52,10 +52,12 @@
     "
     x-init="init()"
     {{$attributes->wire('model')}}
+
+    class="dark:bg-gray-800"
     wire:ignore
     >
 
-        <div x-ref="quilleditor" >
+        <div x-ref="quilleditor" class="dark:text-gray-400">
 
         </div>
         <input type="hidden" x-ref="value" value="{{$value}}">

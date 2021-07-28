@@ -74,16 +74,16 @@ $config = json_encode($field['config']['config']??[
 
     >
 
-        <div id="{{ $field['id'] }}" class="p-2">
+        <div id="{{ $field['id'] }}" class="p-2 dark:bg-gray-600">
             <textarea
 
                 x-ref="input"
                 x-model.debounce.1000ms="content"
-                class=" hidden"
+                class=" hidden dark:bg-gray-600"
 
             ></textarea>
         </div>
-        <div x-html="marked(content?content:'')" class="w-full prose max-w-none prose-indigo leading-6 rounded-b-md shadow-sm border border-gray-300 p-5 bg-white overflow-y-auto"></div>
+        <div x-html="marked(content?content:'')" class="w-full prose max-w-none prose-indigo leading-6 rounded-b-md shadow-sm border border-gray-300 p-5 bg-white overflow-y-auto dark:bg-gray-400 dark:text-gray-400"></div>
 
         <input type="hidden"  x-ref="config" value="{{$config}}">
 

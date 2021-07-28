@@ -26,7 +26,7 @@
 "
 x-init="init()"
 
-class="bg-gray-200">
+class="">
     <div class="flex flex-col  ml-5">
         <input x-ref="field" type="hidden" value="{{json_encode($attributes->get('field',[]))}}">
 
@@ -34,7 +34,7 @@ class="bg-gray-200">
             @foreach ($o as $ov)
 
                 <label class="inline-flex items-center my-3 " >
-                    <input x-bind:disabled="trigger_endable_or_disable()" type="radio"  x-model="value" class="form-radio h-5 w-5 text-green-600 disabled:bg-gray-200" value="{{$ov['id']}}"><span class="ml-2 text-gray-700">{{$ov['option'][0]}}</span>
+                    <input x-bind:disabled="trigger_endable_or_disable()" type="radio"  x-model="value" class="form-radio h-5 w-5 text-green-600 disabled:bg-gray-200 dark:disabled:bg-gray-600" value="{{$ov['id']}}"><span class="ml-2 dark:text-gray-400 ">{{$ov['option'][0]}}</span>
                 </label>
                 @isset($ov['option'][1])
                      <p class="text-xs">{{__($ov['option'][1])}}</p>

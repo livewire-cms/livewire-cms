@@ -54,8 +54,8 @@
 
          @foreach ($o as $v1)
             <label class="{{$inline?'':'block'}}">
-                <input class="disabled:bg-gray-200" :disabled="trigger_endable_or_disable()" type="checkbox" x-bind:checked="itemSelected('{{$v1['id']}}')" x-on:change="toggleItem('{{$v1['id']}}')">
-                <span >
+                <input class="disabled:bg-gray-200 dark:disabled:bg-gray-600" :disabled="trigger_endable_or_disable()" type="checkbox" x-bind:checked="itemSelected('{{$v1['id']}}')" x-on:change="toggleItem('{{$v1['id']}}')">
+                <span class="dark:text-gray-400">
                     @if (is_array($v1['name']))
                     {{$v1['name'][0]}}
                     @else
