@@ -34,7 +34,6 @@ trait ConfigMaker
         if (!$configFile) {
             $configFile = [];
         }
-
         /*
          * Config already made
          */
@@ -51,7 +50,9 @@ trait ConfigMaker
          * Process config from file contents
          */
         else {
+
             if (isset($this->controller) && method_exists($this->controller, 'getConfigPath')) {
+
                 $configFile = $this->controller->getConfigPath($configFile);
             }
             else {
@@ -59,8 +60,8 @@ trait ConfigMaker
             }
             // dd($configFile);
 
-            // dd($configFile);
             if (!File::isFile($configFile)) {
+
                 throw new SystemException(__(
                     'system::lang.config.not_found',
                     ['file' => $configFile, 'location' => get_called_class()]
@@ -143,6 +144,7 @@ trait ConfigMaker
      */
     public function getConfigPath($fileName, $configPath = null)
     {
+
         if (!isset($this->configPath)) {
             $this->configPath = $this->guessConfigPath();
         }
@@ -151,8 +153,10 @@ trait ConfigMaker
             $configPath = $this->configPath;
         }
 
-        dd($configPath,$fileName);
-
+        // dd($configPath,$fileName);
+        // if(\Str::contains($fileName, 'foo/fields.yaml')){
+        //     dd($fileName,1,$this->configPath);
+        // }
         $fileName = File::symbolizePath($fileName);
 
         if (File::isLocalPath($fileName) ||

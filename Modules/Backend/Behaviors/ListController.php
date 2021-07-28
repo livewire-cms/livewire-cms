@@ -93,11 +93,11 @@ class ListController extends ControllerBehavior
             $this->listDefinitions = ['list' => $controller->listConfig];
             $this->primaryDefinition = 'list';
         }
-
         /*
          * Build configuration
          */
         $this->setConfig($this->listDefinitions[$this->primaryDefinition], $this->requiredConfig);
+
 
     }
 

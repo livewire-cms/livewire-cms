@@ -30,6 +30,13 @@ class Plugin extends PluginBase
 
         return [
 
+            'backend' => [
+                'label'       => 'Dashboard',
+                'url'         => Backend::url('backend'),
+                'icon'        => 'icon-leaf',
+                'permissions' => [],
+                'order'       => 100,
+            ]
 
 
         ];

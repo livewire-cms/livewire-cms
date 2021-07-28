@@ -21,6 +21,7 @@ Route::group([
     'middleware' => 'web',
     'as'=> 'backend.backend.',
 ], function () {
+    Route::get('','Index@index')->name('index');
     Route::group([
         'prefix'=>'users',
         'as' =>'users.',

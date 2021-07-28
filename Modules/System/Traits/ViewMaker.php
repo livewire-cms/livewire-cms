@@ -112,12 +112,12 @@ trait ViewMaker
      */
     public function makePartial($partial, $params = [], $throwException = true)
     {
-        // $notRealPath = realpath($partial) === false || is_dir($partial) === true;
-        // if (!File::isPathSymbol($partial) && $notRealPath) {
-        //     $folder = strpos($partial, '/') !== false ? dirname($partial) . '/' : '';
-        //     $partial = $folder . '_' . strtolower(basename($partial)).'.htm';
-        // }
-        $partial = '_' . strtolower(basename($partial)).'.htm';
+        $notRealPath = realpath($partial) === false || is_dir($partial) === true;
+        if (!File::isPathSymbol($partial) && $notRealPath) {
+            $folder = strpos($partial, '/') !== false ? dirname($partial) . '/' : '';
+            $partial = $folder . '_' . strtolower(basename($partial)).'.htm';
+        }
+        // $partial = '_' . strtolower(basename($partial)).'.htm';
 
         $partialPath = $this->getViewPath($partial);
         if (!File::exists($partialPath)) {
@@ -157,7 +157,7 @@ trait ViewMaker
      */
     public function getViewPath($fileName, $viewPath = null)
     {
-        
+
         if (!isset($this->viewPath)) {
             $this->viewPath = $this->guessViewPath();
         }
@@ -166,21 +166,20 @@ trait ViewMaker
             $viewPath = $this->viewPath;
         }
 
-        // $fileName = File::symbolizePath($fileName);
+        $fileName = File::symbolizePath($fileName);
 
-        // if (File::isLocalPath($fileName) ||
-        //     (!Config::get('cms.restrictBaseDir', true) && realpath($fileName) !== false)
-        // ) {
-        //     return $fileName;
-        // }
+        if (File::isLocalPath($fileName) ||
+            (!Config::get('cms.restrictBaseDir', true) && realpath($fileName) !== false)
+        ) {
+            return $fileName;
+        }
 
         if (!is_array($viewPath)) {
             $viewPath = [$viewPath];
         }
 
         foreach ($viewPath as $path) {
-            // $_fileName = File::symbolizePath($path) . '/' . $fileName;
-            $_fileName = $path . '/' . $fileName;
+            $_fileName = File::symbolizePath($path) . '/' . $fileName;
             if (File::isFile($_fileName)) {
                 return $_fileName;
             }
@@ -199,7 +198,7 @@ trait ViewMaker
     {
         if (!strlen($filePath) ||
             !File::isFile($filePath)
-            // || (!File::isLocalPath($filePath) && Config::get('cms.restrictBaseDir', true))
+            || (!File::isLocalPath($filePath) && Config::get('cms.restrictBaseDir', true))
         ) {
             return '';
         }

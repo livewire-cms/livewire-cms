@@ -39,7 +39,10 @@ use Modules\Backend\View\Livewire\Widgets\Lists\Action as LivewireWidgetListsAct
 
 
 use BackendMenu;
+use BackendAuth;
 use Backend;
+use Modules\Backend\Models\UserRole;
+
 use Modules\Backend\Classes\WidgetManager;
 use Modules\Backend\Classes\PermissionManager;
 use Illuminate\Http\Request;
@@ -48,6 +51,7 @@ use Illuminate\Filesystem\Filesystem;
 
 class ServiceProvider extends BaseServiceProvider
 {
+    public $pathSymbols=[];
     /**
      * Register any application services.
      *
@@ -55,7 +59,10 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-
+        $this->pathSymbols = [
+            '$' => base_path() . '/Modules',
+            '~' => base_path(),
+        ];
         \Event::listen('backend.form.refreshFields', function ( $formWidget,  $allFields) {
             // dd(post('refresh_fields'));
             if (($updateFields = post('refresh_fields')) && is_array($updateFields)) {
@@ -77,6 +84,51 @@ class ServiceProvider extends BaseServiceProvider
 
         Filesystem::macro('isLocalDisk', function ($disk) {
             return ($disk->getDriver()->getAdapter() instanceof \League\Flysystem\Adapter\Local);
+        });
+        Filesystem::macro('isLocalPath', function($path, $realpath = true){
+            $base = base_path();
+            if ($realpath) {
+                $path = realpath($path);
+            }
+            return !($path === false || strncmp($path, $base, strlen($base)) !== 0);
+        });
+        Filesystem::macro('symbolizePath', function($path, $default = false){
+            // if(\Str::contains($path, 'foo/fields.yaml')){
+            //     dd($path,22,$this->pathSymbols);
+            // }
+            $pathSymbols = Filesystem::pathSymbols();
+
+            if (!$firstChar = Filesystem::isPathSymbol($path)) {
+                return $default === false ? $path : $default;
+            }
+            $_path = substr($path, 1);
+            return $pathSymbols[$firstChar] . $_path;
+        });
+        Filesystem::macro('isPathSymbol', function($path){
+            $firstChar = substr($path, 0, 1);
+            $pathSymbols = Filesystem::pathSymbols();
+            if (isset($pathSymbols[$firstChar])) {
+                return $firstChar;
+            }
+            return false;
+        });
+
+        Filesystem::macro('issetPathSymbols',function($firstChar=''){
+            $pathSymbols = [
+                '$' => base_path() . '/Modules',
+                '~' => base_path(),
+            ];
+            if($firstChar){
+                return isset($pathSymbols[$firstChar]);
+            }
+            return $pathSymbols;
+        });
+        Filesystem::macro('pathSymbols',function(){
+            $pathSymbols = [
+                '$' => base_path() . '/Modules',
+                '~' => base_path(),
+            ];
+            return $pathSymbols;
         });
 
 
@@ -158,10 +210,10 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerBackendReportWidgets()
     {
         \Modules\Backend\Classes\WidgetManager::instance()->registerReportWidgets(function ($manager) {
-            // $manager->registerReportWidget(\Backend\ReportWidgets\Welcome::class, [
-            //     'label'   => 'backend::lang.dashboard.welcome.widget_title_default',
-            //     'context' => 'dashboard'
-            // ]);
+            $manager->registerReportWidget(\Modules\Backend\ReportWidgets\Welcome::class, [
+                'label'   => 'backend::lang.dashboard.welcome.widget_title_default',
+                'context' => 'dashboard'
+            ]);
         });
     }
     /*
@@ -169,10 +221,55 @@ class ServiceProvider extends BaseServiceProvider
         */
     protected function registerBackendPermissions()
     {
-        PermissionManager::instance()->registerCallback(function ($manager) {
-            //todo
-
-
+        BackendAuth::registerCallback(function ($manager) {
+            $manager->registerPermissions('Modules.Backend', [
+                'backend.access_dashboard' => [
+                    'label' => 'system::lang.permissions.view_the_dashboard',
+                    'tab'   => 'system::lang.permissions.name',
+                ],
+                'backend.manage_default_dashboard' => [
+                    'label' => 'system::lang.permissions.manage_default_dashboard',
+                    'tab'   => 'system::lang.permissions.name',
+                    'roles' => UserRole::CODE_DEVELOPER,
+                ],
+                'backend.manage_users' => [
+                    'label' => 'system::lang.permissions.manage_other_administrators',
+                    'tab'   => 'system::lang.permissions.name',
+                    'roles' => UserRole::CODE_DEVELOPER,
+                ],
+                'backend.impersonate_users' => [
+                    'label' => 'system::lang.permissions.impersonate_users',
+                    'tab'   => 'system::lang.permissions.name',
+                    'roles' => UserRole::CODE_DEVELOPER,
+                ],
+                'backend.manage_preferences' => [
+                    'label' => 'system::lang.permissions.manage_preferences',
+                    'tab'   => 'system::lang.permissions.name',
+                ],
+                'backend.manage_editor' => [
+                    'label' => 'system::lang.permissions.manage_editor',
+                    'tab'   => 'system::lang.permissions.name',
+                    'roles' => UserRole::CODE_DEVELOPER,
+                ],
+                'backend.manage_own_editor' => [
+                    'label' => 'system::lang.permissions.manage_own_editor',
+                    'tab'   => 'system::lang.permissions.name',
+                ],
+                'backend.manage_branding' => [
+                    'label' => 'system::lang.permissions.manage_branding',
+                    'tab'   => 'system::lang.permissions.name',
+                    'roles' => UserRole::CODE_DEVELOPER,
+                ],
+                'media.manage_media' => [
+                    'label' => 'backend::lang.permissions.manage_media',
+                    'tab' => 'system::lang.permissions.name',
+                ],
+                'backend.allow_unsafe_markdown' => [
+                    'label' => 'backend::lang.permissions.allow_unsafe_markdown',
+                    'tab' => 'system::lang.permissions.name',
+                    'roles' => UserRole::CODE_DEVELOPER,
+                ],
+            ]);
 
         });
     }

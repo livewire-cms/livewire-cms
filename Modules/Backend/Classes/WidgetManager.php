@@ -1,7 +1,7 @@
 <?php namespace Modules\Backend\Classes;
 
 use Str;
-// use BackendAuth;
+use BackendAuth;
 use Modules\LivewireCore\Exception\SystemException;
 use Modules\System\Classes\PluginManager;
 use Event;
@@ -205,7 +205,7 @@ class WidgetManager
          *     });
          *
          */
-        Event::fire('system.reportwidgets.extendItems', [$this]);
+        Event::dispatch('system.reportwidgets.extendItems', [$this]);
 
         $user = BackendAuth::getUser();
         foreach ($this->reportWidgets as $widget => $config) {

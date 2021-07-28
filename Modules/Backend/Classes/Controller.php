@@ -8,8 +8,11 @@ use BackendAuth;
 use Request;
 class Controller extends BaseController
 {
+
     use \Modules\LivewireCore\Extension\ExtendableTrait;
+    use \Modules\System\Traits\ConfigMaker;
     use \Modules\System\Traits\ViewMaker;
+    use \Modules\System\Traits\EventEmitter;
 
     public $implement = [];
 
@@ -106,14 +109,14 @@ class Controller extends BaseController
         return self::extendableCallStatic($name, $params);
     }
 
-    public function getConfigPath($file)
-    {
-        if(Str::contains($file, '~')){
-            return base_path().Str::replaceFirst('~', '', $file);
-        }
+    // public function getConfigPath($file)
+    // {
+    //     if(Str::contains($file, '~')){
+    //         return base_path().Str::replaceFirst('~', '', $file);
+    //     }
 
-        return  Str::replaceLast('controller', '', $this->guessViewPathFrom($this).'/'.$file);
-    }
+    //     return  Str::replaceLast('controller', '', $this->guessViewPathFrom($this).'/'.$file);
+    // }
 
 
 
