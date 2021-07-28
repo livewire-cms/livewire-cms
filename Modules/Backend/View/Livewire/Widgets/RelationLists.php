@@ -11,9 +11,6 @@ class RelationLists extends Component
     public $prefix;//relation name
 
 
-
-
-
     public $context;//create or update
     public $modelId;//update/:id
 
@@ -60,12 +57,10 @@ class RelationLists extends Component
         if(!$c){
             throw new \RuntimeException('Could not find controller');
         }
-        if($this->context=='create'){
-            $c->asExtension('FormController')->create();
-        }else if($this->context=='update'){
-            $c->asExtension('FormController')->update($this->modelId);
+        if(!$this->modelId){
+            $c->asExtension('FormController')->create($this->context);
         }else{
-            throw new \RuntimeException('Could not find context');
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
         }
         $c->relationRender($this->prefix);
 
@@ -98,7 +93,7 @@ class RelationLists extends Component
         $pre = 'relation'.ucfirst(\Str::camel($this->prefix));
 
 
-        $c->asExtension('FormController')->update($this->modelId);
+        $c->asExtension('FormController')->update($this->modelId,$this->context);
 
         //$widget = 执行->asExtension('ListController')->index()
         $c->relationRender($this->prefix);
@@ -122,7 +117,7 @@ class RelationLists extends Component
         if(!$c){
             throw new \RuntimeException('Could not find controller');
         }
-        $c->asExtension('FormController')->update($this->modelId);
+        $c->asExtension('FormController')->update($this->modelId,$this->context);
         $c->relationRender($this->prefix);
 
         //$widget = 执行->asExtension('ListController')->index()
