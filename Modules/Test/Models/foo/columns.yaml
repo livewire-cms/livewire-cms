@@ -44,6 +44,8 @@ columns:
         enableEdit: true
         edit_fields:
             - name
+            - published
+            - published_at
             - extra[checkbox-inline]
             - extra[checkbox]
             - extra[toggle]
