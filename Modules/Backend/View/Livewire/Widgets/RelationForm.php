@@ -72,8 +72,13 @@ class RelationForm extends Component
         if(!$c){
             throw new \RuntimeException('Could not find controller');
         }
-        $c->setAction($this->parentContext);
-        $c->setParams([$this->modelId]);
+        if(!$this->modelId){
+            $c->setAction('create');
+            $c->setParams([$this->context]);
+        }else{
+            $c->setAction('update');
+            $c->setParams([$this->modelId,$this->context]);
+        }
         // $c->asExtension('FormController')->update($this->modelId);//todo
         $c->onRelationButtonCreate();
         // dd($c);
@@ -116,8 +121,15 @@ class RelationForm extends Component
         if(!$c){
             throw new \RuntimeException('Could not find controller');
         }
-        $c->setAction($this->parentContext);
-        $c->setParams([$this->modelId]);
+
+        if(!$this->modelId){
+            $c->setAction('create');
+            $c->setParams([$this->context]);
+        }else{
+            $c->setAction('update');
+            $c->setParams([$this->modelId,$this->context]);
+        }
+
         // $c->asExtension('FormController')->update($this->modelId);
         $c->onRelationClickViewList();
         // dd($c);
@@ -333,8 +345,8 @@ class RelationForm extends Component
             if(!$c){
                 throw new \RuntimeException('Could not find controller');
             }
-            $c->setAction('action');
-            $c->setParams([$this->modelId]);
+            $c->setAction('create');
+            $c->setParams([$this->parentContext,$this->modelId]);
             // $c->asExtension('FormController')->update($this->modelId);
             // dd($this->modelId,$this->relation_field);
             $c->onRelationManageCreate();
@@ -353,7 +365,7 @@ class RelationForm extends Component
             }
             // $c->asExtension('FormController')->update($this->modelId);
             $c->setAction('update');
-            $c->setParams([$this->modelId]);
+            $c->setParams([$this->modelId,$this->parentContext]);
 
             $c->onRelationManageUpdate();
 
@@ -426,15 +438,15 @@ class RelationForm extends Component
         if(!$this->manageId){
 
             if(!$this->modelId){
-                $c->asExtension('FormController')->create();
+                $c->asExtension('FormController')->create($this->parentContext);
             }else{
-                $c->asExtension('FormController')->update($this->modelId);
+                $c->asExtension('FormController')->update($this->modelId,$this->parentContext);
             }
         }else{
             if(!$this->modelId){
-                $c->asExtension('FormController')->create();
+                $c->asExtension('FormController')->create($this->parentContext);
             }else{
-                $c->asExtension('FormController')->update($this->modelId);
+                $c->asExtension('FormController')->update($this->modelId,$this->parentContext);
             }
         }
         // dd($c->widget);
@@ -488,7 +500,7 @@ class RelationForm extends Component
 
         ]);
 
-        $c->asExtension('FormController')->create();
+        $c->asExtension('FormController')->create($this->parentContext);
 
         // $c->asExtension('FormController')->update($this->modelId);
 
@@ -591,16 +603,16 @@ class RelationForm extends Component
         if(!$this->manageId){
 
             if(!$this->modelId){
-                $c->asExtension('FormController')->create();
+                $c->asExtension('FormController')->create($this->parentContext);
             }else {
-                $c->asExtension('FormController')->update($this->modelId);
+                $c->asExtension('FormController')->update($this->modelId,$this->parentContext);
             }
 
         }else{
             if($this->parentContext=='create'){
-                $c->asExtension('FormController')->create();
+                $c->asExtension('FormController')->create($this->parentContext);
             }else{
-                $c->asExtension('FormController')->update($this->modelId);
+                $c->asExtension('FormController')->update($this->modelId,$this->parentContext);
             }
         }
 

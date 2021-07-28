@@ -248,10 +248,10 @@ class QuickForm extends Component
             throw new \RuntimeException('Could not find controller');
         }
         if (!$this->modelId) {
-            $c->asExtension('FormController')->create_onSave();
-        } elseif ($this->context=='update') {
+            $c->asExtension('FormController')->create_onSave($this->context);
+        } else {
             // dd($this->form);
-            $c->asExtension('FormController')->update_onSave($this->modelId);
+            $c->asExtension('FormController')->update_onSave($this->modelId,$this->context);
         }
 
         $this->emitTo('backend.livewire.widgets.lists', 'search', ['search'=>'']);
@@ -359,7 +359,7 @@ class QuickForm extends Component
             'file_id' => $id,
             '_session_key' => $this->form['_session_key']??'',
         ]);
-        $c->asExtension('FormController')->create();
+        $c->asExtension('FormController')->create($this->context);
         // $c->asExtension('FormController')->update($this->modelId);
 
         // dd($this->form);
@@ -417,7 +417,7 @@ class QuickForm extends Component
             throw new \RuntimeException('Could not find controller');
         }
 
-        $c->create();
+        $c->asExtension('FormController')->create($this->context);
 
         $this->mount($c->widget);
 
@@ -437,7 +437,7 @@ class QuickForm extends Component
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
-
+        $c->asExtension('FormController')->update($data['record_id']??$data, $this->context);
         $c->update($data['record_id']??$data);
 
         $this->mount($c->widget);
@@ -497,9 +497,9 @@ class QuickForm extends Component
             throw new \RuntimeException('Could not find controller');
         }
         if (!$this->modelId) {
-            $c->create();
+            $c->asExtension('FormController')->create($this->context);
         } else {
-            $c->update($this->modelId);
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
         }
 
 

@@ -207,11 +207,11 @@ class Form extends Component
         }
         if (!$this->modelId) {
 
-            $c->asExtension('FormController')->create_onSave();
-        } elseif ($this->context=='update') {
+            $c->asExtension('FormController')->create_onSave($this->context);
+        } else {
             // dd($this->form);
             // dd($c);
-            $c->asExtension('FormController')->update_onSave($this->modelId);
+            $c->asExtension('FormController')->update_onSave($this->modelId,$this->context);
         }
 
         $this->notification()->success(
@@ -259,14 +259,11 @@ class Form extends Component
             throw new \RuntimeException('Could not find controller');
         }
 
-        $c->asExtension('FormController')->create();
 
         if(!$this->modelId){
-
-            $c->asExtension('FormController')->create();
-
+            $c->asExtension('FormController')->create($this->context);
         }else{
-            $c->asExtension('FormController')->update($this->modelId);
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
 
         }
 
@@ -312,7 +309,7 @@ class Form extends Component
             'file_id' => $id,
             '_session_key' => $this->form['_session_key']??'',
         ]);
-        $c->asExtension('FormController')->create();
+        $c->asExtension('FormController')->create($this->context);
         // $c->asExtension('FormController')->update($this->modelId);
 
         // dd($this->form);
@@ -415,12 +412,12 @@ class Form extends Component
         }
         if (!$this->modelId) {
 
-            $c->create();
+            $c->asExtension('FormController')->create($this->context);
 
         } else {
             // dd($this->form);
             // dd($c);
-            $c->update($this->modelId);
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
         }
 
         $c->widget->form->onRefresh();
