@@ -3048,6 +3048,10 @@ select {
 	padding-right: 2.5rem;
 }
 
+.pt-3 {
+	padding-top: 0.75rem;
+}
+
 .text-left {
 	text-align: left;
 }
@@ -3407,6 +3411,11 @@ select {
 .text-negative-900 {
 	--tw-text-opacity: 1;
 	color: rgba(127, 29, 29, var(--tw-text-opacity));
+}
+
+.text-teal-400 {
+	--tw-text-opacity: 1;
+	color: rgba(22, 189, 202, var(--tw-text-opacity));
 }
 
 .underline {
@@ -8828,6 +8837,11 @@ span.CodeMirror-selectedtext { background: none; }
 	.lg\:px-8 {
 		padding-left: 2rem;
 		padding-right: 2rem;
+	}
+
+	.lg\:text-base {
+		font-size: 1rem;
+		line-height: 1.5rem;
 	}
 }
 

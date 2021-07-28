@@ -22,10 +22,10 @@ fields:
         label: 描述
         span: auto
         type: textarea
-        trigger:
-            action: show
-            field: published
-            condition: checked
+        # trigger:
+        #     action: show
+        #     field: published
+        #     condition: checked
     published:
         label: 发布
         span: auto

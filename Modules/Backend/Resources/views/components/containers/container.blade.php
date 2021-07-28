@@ -1,5 +1,8 @@
 <x-back-app-layout>
 
+    @isset ($header)
+        {!! $header !!}
+    @endif
 
     {{ $slot }}
 
