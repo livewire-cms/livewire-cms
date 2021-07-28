@@ -101,6 +101,6 @@ Route::group([
     ],function () {
         Route::get('', 'Foo@index')->name('');
         Route::get('create/{context?}', 'Foo@create')->name('create');
-        Route::get('update/{id}/{context}', 'Foo@update')->name('update');
+        Route::get('update/{id}/{context?}', 'Foo@update')->name('update');
     });
 });

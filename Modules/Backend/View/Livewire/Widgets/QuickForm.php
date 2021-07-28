@@ -34,7 +34,7 @@ class QuickForm extends Component
 
     public $update;
 
-    public $quickFormModal;
+    public $modal;
 
 
     protected $widget;
@@ -256,7 +256,7 @@ class QuickForm extends Component
 
         $this->emitTo('backend.livewire.widgets.lists', 'search', ['search'=>'']);
 
-        $this->quickFormModal = false;
+        $this->modal = false;
 
         $this->notification()->success(
             $title = 'Success',
@@ -419,7 +419,7 @@ class QuickForm extends Component
             }
         }
 
-        $this->quickFormModal = true;
+        $this->modal = true;
         request()->merge($data);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
@@ -448,7 +448,7 @@ class QuickForm extends Component
             }
         }
 
-        $this->quickFormModal = true;
+        $this->modal = true;
         $this->customData = $data;
         request()->merge($data);
         $c = find_controller_by_url(request()->input('fingerprint.path'));

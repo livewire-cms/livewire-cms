@@ -7,14 +7,14 @@
 
 <div>
 
-        <x-jet-dialog-modal wire:model="quickFormModal">
+        <x-jet-dialog-modal wire:model="modal">
 
             <x-slot name="title">
                 {{$context=='create'?'create':'update'}}
             </x-slot>
 
             <x-slot name="content">
-                @if ($quickFormModal)
+                @if ($modal)
                     <div class="container grid p-6 mx-auto">
                         <form>
                             <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="">
@@ -31,7 +31,7 @@
                 <div wire:loading>
                     Loading...
                 </div>
-                <x-jet-secondary-button wire:click="$toggle('quickFormModal')" wire:loading.attr="disabled">
+                <x-jet-secondary-button wire:click="$toggle('modal')" wire:loading.attr="disabled">
                     {{ __('Cancel') }}
                 </x-jet-secondary-button>
 

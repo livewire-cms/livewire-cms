@@ -45,6 +45,10 @@ class Form extends Component
 
     public $alias;
 
+
+    public $formHeader;
+    public $formFooter;
+
     protected $listeners = ['upload:finished' => 'uploadFinished','setFormProperty'];
 
 
@@ -57,12 +61,25 @@ class Form extends Component
         $this->form = [];
     }
 
+    protected function setSometing($form)
+    {
+        $cc = $form->getController();
+
+        $this->formHeader = $cc->makePartial('form-header',[
+            'model'     => $form->model,
+        ]);
+
+        $this->formFooter = $cc->makePartial('form-footer',[
+            'model'     => $form->model,
+        ]);
+    }
+
     public function mount($widget)
     {
         $this->resetData();
 
         $widget->form->render();
-
+        $this->setSometing($widget->form);
         $this->widget = $widget;
         $this->alias = $widget->form->alias;
         $this->form['_session_key'] = $widget->form->getSessionKey();

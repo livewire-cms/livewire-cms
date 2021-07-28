@@ -31,7 +31,7 @@ class RelationForm extends Component
     public $update;
 
 
-    public $relationFormModal;
+    public $modal;
 
 
     protected $widget;
@@ -50,7 +50,7 @@ class RelationForm extends Component
         $this->resetData();
 
         // dd($data);
-        $this->relationFormModal=true;
+        $this->modal=true;
 
         $this->update = !$this->update;
         $this->relation_field = $data['_relation_field'];
@@ -97,7 +97,7 @@ class RelationForm extends Component
 
         $this->resetData();
 
-        $this->relationFormModal=true;
+        $this->modal=true;
 
         $this->relation_field = $data['_relation_field'];
         $this->context = 'update';
@@ -521,7 +521,7 @@ class RelationForm extends Component
 
 
     }
-    public function updatedRelationFormModal($value)
+    public function updatedmodal($value)
     {
         if(!$value){
             $this->resetData();
@@ -540,7 +540,7 @@ class RelationForm extends Component
         $this->relation_field = null;
         $this->manageId = null;
         $this->sessionKey = null;
-        $this->relationFormModal = false;
+        $this->modal = false;
 
     }
 

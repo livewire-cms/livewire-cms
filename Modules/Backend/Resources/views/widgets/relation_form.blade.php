@@ -10,7 +10,7 @@ if(!isset($widget)){
 //todo if $field['type']=='widget' todo form makeFormFieldWidget
 // dd($fields,$tabs,$secondTabs);
 @endphp
-<x-jet-dialog-modal wire:model="relationFormModal">
+<x-jet-dialog-modal wire:model="modal">
     <x-slot name="title">
         {{ __($context) }} {{__($relation_field)}}
     </x-slot>
@@ -18,9 +18,9 @@ if(!isset($widget)){
     <x-slot name="content">
         <div class="container grid p-6 mx-auto">
 
-            @if ($relationFormModal)
+            @if ($modal)
 
-                <form wire:submit.prevent="save" >
+                <form  >
                     <div x-data="{tab:'{{key($tabs)}}',secondTab:'{{key($secondTabs)}}'}"  class="">
                         <x-back-form-fields :fields="$fields" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-fields>
                         <x-back-form-tabs :tabs="$tabs" tab_name="tab" :form="$form" :relation_field="$relation_field" :widget="$widget"></x-back-form-tabs>
@@ -36,7 +36,7 @@ if(!isset($widget)){
         <div wire:loading>
             Loading...
         </div>
-        <x-jet-secondary-button wire:click="$toggle('relationFormModal')" wire:loading.attr="disabled">
+        <x-jet-secondary-button wire:click="$toggle('modal')" wire:loading.attr="disabled">
             {{ __('Cancel') }}
         </x-jet-secondary-button>
 

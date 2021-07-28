@@ -52,7 +52,7 @@ class ControllerMakeCommand extends GeneratorCommand
 
         // //second create controller config
 
-        foreach (['config_list.yaml','config_form.yaml','config_relation.yaml','config_filter.yaml','_list_toolbar.htm'] as $configFielName)
+        foreach (['config_list.yaml','config_form.yaml','config_relation.yaml','config_filter.yaml','_list_toolbar.htm','_form-header.htm','_form-footer.htm'] as $configFielName)
         {
             $path = str_replace('\\', '/', $this->getControllerConfigDestinationFilePath($configFielName));
             if (!$this->laravel['files']->isDirectory($dir = dirname($path))) {

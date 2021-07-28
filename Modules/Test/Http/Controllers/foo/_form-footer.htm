@@ -1,0 +1,29 @@
+<div class="flex">
+    <div wire:loading>
+        Loading...
+    </div>
+    <?php if (!$model->exists):?>
+        <div class="p-2">
+            <button
+            class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+            wire:click.prevent="save({redirect:1})"
+            wire:loading.attr="disabled"
+            >创建 </button>
+        </div>
+    <?php else:?>
+        <div class="p-2">
+            <button
+            class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+            wire:click.prevent="save({redirect:0})"
+            wire:loading.attr="disabled"
+            >保存 </button>
+        </div>
+        <div class="p-2">
+            <button
+            class="py-2 px-4 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow"
+            wire:click.prevent="save({redirect:1})"
+            wire:loading.attr="disabled"
+            >保存和关闭 </button>
+        </div>
+    <?php endif ?>
+</div>

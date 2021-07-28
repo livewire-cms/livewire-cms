@@ -23,6 +23,10 @@ $relation_field = $attributes->get('relation_field',null);
         $w = 'w-1/2';
         $grid = 'grid-cols-2';
 
+    }elseif ($field['span']=='middle') {
+        $w = 'w-1/2';
+        $grid = 'grid-cols-2';
+
     }
      @endphp
 
@@ -35,11 +39,17 @@ $relation_field = $attributes->get('relation_field',null);
             @if ($preField['span']=='left')
                 <div class="w-full"></div>
             @endif
+        @elseif($field['span']=='middle')
+            @if ($preField['span']=='left'||$preField['span']=='right')
+                <div class="w-full"></div>
+            @endif
         @endif
     @else
         @if($field['span']=='right')
             <div class="w-full"></div>
             <div class="w-1/2"></div>
+        @elseif($field['span']=='middle')
+            <div class="w-1/4"></div>
         @endif
     @endisset
     {{-- {{dd($field)}} --}}
