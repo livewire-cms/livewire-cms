@@ -51,7 +51,7 @@ class RelationForm extends Component
 
         // dd($data);
         $this->modal=true;
-
+        // dd($data['_relation_session_key']);
         $this->update = !$this->update;
         $this->relation_field = $data['_relation_field'];
         $this->context = 'create';
@@ -316,7 +316,6 @@ class RelationForm extends Component
 
     public function save()
     {
-        // dd($this->sessionKey);
 
         $this->form['_relation_field'] = $this->relation_field;
         $this->form['_relation_mode'] = 'form';
@@ -346,10 +345,15 @@ class RelationForm extends Component
                 throw new \RuntimeException('Could not find controller');
             }
             $c->setAction('create');
-            $c->setParams([$this->parentContext,$this->modelId]);
+            $c->setParams([$this->parentContext]);
             // $c->asExtension('FormController')->update($this->modelId);
             // dd($this->modelId,$this->relation_field);
-            $c->onRelationManageCreate();
+            if(!$this->manageId){
+                $c->onRelationManageCreate();
+            }else{
+                $c->onRelationManageUpdate();
+
+            }
             $this->emitTo('backend.livewire.widgets.relation_lists','search'.($this->relation_field?'_'.$this->relation_field:''),[//todo 多个list
                 'search' =>'',
                 'context' => $this->context,
@@ -367,7 +371,11 @@ class RelationForm extends Component
             $c->setAction('update');
             $c->setParams([$this->modelId,$this->parentContext]);
 
-            $c->onRelationManageUpdate();
+            if(!$this->manageId){
+                $c->onRelationManageCreate();
+            }else{
+                $c->onRelationManageUpdate();
+            }
 
             $this->emitTo('backend.livewire.widgets.relation_lists','search'.($this->relation_field?'_'.$this->relation_field:''),[//todo 多个list
                 'search' =>'',

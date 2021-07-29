@@ -45,8 +45,6 @@ class Index extends Controller
 
         $this->pageTitle = 'backend::lang.dashboard.menu_label';
 
-
-
         return view('backend::index.dashboard',['widget'=>$this->widget]);
     }
 

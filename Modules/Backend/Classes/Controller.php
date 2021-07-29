@@ -39,7 +39,7 @@ class Controller extends BaseController
     /**
      * @var string Page title
      */
-    public $pageTitle;
+    public $pageTitle = 'none';
     /**
      * @var array Collection of WidgetBase objects used on this page.
      */
@@ -109,16 +109,6 @@ class Controller extends BaseController
         return self::extendableCallStatic($name, $params);
     }
 
-    // public function getConfigPath($file)
-    // {
-    //     if(Str::contains($file, '~')){
-    //         return base_path().Str::replaceFirst('~', '', $file);
-    //     }
-
-    //     return  Str::replaceLast('controller', '', $this->guessViewPathFrom($this).'/'.$file);
-    // }
-
-
 
 
         /**
@@ -126,14 +116,10 @@ class Controller extends BaseController
      */
     public function getId($suffix = null)
     {
-
-        // dd($this->action);
         $id = class_basename(get_called_class()) . '-' . $this->action;
         if ($suffix !== null) {
             $id .= '-' . $suffix;
         }
-
-        // dd($id);
 
         return $id;
     }

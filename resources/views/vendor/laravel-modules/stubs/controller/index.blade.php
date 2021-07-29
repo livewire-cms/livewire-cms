@@ -1,4 +1,7 @@
 <x-back-container>
+    @section('title')
+        {{__(current($widget)->getController()->pageTitle)}}
+    @endsection
     @livewire('backend.livewire.widgets.lists',[
         'widget' =>$widget,
         'prefix' => 'list'

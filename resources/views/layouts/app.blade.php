@@ -9,7 +9,7 @@
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Windmill Dashboard') }} | @yield('title', 'Windmill')</title>
+    <title>{{ config('app.name', 'Windmill Dashboard') }} | @yield('title', 'Windmill') @slot('title')</title>
 
     {{-- Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"

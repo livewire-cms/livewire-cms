@@ -119,6 +119,8 @@ class ReportContainer extends WidgetBase
 
         $this->defineReportWidgets();
         $this->vars['widgets'] = $this->reportWidgets;
+
+        return $this;
         return $this->makePartial('container');
     }
 
