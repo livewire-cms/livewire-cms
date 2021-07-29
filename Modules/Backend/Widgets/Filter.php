@@ -361,8 +361,19 @@ class Filter extends WidgetBase
         $available = [];
         $nameColumn = $this->getScopeNameFrom($scope);
         $options = $this->getOptionsFromModel($scope, $searchQuery);
+
+
         foreach ($options as $option) {
             $available[$option->getKey()] = $option->{$nameColumn};
+        }
+
+        if(empty($scope->options)){
+            $allOptions = [];
+            $options = $this->getOptionsFromModel($scope, '');
+            foreach ($options as $option) {
+                $allOptions[$option->getKey()] = $option->{$nameColumn};
+            }
+            $scope->options = $allOptions;
         }
 
         return $available;
@@ -656,6 +667,7 @@ class Filter extends WidgetBase
 
             $this->allScopes[$name] = $scopeObj;
         }
+
     }
 
     /**
@@ -701,7 +713,7 @@ class Filter extends WidgetBase
     public function applyAllScopesToQuery($query)
     {
         $this->defineFilterScopes();
-
+        // dd($this->allScopes);
         foreach ($this->allScopes as $scope) {
             // Ensure that only valid values are set scopes of type: group
             if ($scope->type === 'group') {

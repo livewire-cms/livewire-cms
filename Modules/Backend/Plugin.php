@@ -98,6 +98,17 @@ class Plugin extends PluginBase
                 'keywords' => 'system roles',
                 'permissions' => ['backend.manage_users'],
             ],
+            'access_logs' => [
+                'label' => 'Access Logs',
+                'description' => 'rainlab.blog::lang.blog.settings_description',
+                'category' => 'Logs',
+                'icon' => 'icon-pencil',
+                'url'         => Backend::url('backend/accesslogs'),
+                'order' => 1000,
+                'context'=>['modules.system'],//对应模块1的标识符
+                'keywords' => 'accesslogs roles',
+                'permissions' => ['system.accesslogs'],
+            ],
 
         ];
     }

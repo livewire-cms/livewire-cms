@@ -29,6 +29,7 @@ use Modules\Backend\View\Livewire\Widgets\Form as LivewireWidgetForm;
 use Modules\Backend\View\Livewire\Widgets\QuickForm as LivewireWidgetQuickForm;
 use Modules\Backend\View\Livewire\Widgets\RelationForm as LivewireWidgetRelationForm;
 use Modules\Backend\View\Livewire\Widgets\ReportContainer as LivewireWidgetReportContainer;
+use Modules\Backend\View\Livewire\Widgets\ReportWidget as LivewireWidgetReportWidget;
 use Modules\Backend\View\Livewire\Widgets\Form\Fields as LivewireWidgetFormFields;
 use Modules\Backend\View\Livewire\Widgets\Form\Repeater as LivewireWidgetFormRepeater;
 use Modules\Backend\View\Livewire\Widgets\Form\EditorJs as LivewireWidgetFormEditorJs;
@@ -133,7 +134,6 @@ class ServiceProvider extends BaseServiceProvider
         });
 
 
-
         /*
         * Backend specific
         */
@@ -164,6 +164,7 @@ class ServiceProvider extends BaseServiceProvider
                 Livewire::component('backend.livewire.widgets.quickform', LivewireWidgetQuickForm::class);
                 Livewire::component('backend.livewire.widgets.relation_form', LivewireWidgetRelationForm::class);
                 Livewire::component('backend.livewire.widgets.reportcontainer', LivewireWidgetReportContainer::class);
+                Livewire::component('backend.livewire.widgets.reportwidget', LivewireWidgetReportWidget::class);
                 Livewire::component('backend.livewire.widgets.form.fields', LivewireWidgetFormFields::class);
                 Livewire::component('backend.livewire.widgets.form.repeater', LivewireWidgetFormRepeater::class);
                 Livewire::component('backend.livewire.widgets.form.editorjs', LivewireWidgetFormEditorJs::class);

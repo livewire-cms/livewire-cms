@@ -1,0 +1,10 @@
+<div data-control="toolbar" class="loading-indicator-container">
+    <a
+        wire:click="refresh()"
+        href="javascript:;"
+        data-request="onRefresh"
+        data-load-indicator="<?= e(trans('backend::lang.list.updating')) ?>"
+        class="btn btn-primary wn-icon-refresh">
+        <?= e(trans('backend::lang.list.refresh')) ?>
+    </a>
+</div>

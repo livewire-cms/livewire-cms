@@ -4,7 +4,7 @@ use Modules\LivewireCore\Database\Model;
 
 use App;
 use Backend;
-use Url;
+use URL;
 use File;
 use Lang;
 
@@ -173,7 +173,7 @@ class BrandSetting extends Model
         $faviconPath = File::symbolizePath(Config::get('brand.faviconPath'));
 
         if ($faviconPath && File::exists($faviconPath)) {
-            return Url::asset(File::localToPublic($faviconPath));
+            return URL::asset(File::localToPublic($faviconPath));
         }
 
         return Backend::skinAsset('assets/images/favicon.png');
@@ -184,7 +184,7 @@ class BrandSetting extends Model
         $logoPath = File::symbolizePath(Config::get('brand.logoPath'));
 
         if ($logoPath && File::exists($logoPath)) {
-            return Url::asset(File::localToPublic($logoPath));
+            return URL::asset(File::localToPublic($logoPath));
         }
 
         return null;

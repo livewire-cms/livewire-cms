@@ -9,7 +9,7 @@ use Modules\Backend\Classes\WidgetBase;
 use Modules\Backend\Classes\WidgetManager;
 use Modules\Backend\Models\UserPreference;
 use Modules\System\Models\Parameter as SystemParameters;
-use ApplicationException;
+use Modules\LivewireCore\Exception\ApplicationException;
 
 /**
  * Report Container Widget
@@ -211,7 +211,7 @@ class ReportContainer extends WidgetBase
         }
 
         $widget = new $className($this->controller);
-        if (!($widget instanceof \Backend\Classes\ReportWidgetBase)) {
+        if (!($widget instanceof \Modules\Backend\Classes\ReportWidgetBase)) {
             throw new ApplicationException('The selected class is not a report widget.');
         }
 
@@ -301,6 +301,10 @@ class ReportContainer extends WidgetBase
     // Methods for internal use
     //
 
+    public function getReportWidgets()
+    {
+        return $this->reportWidgets;
+    }
     /**
      * Registers the report widgets that will be included in this container.
      * The chosen widgets are based on the user preferences.

@@ -42,25 +42,19 @@ class Index extends Controller
         }
         $this->initReportContainer();
 
-
         $this->pageTitle = 'backend::lang.dashboard.menu_label';
 
         return view('backend::index.dashboard',['widget'=>$this->widget]);
     }
 
-    public function index_onInitReportContainer()
-    {
-        $this->initReportContainer();
 
-        return ['#dashReportContainer' => $this->widget->reportContainer->render()];
-    }
 
     /**
      * Prepare the report widget used by the dashboard
      * @param Model $model
      * @return void
      */
-    protected function initReportContainer()
+    public function initReportContainer()
     {
         new ReportContainer($this, 'config_dashboard.yaml');
     }

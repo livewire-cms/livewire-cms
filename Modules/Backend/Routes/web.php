@@ -49,4 +49,12 @@ Route::group([
         Route::get('create', 'UserRoles@create')->name('create');
         Route::get('update/{id}', 'UserRoles@update')->name('update');
     });
+    Route::group([
+        'prefix'=>'accesslogs',
+        'as' =>'accesslogs.',
+        'middleware' =>['auth']
+    ],function () {
+        Route::get('', 'AccessLogs@index')->name('');
+
+    });
 });
