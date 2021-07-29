@@ -31,7 +31,7 @@ class Welcome extends ReportWidgetBase
         catch (Exception $ex) {
             $this->vars['error'] = $ex->getMessage();
         }
-
+        dd($this);
         return $this->makePartial('widget');
     }
 
