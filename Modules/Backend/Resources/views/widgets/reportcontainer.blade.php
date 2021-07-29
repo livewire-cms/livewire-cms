@@ -1,6 +1,6 @@
 
 
-<div class="">
+<div class="p-2">
     @if($update)
         <form>
     @endif
@@ -11,7 +11,7 @@
                     'widget'=>$widget,
                     'alias'=>$reportWidget['widget']->alias,
                 ],key($reportWidget['widget']->alias))
-            <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+            <span class="w-full text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
                 <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
             </span>
             @endforeach
@@ -21,7 +21,7 @@
     </form>
     @endif
 
-    <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <span class="w-full text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
         <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onLoadAddPopup',{})">{{__('backend::lang.dashboard.add_widget')}}</a>
      </span>
 
