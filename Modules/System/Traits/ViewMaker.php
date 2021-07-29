@@ -228,7 +228,7 @@ trait ViewMaker
             $this->handleViewException($e,$obLevel);
         }
 
-        return ob_get_clean();
+        return ltrim(ob_get_clean());
     }
 
 
