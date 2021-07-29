@@ -219,7 +219,16 @@ trait ViewMaker
         // flush out any stray output that might get out before an error occurs or
         // an exception is thrown. This prevents any partial views from leaking.
         try {
-            include $filePath;
+            $__path = $filePath;
+            $__data = $vars;
+            $course =(function () use ($__path, $__data) {
+                extract($__data, EXTR_SKIP);
+
+                return require $__path;
+            });
+            $course->bindTo(null,$this);
+            $course();
+            // include $filePath;
         }
         catch (Exception $e) {
             $this->handleViewException($e, $obLevel);
