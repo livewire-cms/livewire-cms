@@ -10,6 +10,8 @@ class ReportWidget extends Component
     protected $reportWidget;
     protected $widget;
 
+    public $content;
+
     public function mount($widget,$alias)
     {
         $reportcontainer = $widget->reportContainer;
@@ -17,7 +19,7 @@ class ReportWidget extends Component
         $this->reportWidget = $reportcontainer->findReportWidgetByAlias($alias); //['welcome'=>['widget'=>object,'sortOrder'=>50]]
         $this->widget = $widget;
 
-
+        $this->content = $this->reportWidget['widget']->render();
     }
 
     public function onRefresh()
@@ -35,6 +37,6 @@ class ReportWidget extends Component
 
     public function render()
     {
-        return view('backend::widgets.reportwidget',['widget'=>$this->widget,'reportWidget'=>$this->reportWidget]);
+        return view('backend::widgets.reportwidget',[]);
     }
 }

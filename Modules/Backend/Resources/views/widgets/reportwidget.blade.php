@@ -2,6 +2,7 @@
 
 <div class="text-center">
 
-<?php $reportWidget['widget']->render() ?>
+    {!! $content !!}
+
 
 </div>
