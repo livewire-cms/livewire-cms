@@ -2,7 +2,7 @@
 
 <div class="text-center">
 
-    {!! $content !!}
+
 
 
 </div>
