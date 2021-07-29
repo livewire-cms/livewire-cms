@@ -3,6 +3,6 @@
 <div class="text-center">
 
 
-{{$content}}
+{!!$content!!}
 
 </div>
