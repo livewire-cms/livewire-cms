@@ -3,7 +3,7 @@
 # ===================================
 
 name: backend::lang.user.name
-form: ~/modules/backend/models/user/fields.yaml
+form: ~/Modules/Backend/Models/user/fields.yaml
 modelClass: Modules\Backend\Models\User
 defaultRedirect: backend/users
 
