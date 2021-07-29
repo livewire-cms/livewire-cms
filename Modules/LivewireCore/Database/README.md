@@ -8,15 +8,15 @@ See the [Illuminate Database instructions](https://github.com/illuminate/databas
 
 ### Alternate relations and events
 
-Relations and events can be defined using an alternative syntax, which is preferred by the [Winter CMS platform](https://wintercms.com).
+Relations and events can be defined using an alternative syntax, which is preferred by the [Livewire CMS platform](https://wintercms.com).
 
-[See Winter CMS Model documentation](https://wintercms.com/docs/database/model)
+[See Livewire CMS Model documentation](https://wintercms.com/docs/database/model)
 
 ### Model validation
 
 Models can define validation rules Laravel's built-in Validator class.
 
-[See Winter CMS Model documentation](https://wintercms.com/docs/database/model)
+[See Livewire CMS Model documentation](https://wintercms.com/docs/database/model)
 
 ### Deferred bindings
 

@@ -2,7 +2,7 @@
 
 return [
     'app' => [
-        'name' => 'Winter CMS',
+        'name' => 'Livewire CMS',
         'tagline' => 'Visszatérés az alapokhoz'
     ],
     'directory' => [

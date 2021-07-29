@@ -2,7 +2,7 @@
 
 return [
     'app' => [
-        'name' => 'Winter CMS',
+        'name' => 'Livewire CMS',
         'tagline' => 'Tornant als bàsics'
     ],
     'directory' => [

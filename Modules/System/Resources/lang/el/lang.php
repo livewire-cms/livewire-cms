@@ -2,7 +2,7 @@
 /* Greek Language Updated on 2016-07-16 v1.05 */
 return [
     'app' => [
-        'name' => 'Winter CMS',
+        'name' => 'Livewire CMS',
         'tagline' => 'Επιστροφή στα βασικά'
     ],
     'directory' => [

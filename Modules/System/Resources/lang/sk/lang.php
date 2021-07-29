@@ -1,7 +1,7 @@
 <?php
 return [
     'app' => [
-        'name' => 'Winter CMS',
+        'name' => 'Livewire CMS',
         'tagline' => 'Návrat k základom'
     ],
     'locale' => [

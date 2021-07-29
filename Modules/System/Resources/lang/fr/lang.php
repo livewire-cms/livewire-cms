@@ -2,7 +2,7 @@
 
 return [
     'app' => [
-        'name' => 'Winter CMS',
+        'name' => 'Livewire CMS',
         'tagline' => 'Retourner à l’essentiel',
     ],
 
@@ -68,7 +68,7 @@ return [
         'install_products' => 'Installer des produits',
         'search' => 'Recherche des plugins à installer…',
         'installed' => 'Plugins installés',
-        'no_plugins' => 'Il n’y a aucun plugin installé depuis le site d’Winter CMS.',
+        'no_plugins' => 'Il n’y a aucun plugin installé depuis le site d’Livewire CMS.',
         'recommended' => 'Recommandé',
         'plugin_label'  => 'Plugin',
         'unknown_plugin' => 'Le plugin a été supprimé du système de fichiers.',

@@ -11,7 +11,9 @@
                     'widget'=>$widget,
                     'alias'=>$reportWidget['widget']->alias,
                 ],key($reportWidget['widget']->alias))
-                <span wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">移除</span>
+            <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+                <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
+            </span>
             @endforeach
         @endif
         </div>
@@ -19,9 +21,12 @@
     </form>
     @endif
 
+    <span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+        <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onLoadAddPopup',{})">{{__('backend::lang.dashboard.add_widget')}}</a>
+     </span>
 
 
-<span wire:click="onAction('onLoadAddPopup',{})"> 设置</span>
+
 
 <x-jet-dialog-modal wire:model="modal" maxWidth="2xl">
     <x-slot name="title">
