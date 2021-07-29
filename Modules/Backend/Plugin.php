@@ -34,7 +34,7 @@ class Plugin extends PluginBase
                 'label'       => 'Dashboard',
                 'url'         => Backend::url('backend'),
                 'icon'        => 'icon-leaf',
-                'permissions' => [],
+                'permissions' => ['backend.access_dashboard'],
                 'order'       => 100,
             ]
 
