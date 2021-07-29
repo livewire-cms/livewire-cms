@@ -6,6 +6,7 @@ use Modules\Backend\Classes\ReportWidgetBase;
 use Modules\Backend\Models\BrandSetting;
 use Exception;
 
+
 /**
  * User welcome report widget.
  *
