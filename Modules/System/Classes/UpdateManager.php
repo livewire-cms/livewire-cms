@@ -4,7 +4,7 @@ use App;
 use URL;
 use File;
 use Lang;
-use Http;
+use Modules\LivewireCore\Network\Http as Http;
 use Cache;
 use Schema;
 use Config;
@@ -227,7 +227,7 @@ class UpdateManager
 
         try {
             $result = $this->requestUpdateList();
-            $newCount = array_get($result, 'update', 0);
+            $newCount = \Arr::get($result, 'update', 0);
         } catch (Exception $ex) {
             $newCount = 0;
         }
@@ -270,12 +270,12 @@ class UpdateManager
         ];
 
         $result = $this->requestServerData('core/update', $params);
-        $updateCount = (int) array_get($result, 'update', 0);
+        $updateCount = (int) \Arr::get($result, 'update', 0);
 
         /*
          * Inject known core build
          */
-        if ($core = array_get($result, 'core')) {
+        if ($core = \Arr::get($result, 'core')) {
             $core['old_build'] = Parameter::get('system::core.build');
             $result['core'] = $core;
         }
@@ -284,7 +284,7 @@ class UpdateManager
          * Inject the application's known plugin name and version
          */
         $plugins = [];
-        foreach (array_get($result, 'plugins', []) as $code => $info) {
+        foreach (\Arr::get($result, 'plugins', []) as $code => $info) {
             $info['name'] = $names[$code] ?? $code;
             $info['old_version'] = $versions[$code] ?? false;
             $info['icon'] = $icons[$code] ?? false;
@@ -309,7 +309,7 @@ class UpdateManager
          */
         if ($this->themeManager) {
             $themes = [];
-            foreach (array_get($result, 'themes', []) as $code => $info) {
+            foreach (\Arr::get($result, 'themes', []) as $code => $info) {
                 if (!$this->themeManager->isInstalled($code)) {
                     $themes[$code] = $info;
                 }
@@ -321,7 +321,7 @@ class UpdateManager
          * If there is a core update and core updates are disabled,
          * remove the entry and discount an update unit.
          */
-        if (array_get($result, 'core') && $this->disableCoreUpdates) {
+        if (\Arr::get($result, 'core') && $this->disableCoreUpdates) {
             $updateCount = max(0, --$updateCount);
             unset($result['core']);
         }
@@ -714,7 +714,7 @@ class UpdateManager
             $dataCodes = [];
             $data = $this->requestServerData($type . '/details', ['names' => $newCodes]);
             foreach ($data as $product) {
-                $code = array_get($product, 'code', -1);
+                $code = \Arr::get($product, 'code', -1);
                 $this->cacheProductDetail($type, $code, $product);
                 $dataCodes[] = $code;
             }
@@ -766,7 +766,7 @@ class UpdateManager
         Cache::put($cacheKey, base64_encode(serialize($data)), $expiresAt);
 
         foreach ($data as $product) {
-            $code = array_get($product, 'code', -1);
+            $code = \Arr::get($product, 'code', -1);
             $this->cacheProductDetail($type, $code, $product);
         }
 

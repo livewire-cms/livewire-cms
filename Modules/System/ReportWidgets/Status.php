@@ -61,7 +61,8 @@ class Status extends ReportWidgetBase
         $manager = UpdateManager::instance();
 
         $this->vars['canUpdate'] = BackendAuth::getUser()->hasAccess('system.manage_updates');
-        $this->vars['updates']   = $manager->check();
+        // $this->vars['updates']   = $manager->check();
+        $this->vars['updates']   = '111';
         $this->vars['warnings']  = $this->getSystemWarnings();
         $this->vars['coreBuild'] = Parameter::get('system::core.build');
 
