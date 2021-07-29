@@ -10,13 +10,26 @@ class ReportWidget extends Component
     protected $reportWidget;
     protected $widget;
 
-    public function mount($widget,$reportWidget)
+    public function mount($widget,$alias)
     {
         $reportcontainer = $widget->reportContainer;
         $reportcontainer->render();
-        $this->reportWidget = $reportWidget; //['welcome'=>['widget'=>object,'sortOrder'=>50]]
+        $this->reportWidget = $reportcontainer->findReportWidgetByAlias($alias); //['welcome'=>['widget'=>object,'sortOrder'=>50]]
         $this->widget = $widget;
-        $this->alias = $reportWidget['widget']->alias;
+
+
+    }
+
+    public function onRefresh()
+    {
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        $c->initReportContainer();
+
+        $this->mount($c->widget,$this->alias);
 
     }
 

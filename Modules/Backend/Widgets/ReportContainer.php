@@ -119,7 +119,6 @@ class ReportContainer extends WidgetBase
 
         $this->defineReportWidgets();
         $this->vars['widgets'] = $this->reportWidgets;
-
         return $this;
         return $this->makePartial('container');
     }
@@ -193,7 +192,7 @@ class ReportContainer extends WidgetBase
 
         $this->vars['sizes'] = $sizes;
         $this->vars['widgets'] = WidgetManager::instance()->listReportWidgets();
-
+        return $this;
         return $this->makePartial('new_widget_popup');
     }
 
@@ -216,6 +215,7 @@ class ReportContainer extends WidgetBase
         }
 
         $widgetInfo = $this->addWidget($widget, $size);
+        return $this;
 
         return [
             '@#'.$this->getId('container-list') => $this->makePartial('widget', [
@@ -384,6 +384,17 @@ class ReportContainer extends WidgetBase
         $this->setWidgetsToUserPreferences($widgets);
     }
 
+    public function findReportWidgetByAlias($alias)
+    {
+        $this->defineReportWidgets();
+
+        $widgets = $this->reportWidgets;
+        if (!isset($widgets[$alias])) {
+            throw new ApplicationException('The specified widget is not found.');
+        }
+
+        return $widgets[$alias];
+    }
     protected function findWidgetByAlias($alias)
     {
         $this->defineReportWidgets();
@@ -479,7 +490,6 @@ class ReportContainer extends WidgetBase
     protected function getWidgetsFromUserPreferences()
     {
         $defaultWidgets = SystemParameters::get($this->getSystemParametersKey(), $this->defaultWidgets);
-
         $widgets = UserPreference::forUser()
             ->get($this->getUserPreferencesKey(), $defaultWidgets);
 

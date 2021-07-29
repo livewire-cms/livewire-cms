@@ -2884,6 +2884,14 @@ select {
 	padding-right: 2.5rem;
 }
 
+.pb-6 {
+	padding-bottom: 1.5rem;
+}
+
+.pb-9 {
+	padding-bottom: 2.25rem;
+}
+
 .text-left {
 	text-align: left;
 }

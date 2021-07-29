@@ -1341,7 +1341,6 @@ class Lists extends WidgetBase
         if (!empty($column->config['ignoreTimezone'])) {
             $options['ignoreTimezone'] = true;
         }
-
         return Backend::dateTime($dateTime, $options);
     }
 

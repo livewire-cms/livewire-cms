@@ -162,7 +162,7 @@ init_field({
                   <div x-show.transition.origin.top="isOpen()"
                       class="absolute shadow top-100 bg-white z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj"
                       x-on:click.away="close">
-                      <div class="flex flex-col w-full">
+                      <div class="flex flex-col w-full max-h-44 overflow-auto pb-6">
                           <template x-for="(option,index) in options" :key="option">
                               <div x-show="filterOptions(option)">
                                   <div class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100"

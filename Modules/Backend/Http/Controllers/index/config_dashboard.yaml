@@ -11,7 +11,7 @@ defaultWidgets:
             ocWidgetWidth: 7
 
    systemStatus:
-        class: System\ReportWidgets\Status
+        class: Modules\System\ReportWidgets\Status
         sortOrder: 60
         configuration:
             ocWidgetWidth: 7

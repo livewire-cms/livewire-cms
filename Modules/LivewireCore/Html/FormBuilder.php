@@ -149,7 +149,7 @@ class FormBuilder
         // is used to spoof requests for this PUT, PATCH, etc. methods on forms.
         $attributes = array_merge(
             $attributes,
-            array_except($options, $this->reserved)
+            \Arr::except($options, $this->reserved)
         );
 
         // Finally, we will concatenate all of the attributes into a single string so
@@ -174,7 +174,7 @@ class FormBuilder
 
         $attributes = array_merge(
             ['data-request' => $handler],
-            array_except($options, $this->reservedAjax)
+            \Arr::except($options, $this->reservedAjax)
         );
 
         $ajaxAttributes = array_diff_key($options, $attributes);

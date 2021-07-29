@@ -8,6 +8,8 @@ use Modules\LivewireCore\Filesystem\PathResolver;
 use Modules\System\Classes\PluginManager;
 use Modules\System\Classes\SettingsManager;
 use Modules\System\Classes\SideNavManager;
+use Modules\Backend\Classes\WidgetManager;
+
 
 use BackendMenu;
 use BackendAuth;
@@ -39,7 +41,7 @@ class ServiceProvider extends BaseServiceProvider
         if ($this->app['execution.context']=='back-end') {
             $this->registerBackendNavigation();
 
-            //$this->registerBackendReportWidgets();
+            $this->registerBackendReportWidgets();
            // $this->registerBackendWidgets();
             $this->registerBackendPermissions();
            // $this->registerBackendSettings();
@@ -103,6 +105,18 @@ class ServiceProvider extends BaseServiceProvider
             }, -9999);
         });
     }
+        /*
+     * Register report widgets
+     */
+    protected function registerBackendReportWidgets()
+    {
+        WidgetManager::instance()->registerReportWidgets(function ($manager) {
+            $manager->registerReportWidget(\Modules\System\ReportWidgets\Status::class, [
+                'label'   => 'backend::lang.dashboard.status.widget_title_default',
+                'context' => 'dashboard1'
+            ]);
+        });
+    }
     /**
      * Register singletons
      */
@@ -157,7 +171,7 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerBackendPermissions()
     {
         BackendAuth::registerCallback(function ($manager) {
-            $manager->registerPermissions('Winter.System', [
+            $manager->registerPermissions('Modules.System', [
                 'system.manage_updates' => [
                     'label' => 'system::lang.permissions.manage_software_updates',
                     'tab' => 'system::lang.permissions.name',

@@ -134,7 +134,7 @@ class FormController extends ControllerBehavior
          */
         $formFields = $this->getConfig("{$context}[form]", $this->config->form);
         $config = $this->makeConfig($formFields);
-
+        // dd($config,$formFields,$model);
         $config->model = $model;
         $config->arrayName = class_basename($model);
         $config->context = $context;

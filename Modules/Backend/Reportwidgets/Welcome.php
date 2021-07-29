@@ -60,5 +60,6 @@ class Welcome extends ReportWidgetBase
         $this->vars['user'] = $user = BackendAuth::getUser();
         $this->vars['appName'] = BrandSetting::get('app_name');
         $this->vars['lastSeen'] = AccessLog::getRecent($user);
+
     }
 }
