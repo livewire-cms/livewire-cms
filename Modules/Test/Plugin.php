@@ -60,6 +60,14 @@ class Plugin extends PluginBase
                 'label'    => '可滚动的图例',
                 'context' => [],
             ],
+            'Modules\Test\ReportWidgets\Yibiaopan'=>[
+                'label'    => '仪表盘',
+                'context' => [],
+            ],
+            'Modules\Test\ReportWidgets\Loudoutu'=>[
+                'label'    => '漏斗图',
+                'context' => [],
+            ],
         ];
     }
 
