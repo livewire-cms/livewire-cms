@@ -187,7 +187,11 @@ class ReportContainer extends WidgetBase
     {
         $sizes = [];
         for ($i = 1; $i <= 12; $i++) {
-            $sizes[$i] = $i < 12 ? $i : $i.' (' . Lang::get('backend::lang.dashboard.full_width') . ')';
+            if($i<12){
+                $sizes["w-{$i}/12"] = $i < 12 ? $i : $i.' (' . Lang::get('backend::lang.dashboard.full_width') . ')';
+            }else{
+                $sizes["w-full"] = $i < 12 ? $i : $i.' (' . Lang::get('backend::lang.dashboard.full_width') . ')';
+            }
         }
 
         $this->vars['sizes'] = $sizes;

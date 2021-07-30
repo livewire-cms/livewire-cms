@@ -1,9 +1,9 @@
 
 
-<div class="text-center">
+@php
+    $widget = $reportWidget['widget'];
+@endphp
 
-    {!! $content !!}
-
-
-
+<div class="">
+    {!! $widget->render() !!}
 </div>

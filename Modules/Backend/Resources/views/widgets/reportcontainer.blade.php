@@ -1,19 +1,35 @@
 
 
 <div class="p-2">
+    <div class="
+w-1/12
+w-2/12
+w-3/12
+w-4/12
+w-5/12
+w-6/12
+w-7/12
+w-8/12
+w-9/12
+w-10/12
+w-11/12
+w-full
+"></div>
     @if($update)
-        <form>
+        <form class="flex">
     @endif
-        <div wire:ignore>
+        <div wire:ignore class="flex p-6 ">
         @if($widget)
             @foreach ($reportWidgets as $reportWidget)
+            <div class="{{$reportWidget['widget']->property('ocWidgetWidth')}} relative ">
                 @livewire('backend.livewire.widgets.reportwidget',[
                     'widget'=>$widget,
                     'alias'=>$reportWidget['widget']->alias,
                 ],key($reportWidget['widget']->alias))
-            <span class="w-full text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
-                <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
-            </span>
+                <span class="absolute right-0 top-0 text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
+                    <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
+                </span>
+            </div>
             @endforeach
         @endif
         </div>
