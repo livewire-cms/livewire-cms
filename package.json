@@ -29,6 +29,7 @@
         "@tiptap/core": "^2.0.0-beta.86",
         "@tiptap/starter-kit": "^2.0.0-beta.82",
         "codemirror": "^5.62.2",
+        "echarts": "^5.1.2",
         "flatpickr": "^4.6.9",
         "get-value": "^3.0.1",
         "marked": "^2.1.3",

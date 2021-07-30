@@ -10,6 +10,8 @@ require("flatpickr");//日期时间选择器
 window.Quill = require("Quill");//
 
 
+import * as echarts from 'echarts';
+window.echarts = echarts
 //enable Disable
 
 

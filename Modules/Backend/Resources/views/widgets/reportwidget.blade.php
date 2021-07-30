@@ -4,6 +4,6 @@
     $widget = $reportWidget['widget'];
 @endphp
 
-<div class="">
+<div class="text-center">
     {!! $widget->render() !!}
 </div>

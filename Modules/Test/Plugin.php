@@ -45,6 +45,23 @@ class Plugin extends PluginBase
 
         ];
     }
+    public function registerReportWidgets()
+    {
+        return [
+            'Modules\Test\ReportWidgets\Zhexian'=>[
+                'label'    => '折线图',
+                'context' => [],
+            ],
+            'Modules\Test\ReportWidgets\Jianbianduidie'=>[
+                'label'    => '渐变堆叠面积图',
+                'context' => [],
+            ],
+            'Modules\Test\ReportWidgets\Kegundongdetuli'=>[
+                'label'    => '可滚动的图例',
+                'context' => [],
+            ],
+        ];
+    }
 
     public function register()
     {

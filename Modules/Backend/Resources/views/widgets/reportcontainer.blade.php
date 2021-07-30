@@ -16,9 +16,9 @@ w-11/12
 w-full
 "></div>
     @if($update)
-        <form class="flex">
+        <form class="flex flex-wrap p-6">
     @endif
-        <div wire:ignore class="flex p-6 ">
+        <div wire:ignore class="flex  flex-wrap p-6 ">
         @if($widget)
             @foreach ($reportWidgets as $reportWidget)
             <div class="{{$reportWidget['widget']->property('ocWidgetWidth')}} relative ">
@@ -26,7 +26,7 @@ w-full
                     'widget'=>$widget,
                     'alias'=>$reportWidget['widget']->alias,
                 ],key($reportWidget['widget']->alias))
-                <span class="absolute right-0 top-0 text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
+                <span class=" w-full text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
                     <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
                 </span>
             </div>
