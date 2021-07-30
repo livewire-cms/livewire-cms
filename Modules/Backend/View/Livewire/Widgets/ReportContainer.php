@@ -34,6 +34,10 @@ class ReportContainer extends Component
         'setFormProperty'
     ];
 
+    protected $rules = [
+        'form.Custom.className' => 'required',
+    ];
+
 
     public function mount($widget)
     {
@@ -358,7 +362,10 @@ class ReportContainer extends Component
 
         if($this->action=='onAddWidget'){
 
+            $this->validate();
             request()->merge($this->form['Custom']??[]);
+
+
 
         }elseif ($this->action=='onRemoveWidget'){
 

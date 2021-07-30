@@ -201,6 +201,10 @@ $relation_field = $attributes->get('relation_field',null);
             @endif
             {{-- {{dd($field)}} --}}
             @error($field['fieldName'])
+
+                <span class="text-xs text-red-500">{{$message}}</span>
+            @enderror
+            @error($field['modelName'])
                 <span class="text-xs text-red-500">{{$message}}</span>
             @enderror
         </div>
