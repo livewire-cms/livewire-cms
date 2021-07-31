@@ -69,7 +69,7 @@ w-full
                     @if($widget)
                         @foreach ($reportWidgets as $reportWidget)
                         <div class="{{$reportWidget['widget']->property('ocWidgetWidth')}} relative Block--isDraggable">
-                            <span class="cursor-move"> drag me<span>
+                            <span class="cursor-move dark:text-gray-400"> drag me<span>
                             @livewire('backend.livewire.widgets.reportwidget',[
                                 'widget'=>$widget,
                                 'alias'=>$reportWidget['widget']->alias,
