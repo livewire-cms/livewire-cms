@@ -68,6 +68,10 @@ class Plugin extends PluginBase
                 'label'    => '漏斗图',
                 'context' => [],
             ],
+            'Modules\Test\ReportWidgets\PeopleRelation'=>[
+                'label'    => '悲惨世界人物关系图',
+                'context' => [],
+            ],
         ];
     }
 
