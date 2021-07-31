@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97528f0ed4c389651dd9fe7ec861e955",
+    "content-hash": "19d764733929121c8f93c2ca9cfb697a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5959,6 +5959,147 @@
             "time": "2021-03-09T10:59:23+00:00"
         },
         {
+            "name": "wpjscc/backend-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/livewire-cms/backend-module.git",
+                "reference": "6e4bc6429f9c5d51547281f09fd2df6aade7946a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/livewire-cms/backend-module/zipball/6e4bc6429f9c5d51547281f09fd2df6aade7946a",
+                "reference": "6e4bc6429f9c5d51547281f09fd2df6aade7946a",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "default-branch": true,
+            "type": "laravel-module",
+            "extra": {
+                "laravel": {
+                    "providers": [],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Backend\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "wpjscc",
+                    "email": "wpjscc@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/livewire-cms/backend-module/issues",
+                "source": "https://github.com/livewire-cms/backend-module/tree/master"
+            },
+            "time": "2021-07-31T17:02:04+00:00"
+        },
+        {
+            "name": "wpjscc/livewire-core-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/livewire-cms/livewire-core-module.git",
+                "reference": "493e5121d91fb34fe67527db6361dba75e4cabc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/livewire-cms/livewire-core-module/zipball/493e5121d91fb34fe67527db6361dba75e4cabc5",
+                "reference": "493e5121d91fb34fe67527db6361dba75e4cabc5",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "default-branch": true,
+            "type": "laravel-module",
+            "extra": {
+                "laravel": {
+                    "providers": [],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\LivewireCore\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "wpjscc",
+                    "email": "wpjscc@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/livewire-cms/livewire-core-module/issues",
+                "source": "https://github.com/livewire-cms/livewire-core-module/tree/master"
+            },
+            "time": "2021-07-31T17:15:04+00:00"
+        },
+        {
+            "name": "wpjscc/system-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/livewire-cms/system-module.git",
+                "reference": "37b5da6869d85ad30d2bc8e0b1be2135fcc455ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/livewire-cms/system-module/zipball/37b5da6869d85ad30d2bc8e0b1be2135fcc455ae",
+                "reference": "37b5da6869d85ad30d2bc8e0b1be2135fcc455ae",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "wpjscc/backend-module": "dev-master"
+            },
+            "default-branch": true,
+            "type": "laravel-module",
+            "extra": {
+                "laravel": {
+                    "providers": [],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\System\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "wpjscc",
+                    "email": "wpjscc@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/livewire-cms/system-module/issues",
+                "source": "https://github.com/livewire-cms/system-module/tree/master"
+            },
+            "time": "2021-07-31T17:06:12+00:00"
+        },
+        {
             "name": "wpjscc/test-module",
             "version": "dev-master",
             "source": {
@@ -8750,6 +8891,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "wpjscc/livewire-core-module": 20,
+        "wpjscc/system-module": 20,
         "wpjscc/test-module": 20
     },
     "prefer-stable": true,

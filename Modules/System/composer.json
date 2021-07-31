@@ -16,6 +16,9 @@
             }
         }
     },
+    "require":{
+        "wpjscc/backend-module":"dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Modules\\System\\": ""

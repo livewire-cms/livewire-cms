@@ -11,5 +11,5 @@
 
     },
     "files": [],
-    "requires": []
+    "requires": ["wpjscc/backend-module"]
 }
