@@ -1,4 +1,20 @@
+@php
 
+$aliases = [];
+$orders = [];
+if($reportWidgets){
+    foreach ($reportWidgets as $reportWidget){
+    $aliases[] = $reportWidget['widget']->alias;
+
+    $orders[] = $reportWidget['sortOrder'];
+ }
+}
+
+ $aliases = json_encode($aliases);
+ $orders = json_encode($orders);
+
+
+@endphp
 
 <div class="p-2">
     <div class="
@@ -19,19 +35,55 @@ w-full
         <form class="flex flex-wrap p-6">
     @endif
         <div wire:ignore class="flex  flex-wrap p-6 ">
-        @if($widget)
-            @foreach ($reportWidgets as $reportWidget)
-            <div class="{{$reportWidget['widget']->property('ocWidgetWidth')}} relative ">
-                @livewire('backend.livewire.widgets.reportwidget',[
-                    'widget'=>$widget,
-                    'alias'=>$reportWidget['widget']->alias,
-                ],key($reportWidget['widget']->alias))
-                <span class=" w-full text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
-                    <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
-                </span>
+            <div x-data="{
+                wire:null,
+                aliases:[],
+                orders:[],
+                init(){
+                    console.log(JSON.parse(this.$refs['aliases'].value));
+                    console.log(JSON.parse(this.$refs['orders'].value));
+                    this.aliases = JSON.parse(this.$refs['aliases'].value)
+                    this.orders = JSON.parse(this.$refs['orders'].value)
+                    this.wire = @this;
+                    draggable = sortAnimation(this)
+                    draggable.on('sortable:sorted', (evt) => {
+                        var oldIndex = evt.oldIndex
+                        var newIndex = evt.newIndex
+                        this.sortWidget(oldIndex,newIndex)
+
+                    });
+                },
+                sortWidget(oldIndex,newIndex){
+                    var oldAlias = this.aliases[oldIndex]
+                    if(newIndex<oldIndex){//前面插入
+                        this.aliases.splice(newIndex,0,oldAlias)
+                        this.aliases.splice(oldIndex+1,1)
+                    }else{//后面插入
+                        this.aliases.splice(newIndex,0,oldAlias)
+                        this.aliases.splice(oldIndex,1)
+                    }
+                    this.wire.onAction('onSetWidgetOrders',{aliases:this.aliases.join(','),orders:this.orders.join(',')})
+                }
+            }" x-init="init()" >
+            <input  type="hidden" x-ref="aliases" value="{{$aliases}}"/>
+            <input  type="hidden" x-ref="orders" value="{{$orders}}"/>
+                <div x-ref="sort-animation" class="sort-animation">
+                    @if($widget)
+                        @foreach ($reportWidgets as $reportWidget)
+                        <div class="{{$reportWidget['widget']->property('ocWidgetWidth')}} relative Block--isDraggable">
+                            <span class="cursor-move"> drag me<span>
+                            @livewire('backend.livewire.widgets.reportwidget',[
+                                'widget'=>$widget,
+                                'alias'=>$reportWidget['widget']->alias,
+                            ],key($reportWidget['widget']->alias))
+                            <span class=" w-full text-gray-700 px-6 py-3 flex justify-center items-center text-xs">
+                                <a class="p-2 border rounded-md border-blue-600 text-blue-600 cursor-pointer  text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" wire:click="onAction('onRemoveWidget',{alias:'{{$reportWidget['widget']->alias}}'})">X</a>
+                            </span>
+                        </div>
+                        @endforeach
+                    @endif
+                </div>
             </div>
-            @endforeach
-        @endif
         </div>
     @if($update)
     </form>

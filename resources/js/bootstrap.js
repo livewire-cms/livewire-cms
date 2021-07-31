@@ -10,6 +10,34 @@ require("flatpickr");//日期时间选择器
 window.Quill = require("Quill");//
 
 
+
+// import {Sortable, Plugins} from '@shopify/draggable';
+import Sortable from '@shopify/draggable/lib/sortable';
+import SwapAnimation from '@shopify/draggable/lib/plugins/swap-animation';
+
+
+window.sortAnimation =  function (that) {
+
+    const containers = that.$refs['sort-animation'];
+    if (!containers) {
+      return false;
+    }
+    // const containers = document.querySelectorAll('.sort-animation');
+    const sortable = new Sortable(containers, {
+      draggable: '.Block--isDraggable',
+      mirror: {
+        constrainDimensions: true,
+      },
+      plugins: [SwapAnimation],
+      swapAnimation: {
+        duration: 200,
+        easingFunction: 'ease-in-out',
+      },
+    });
+
+    return sortable;
+  }
+
 import * as echarts from 'echarts';
 window.echarts = echarts
 //enable Disable

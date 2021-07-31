@@ -1,13 +1,13 @@
 <div x-data="{
     init(){
-        var myChart = echarts.init(this.$refs['main']);
-        var graph = JSON.parse(this.$refs['input'].value)
+        let myChart = echarts.init(this.$refs['main']);
+        let graph = JSON.parse(this.$refs['input'].value)
         graph.nodes.forEach(function (node) {
             node.label = {
                 show: node.symbolSize > 30
             };
         });
-        option = {
+        let option = {
             title: {
                 text: '人物关系图',
                 subtext: 'Default layout',

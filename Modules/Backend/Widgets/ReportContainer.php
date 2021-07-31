@@ -291,6 +291,8 @@ class ReportContainer extends WidgetBase
             throw new ApplicationException('Invalid data posted.');
         }
 
+        // dd($aliases, $orders);
+
         $widgets = $this->getWidgetsFromUserPreferences();
         foreach ($aliases as $index => $alias) {
             if (isset($widgets[$alias])) {

@@ -1,7 +1,7 @@
 <div x-data="{
     init(){
-        var myChart = echarts.init(this.$refs['main']);
-        var option = {
+        let myChart = echarts.init(this.$refs['main']);
+        let option = {
             xAxis: {
                 type: 'category',
                 data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']

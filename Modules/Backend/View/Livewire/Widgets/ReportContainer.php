@@ -357,10 +357,10 @@ class ReportContainer extends Component
         }
         $this->action = $method;
 
-        $this->modal = true;
         request()->merge($params);
 
         if($this->action=='onAddWidget'){
+            $this->modal = true;
 
             $this->validate();
             request()->merge($this->form['Custom']??[]);

@@ -1,7 +1,7 @@
 <div x-data="{
     init(){
-        var myChart = echarts.init(this.$refs['main']);
-        var option;
+        let myChart = echarts.init(this.$refs['main']);
+        let option;
 
         var data = genData(50);
 
@@ -77,7 +77,7 @@
                 return name.join('');
             }
         }
-
+        myChart.clear()
         option && myChart.setOption(option);
 
     }

@@ -2019,6 +2019,10 @@ select {
 	cursor: not-allowed;
 }
 
+.cursor-move {
+	cursor: move;
+}
+
 .select-none {
 	-webkit-user-select: none;
 	   -moz-user-select: none;
