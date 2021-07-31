@@ -358,8 +358,10 @@ class ReportContainer extends Component
         $this->action = $method;
 
         request()->merge($params);
-
-        if($this->action=='onAddWidget'){
+        if($this->action=='onLoadAddPopup'){
+            $this->modal = true;
+        }
+        else if($this->action=='onAddWidget'){
             $this->modal = true;
 
             $this->validate();

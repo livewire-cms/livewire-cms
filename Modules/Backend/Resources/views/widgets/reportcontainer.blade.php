@@ -40,8 +40,6 @@ w-full
                 aliases:[],
                 orders:[],
                 init(){
-                    console.log(JSON.parse(this.$refs['aliases'].value));
-                    console.log(JSON.parse(this.$refs['orders'].value));
                     this.aliases = JSON.parse(this.$refs['aliases'].value)
                     this.orders = JSON.parse(this.$refs['orders'].value)
                     this.wire = @this;
@@ -64,10 +62,10 @@ w-full
                     }
                     this.wire.onAction('onSetWidgetOrders',{aliases:this.aliases.join(','),orders:this.orders.join(',')})
                 }
-            }" x-init="init()" >
+            }" x-init="init()" x-ref="sort-animation" class="sort-animation flex  flex-wrap p-6 ">
             <input  type="hidden" x-ref="aliases" value="{{$aliases}}"/>
             <input  type="hidden" x-ref="orders" value="{{$orders}}"/>
-                <div x-ref="sort-animation" class="sort-animation">
+
                     @if($widget)
                         @foreach ($reportWidgets as $reportWidget)
                         <div class="{{$reportWidget['widget']->property('ocWidgetWidth')}} relative Block--isDraggable">
@@ -82,7 +80,7 @@ w-full
                         </div>
                         @endforeach
                     @endif
-                </div>
+
             </div>
         </div>
     @if($update)
