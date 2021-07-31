@@ -1,10 +1,11 @@
 {
-    "name": "nwidart/system",
+    "name": "wpjscc/system-module",
     "description": "",
+    "type":"laravel-module",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "wpjscc",
+            "email": "wpjscc@gmail.com"
         }
     ],
     "extra": {
