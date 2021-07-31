@@ -33,4 +33,11 @@ Route::group([
     ],function () {
         Route::get('', 'SystemController@index')->name('');
     });
+    Route::group([
+        'prefix'=>'updates',
+        'as' =>'updates.',
+        'middleware' =>[]
+    ],function () {
+        Route::get('manage', 'Updates@manage')->name('manage');
+    });
 });

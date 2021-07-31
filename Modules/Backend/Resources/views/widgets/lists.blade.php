@@ -4,11 +4,13 @@
 
     // dd($widget);
     $list= $widget->{$prefix}->prepareVars();
+
     if(isset($widget->{$prefix.'ToolbarSearch'})){
         $listToolbarSearch = $widget->{$prefix.'ToolbarSearch'}->prepareVars();
     }
     if(isset($widget->{$prefix.'Toolbar'})){
         $listToolbar = $widget->{$prefix.'Toolbar'}->prepareVars();
+        // dd($listToolbar);
     }
     if(isset($widget->{$prefix.'Filter'})){
         $listFilter = $widget->{$prefix.'Filter'}->prepareVars();
@@ -36,7 +38,7 @@
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs" x-data="{{$prefix}}datatables()" x-cloak>
 
-        @if (isset($listToolbarSearch))
+        @if (isset($listToolbar))
             <div class="grid p-2 grid-cols-3">
                 <div>
                     @if (isset($listToolbar))
@@ -44,7 +46,10 @@
                     @endif
                 </div>
                 <div></div>
-                @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+                @isset($listToolbarSearch)
+                    @livewire('backend.livewire.widgets.search',['search'=>$listToolbarSearch->getActiveTerm()])
+
+                @endisset
             </div>
         @endif
         @if (isset($listFilter))
@@ -158,7 +163,10 @@
         </span>
         <span class="col-span-2"></span>
         <!-- Pagination -->
-        {!! $list->vars['records']->render('vendor.pagination.tailwind-list') !!}
+        @if ($list->showPagination)
+            {!! $list->vars['records']->render('vendor.pagination.tailwind-list') !!}
+
+        @endif
 
       </div>
     </div>

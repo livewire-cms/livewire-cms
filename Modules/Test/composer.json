@@ -1,6 +1,7 @@
 {
-    "name": "nwidart/test",
+    "name": "wpjscc/test-module",
     "description": "",
+    "type":"laravel-module",
     "authors": [
         {
             "name": "Nicolas Widart",

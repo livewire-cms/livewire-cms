@@ -73,6 +73,8 @@ editor
 ## todo
 
 * 深层验证问题
+* list 动态展示配置（分页 filter toobar）
+* 
 
 
 ## 特性

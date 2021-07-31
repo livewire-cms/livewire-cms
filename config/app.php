@@ -194,7 +194,7 @@ return [
         // App\Modules\Backend\ServiceProvider::class,
         // Nwidart\Modules\LaravelModulesServiceProvider::class,
 
-    ],include(base_path('Modules/System/providers.php')),[
+    ],[
         Modules\System\ServiceProvider::class,
         Modules\Backend\ServiceProvider::class,
 
@@ -253,6 +253,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-    ],include(base_path('Modules/System/aliases.php'))),
+    ],[]),
 
 ];

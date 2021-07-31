@@ -17,6 +17,8 @@ use Backend;
 use Event;
 use Livewire\Livewire;
 use Modules\Backend\Models\UserRole;
+use App;
+use Illuminate\Foundation\AliasLoader;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -29,12 +31,17 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+
+        $this->registerProvider();
+        $this->registerAlias();
+
         $this->app->instance('path.plugins', $this->pluginsPath());
         $this->app->instance('path.temp', $this->tempPath());
 
         $this->registerSingletons();
 
         PluginManager::instance()->registerAll();
+
 
 
 
@@ -48,6 +55,25 @@ class ServiceProvider extends BaseServiceProvider
         }
 
 
+    }
+
+    protected function registerProvider()
+    {
+        $providers = include 'providers.php';
+
+        foreach ($providers as $provider){
+            App::register($provider);
+        }
+    }
+
+    protected function registerAlias()
+    {
+        $aliases = include 'aliases.php';
+
+        foreach ($aliases as $alias=>$class)
+        {
+            AliasLoader::getInstance()->alias($alias,$class);
+        }
     }
 
         /**

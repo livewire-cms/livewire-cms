@@ -7,7 +7,9 @@
     "providers": [
         "Modules\\System\\Providers\\SystemServiceProvider"
     ],
-    "aliases": {},
+    "aliases": {
+
+    },
     "files": [],
     "requires": []
 }

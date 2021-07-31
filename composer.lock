@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa5e94e9ed0057dc9ead3b021228d03a",
+    "content-hash": "97528f0ed4c389651dd9fe7ec861e955",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1044,6 +1044,54 @@
                 "source": "https://github.com/guzzle/psr7/tree/2.0.0"
             },
             "time": "2021-06-30T20:03:07+00:00"
+        },
+        {
+            "name": "joshbrw/laravel-module-installer",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joshbrw/laravel-module-installer.git",
+                "reference": "667820efd0652df8ed61420cd0dec8df1b3ecdd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joshbrw/laravel-module-installer/zipball/667820efd0652df8ed61420cd0dec8df1b3ecdd2",
+                "reference": "667820efd0652df8ed61420cd0dec8df1b3ecdd2",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": "7.* || 8.*"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~8.0 || ~9.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Joshbrw\\LaravelModuleInstaller\\LaravelModuleInstallerPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Joshbrw\\LaravelModuleInstaller\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "issues": "https://github.com/joshbrw/laravel-module-installer/issues",
+                "source": "https://github.com/joshbrw/laravel-module-installer/tree/v2.0.1"
+            },
+            "time": "2021-01-17T21:51:00+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -5909,6 +5957,52 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.10.0"
             },
             "time": "2021-03-09T10:59:23+00:00"
+        },
+        {
+            "name": "wpjscc/test-module",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/livewire-cms/test-module.git",
+                "reference": "3b5a597ba3e1e20edddb23608c976571cf9a2ca3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/livewire-cms/test-module/zipball/3b5a597ba3e1e20edddb23608c976571cf9a2ca3",
+                "reference": "3b5a597ba3e1e20edddb23608c976571cf9a2ca3",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "default-branch": true,
+            "type": "laravel-module",
+            "extra": {
+                "laravel": {
+                    "providers": [],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Test\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Nicolas Widart",
+                    "email": "n.widart@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/livewire-cms/test-module/issues",
+                "source": "https://github.com/livewire-cms/test-module/tree/master"
+            },
+            "time": "2021-07-31T14:40:10+00:00"
         }
     ],
     "packages-dev": [
@@ -8655,7 +8749,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "wpjscc/test-module": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
