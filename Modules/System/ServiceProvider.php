@@ -11,6 +11,8 @@ use Modules\System\Classes\SideNavManager;
 use Modules\Backend\Classes\WidgetManager;
 
 
+use Arr;
+use Str;
 use BackendMenu;
 use BackendAuth;
 use Backend;
@@ -19,6 +21,7 @@ use Livewire\Livewire;
 use Modules\Backend\Models\UserRole;
 use App;
 use Illuminate\Foundation\AliasLoader;
+
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -31,6 +34,8 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+
+        $this->extendArrStr();
 
         $this->registerProvider();
         $this->registerAlias();
@@ -55,6 +60,46 @@ class ServiceProvider extends BaseServiceProvider
         }
 
 
+    }
+
+    protected function extendArrStr()
+    {
+        Arr::macro('build', function(array $array, callable $callback){
+            $results = [];
+
+            foreach ($array as $key => $value) {
+                list($innerKey, $innerValue) = call_user_func($callback, $key, $value);
+
+                $results[$innerKey] = $innerValue;
+            }
+
+            return $results;
+        });
+        Str::macro('normalizeClassName', function ($name){
+            if (is_object($name)) {
+                $name = get_class($name);
+            }
+
+            $name = '\\'.ltrim($name, '\\');
+            return $name;
+        });
+        Str::macro('getClassId', function ($name){
+            if (is_object($name)) {
+                $name = get_class($name);
+            }
+
+            $name = ltrim($name, '\\');
+            $name = str_replace('\\', '_', $name);
+
+            return strtolower($name);
+        });
+        Str::macro('getClassNamespace', function ($name){
+            $name = Str::normalizeClassName($name);
+            return substr($name, 0, strrpos($name, "\\"));
+        });
+        Str::macro('getPrecedingSymbols', function($string, $symbol){
+            return strlen($string) - strlen(ltrim($string, $symbol));
+        });
     }
 
     protected function registerProvider()

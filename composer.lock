@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19d764733929121c8f93c2ca9cfb697a",
+    "content-hash": "4c4054c8d7ce24f569736d32e2d1f518",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6010,12 +6010,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire-cms/livewire-core-module.git",
-                "reference": "493e5121d91fb34fe67527db6361dba75e4cabc5"
+                "reference": "2419cef467d589e581c88325232bdddc0e22a5c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire-cms/livewire-core-module/zipball/493e5121d91fb34fe67527db6361dba75e4cabc5",
-                "reference": "493e5121d91fb34fe67527db6361dba75e4cabc5",
+                "url": "https://api.github.com/repos/livewire-cms/livewire-core-module/zipball/2419cef467d589e581c88325232bdddc0e22a5c0",
+                "reference": "2419cef467d589e581c88325232bdddc0e22a5c0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6023,6 +6023,9 @@
                         "preferred": true
                     }
                 ]
+            },
+            "require": {
+                "wpjscc/system-module": "dev-master"
             },
             "default-branch": true,
             "type": "laravel-module",
@@ -6033,6 +6036,10 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "Support/helpers.php",
+                    "Html/helpers.php"
+                ],
                 "psr-4": {
                     "Modules\\LivewireCore\\": ""
                 }
@@ -6048,7 +6055,7 @@
                 "issues": "https://github.com/livewire-cms/livewire-core-module/issues",
                 "source": "https://github.com/livewire-cms/livewire-core-module/tree/master"
             },
-            "time": "2021-07-31T17:15:04+00:00"
+            "time": "2021-08-01T04:26:05+00:00"
         },
         {
             "name": "wpjscc/system-module",
@@ -8892,7 +8899,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "wpjscc/livewire-core-module": 20,
-        "wpjscc/system-module": 20,
         "wpjscc/test-module": 20
     },
     "prefer-stable": true,

@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -18,7 +21,6 @@
         "ph7jack/wireui": "^0.10.0",
         "symfony/yaml": "^5.3",
         "wpjscc/livewire-core-module": "dev-master",
-        "wpjscc/system-module": "dev-master",
         "wpjscc/test-module": "dev-master"
     },
     "require-dev": {
@@ -30,14 +32,10 @@
         "phpunit/phpunit": "^9.3.3"
     },
     "autoload": {
-        "files":[
-            "Modules/LivewireCore/Support/helpers.php",
-            "Modules/LivewireCore/Html/helpers.php"
-        ],
+
         "psr-4": {
             "App\\": "app/",
             "Modules\\": "Modules/",
-
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }

@@ -16,7 +16,14 @@
             }
         }
     },
+    "require":{
+        "wpjscc/system-module":"dev-master"
+    },
     "autoload": {
+        "files": [
+            "Support/helpers.php",
+            "Html/helpers.php"
+        ],
         "psr-4": {
             "Modules\\LivewireCore\\": ""
         }
