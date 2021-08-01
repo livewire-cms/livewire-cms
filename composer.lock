@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c4054c8d7ce24f569736d32e2d1f518",
+    "content-hash": "0a850920b9de591b646b792e4483d138",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5964,12 +5964,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire-cms/backend-module.git",
-                "reference": "6e4bc6429f9c5d51547281f09fd2df6aade7946a"
+                "reference": "31c506df389933ad935c83195407c4c9aad0f6d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire-cms/backend-module/zipball/6e4bc6429f9c5d51547281f09fd2df6aade7946a",
-                "reference": "6e4bc6429f9c5d51547281f09fd2df6aade7946a",
+                "url": "https://api.github.com/repos/livewire-cms/backend-module/zipball/31c506df389933ad935c83195407c4c9aad0f6d9",
+                "reference": "31c506df389933ad935c83195407c4c9aad0f6d9",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6002,7 +6002,7 @@
                 "issues": "https://github.com/livewire-cms/backend-module/issues",
                 "source": "https://github.com/livewire-cms/backend-module/tree/master"
             },
-            "time": "2021-07-31T17:02:04+00:00"
+            "time": "2021-08-01T05:00:17+00:00"
         },
         {
             "name": "wpjscc/livewire-core-module",
@@ -6063,12 +6063,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire-cms/system-module.git",
-                "reference": "37b5da6869d85ad30d2bc8e0b1be2135fcc455ae"
+                "reference": "4b3e7083916f41f666de7dc607f0672d35edfb7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire-cms/system-module/zipball/37b5da6869d85ad30d2bc8e0b1be2135fcc455ae",
-                "reference": "37b5da6869d85ad30d2bc8e0b1be2135fcc455ae",
+                "url": "https://api.github.com/repos/livewire-cms/system-module/zipball/4b3e7083916f41f666de7dc607f0672d35edfb7c",
+                "reference": "4b3e7083916f41f666de7dc607f0672d35edfb7c",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -6104,7 +6104,7 @@
                 "issues": "https://github.com/livewire-cms/system-module/issues",
                 "source": "https://github.com/livewire-cms/system-module/tree/master"
             },
-            "time": "2021-07-31T17:06:12+00:00"
+            "time": "2021-08-01T05:04:07+00:00"
         },
         {
             "name": "wpjscc/test-module",
@@ -8898,7 +8898,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "wpjscc/backend-module": 20,
         "wpjscc/livewire-core-module": 20,
+        "wpjscc/system-module": 20,
         "wpjscc/test-module": 20
     },
     "prefer-stable": true,
