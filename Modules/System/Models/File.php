@@ -15,6 +15,15 @@ use Modules\Backend\Http\Controllers\Files;
  */
 class File extends FileBase
 {
+
+    public function getRelativePath()
+    {
+
+        $fileName = $this->disk_name;
+
+        // dd($this->getPublicPath() , $this->getPartitionDirectory() ,$fileName);
+        return $this->getPartitionDirectory() . $fileName;
+    }
     /**
      * @var string The database table used by the model.
      */

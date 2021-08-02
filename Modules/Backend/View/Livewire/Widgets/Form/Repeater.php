@@ -8,6 +8,8 @@ use Modules\LivewireCore\Html\Helper as HtmlHelper;
 
 class Repeater extends Component
 {
+    use \Livewire\WithFileUploads;
+
     public $fields = [];
     public $tabs = [];
     public $secondTabs = [];
@@ -31,7 +33,12 @@ class Repeater extends Component
 
     public $formAlias;
 
+    public $needSetFields = [];
+
     protected $widget;
+
+
+
 
 
     public function mount()
@@ -51,6 +58,8 @@ class Repeater extends Component
         $this->form[$this->field['alias'].'_loaded'] = 1;
         // $this->form['formExtraForm0PointEvidence'.'_loaded'] = 1;
         $ww = $widget->{$this->field['alias']};
+        // dd($ww->getController());
+        // dd($ww);
         // dd($this->field);
         // if($this->field['alias']=='formExtraForm0PointEvidence'){
         // $ww = $widget->{$this->field['alias']};
@@ -58,7 +67,6 @@ class Repeater extends Component
         // }
         // dd($widget,$this->field);
         // $ww->render();
-        // dd($ww);
         $formWidgets = $ww->vars['formWidgets'];
         // dd($ww,$widget,$widget->formExtraForm0PointEvidence->render());
         foreach ($formWidgets as $indexValue=>$formWidget) {
@@ -236,8 +244,7 @@ class Repeater extends Component
             // dd($form->getFormWidgets()['avatars']->render());
             // dd($form,$primaryTabField->valueFrom);
             // dd($form->getFormWidgets()[$field->valueFrom]->render());
-
-            $field = $form->getFormWidgets()[$field->valueFrom]->render()->vars['field'];
+            $field = $form->getFormWidgets()[$field->fieldName]->render()->vars['field'];
             // dd($field);
             // dd($primaryTabField);
             // $primaryTabs[$tab][$tabField] = $primaryTabField;
@@ -305,18 +312,19 @@ class Repeater extends Component
         // if(!isset($field->config['type'])){
         //     dd($field);
         // }
-        if (\Arr::get($field->config, 'type')=='fileupload') {
+        if ( in_array(\Arr::get($field->config,'type'),['fileupload','fieldfileupload'])) {
 
-            //todo 过滤$field->vars['fileList']
-            $this->form['fileList'][$field->arrayName][$field->fieldName] = $field->vars['fileList']->map(function ($file) {
+            \Arr::set($this->form['fileList'], $field->modelNameNotFirst,$field->vars['fileList']->map(function ($file) {
                 return [
                     'id' => $file->id,
                     'thumb' => $file->thumbUrl,
-                    'path' => $file->pathUrl
+                    'path' => $file->pathUrl,
+                    'relative_path' => $file->getRelativePath()
                 ];
-            })->toArray();
-            // dd($form->getFormWidgets());
-            // $field = $form->getFormWidgets()[$field->valueFrom]->render();
+            })->toArray());
+            if(\Arr::get($field->config,'type')=='fieldfileupload'){
+                $this->needSetFields[]=$field->modelNameNotFirst;
+            }
         }
 
 
@@ -394,7 +402,6 @@ class Repeater extends Component
         }
         $ww = $c->widget->{$this->field['alias']};
         $ww->onRefresh();
-
 
         $formWidgets = $ww->getFormWidgets();
 
@@ -542,10 +549,192 @@ class Repeater extends Component
     }
 
 
+
+    public function uploadFinished()
+    {
+        // $this->update = !$this->update;
+
+
+        $params = func_get_args();
+        $name = $params[0];
+
+        $arrayName = explode('.', $name);
+
+        array_shift($arrayName);
+
+        request()->merge([
+            '_session_key' => $this->form['_session_key']??''
+        ]);
+
+
+
+        $keyStr = '';
+        foreach ($arrayName as $a) {
+            if (\Str::startsWith($a, '[')) {
+                $keyStr .='.'. str_replace(['[',']'], '', $a);
+            } else {
+                if (!$keyStr) {
+                    $keyStr .= $a;
+                } else {
+                    $keyStr .='.'. $a;
+                }
+            }
+        }
+        $uplodaFiles = \Arr::get($this->form, $keyStr);
+
+
+
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+
+
+        if(!$this->modelId){
+            $c->asExtension('FormController')->create($this->context);
+        }else{
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
+        }
+
+
+        if (is_array($uplodaFiles)) {//多文件
+            // $this->form['fileList'][$arrayName[0]][$arrayName[1]] = [];
+            foreach ($uplodaFiles as $uplodaFile) {
+                // dd($c->widget,'form'.ucfirst(\Str::camel($arrayName[1])));
+                if (!is_string($uplodaFile)) {
+                    request()->files->set('file_data', $uplodaFile);
+                    request()->setConvertedFiles(request()->files->all());
+                    $widgetName = $this->getFieldWidgetName($keyStr);
+                    // dd($c->widget);
+                    $file = $c->widget->{$widgetName}->onUpload();
+                //    array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+
+                    $files = \Arr::get($this->form['fileList'], $keyStr,[]);
+                    array_push($files,$file);
+                    \Arr::set($this->form['fileList'], $keyStr, $files);
+                    // \Arr::set($this->form, $keyStr, $files);
+
+                }
+            }
+        } else {//单文件
+
+            request()->files->set('file_data', $uplodaFiles);
+            request()->setConvertedFiles(request()->files->all());
+            $widgetName = $this->getFieldWidgetName($keyStr);
+
+            $file = $c->widget->{$widgetName}->onUpload();
+            // $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
+            \Arr::set($this->form['fileList'], $keyStr, [$file]);
+            // \Arr::set($this->form, $keyStr, [$file]);
+            // array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+
+            // dd(request()->hasFile('file_data'),3213);
+        }
+        if ($this->relation_field) {
+            $this->emit('setRelationFormProperty', ['name'=>$name,'value'=>\Arr::get($this->form['fileList'], $keyStr)]);
+        } else {
+            $this->emit('setFormProperty', ['name'=>$name,'value'=>\Arr::get($this->form['fileList'], $keyStr)]);
+        }
+    }
+
+    protected function getFieldWidgetName($modelNameNotFirst)
+    {
+
+        foreach ($this->allFields as $allField) {
+            $fields = $allField['fields']??[];
+            $tabs = $allField['tabs']??[];
+            $secondTabs = $allField['secondTabs']??[];
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['alias']??$field['fieldName'];
+                }
+            }
+
+            foreach ($tabs as $tab=>$fields)
+            {
+                foreach ($fields as $field){
+                    if($field['modelNameNotFirst']==$modelNameNotFirst){
+                        return $field['alias']??$field['fieldName'];
+                    }
+                }
+            }
+            foreach ($secondTabs as $secondTab=>$fields)
+            {
+                foreach ($fields as $field){
+                    if($field['modelNameNotFirst']==$modelNameNotFirst){
+                        return $field['alias']??$field['fieldName'];
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    //删除文件
+    public function onRemoveAttachment($modelName,$id)
+    {
+
+
+
+        $arrayName = explode('.', $modelName);
+
+        array_shift($arrayName);
+        $c = find_controller_by_url(request()->input('fingerprint.path'));
+        if (!$c) {
+            throw new \RuntimeException('Could not find controller');
+        }
+        request()->merge([
+            'file_id' => $id,
+            '_session_key' => $this->form['_session_key']??'',
+        ]);
+        $keyStr = '';
+        foreach ($arrayName as $a) {
+            if (\Str::startsWith($a, '[')) {
+                $keyStr .='.'. str_replace(['[',']'], '', $a);
+            } else {
+                if (!$keyStr) {
+                    $keyStr .= $a;
+                } else {
+                    $keyStr .='.'. $a;
+                }
+            }
+        }
+        $widgetName = $this->getFieldWidgetName($keyStr);
+
+        if(!$this->modelId){
+            $c->asExtension('FormController')->create($this->context);
+        }else{
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
+        }
+        // $c->asExtension('FormController')->update($this->modelId);
+
+        // dd($this->form);
+
+
+        $c->widget->{$widgetName}->onRemoveAttachment();
+
+        $files = \Arr::get($this->form['fileList'],$keyStr,[]);
+
+        \Arr::set($this->form['fileList'] ,$keyStr, array_filter($files,function($file)use($id){
+            return $file['id']!=$id;
+        }));
+
+        if ($this->relation_field) {
+            $this->emit('setRelationFormProperty', ['name'=>$modelName,'value'=>\Arr::get($this->form['fileList'], $keyStr)]);
+        } else {
+            $this->emit('setFormProperty', ['name'=>$modelName,'value'=>\Arr::get($this->form['fileList'], $keyStr)]);
+        }
+
+
+    }
+
+
     protected function getListeners()
     {
         return [
-            $this->formAlias.'_setForm' =>'setForm'
+            $this->formAlias.'_setForm' =>'setForm',
+            'upload:finished' => 'uploadFinished'
         ];
     }
 

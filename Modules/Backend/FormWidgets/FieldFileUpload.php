@@ -539,7 +539,7 @@ class FieldFileUpload extends FormWidgetBase
                 'id' => $file->id,
                 'thumb' => $file->thumbUrl,
                 'path' => $file->pathUrl,
-                'relative_path' =>$file->path
+                'relative_path' =>$file->getRelativePath()
             ];
 
             return $result;

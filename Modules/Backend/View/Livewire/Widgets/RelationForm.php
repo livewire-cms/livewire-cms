@@ -33,6 +33,7 @@ class RelationForm extends Component
 
     public $modal;
 
+    public $needSetFields = [];
 
     protected $widget;
 
@@ -255,20 +256,19 @@ class RelationForm extends Component
         // if(!isset($field->config['type'])){
         //     dd($field);
         // }
-        if (\Arr::get($field->config,'type')=='fileupload') {
-            //todo 过滤$field->vars['fileList']
-            $this->form['fileList'][$field->arrayName][$field->fieldName] = $field->vars['fileList']->map(function ($file) {
+        if ( in_array(\Arr::get($field->config,'type'),['fileupload','fieldfileupload'])) {
+
+            \Arr::set($this->form['fileList'], $field->modelNameNotFirst,$field->vars['fileList']->map(function ($file) {
                 return [
                     'id' => $file->id,
                     'thumb' => $file->thumbUrl,
-                    'path' => $file->pathUrl
+                    'path' => $file->pathUrl,
+                    'relative_path' => $file->getRelativePath()
                 ];
-
-            })->toArray();
-            // dd($this->form);
-
-            // dd($widget->form->getFormWidgets());
-            // $field = $widget->form->getFormWidgets()[$field->valueFrom]->render();
+            })->toArray());
+            if(\Arr::get($field->config,'type')=='fieldfileupload'){
+                $this->needSetFields[]=$field->modelNameNotFirst;
+            }
         }
 
 
@@ -316,6 +316,12 @@ class RelationForm extends Component
 
     public function save()
     {
+
+        foreach($this->needSetFields as $modelNameNotFirst){
+            $fieldValue = \Arr::get($this->form['fileList'], $modelNameNotFirst);
+            \Arr::set($this->form, $modelNameNotFirst,$fieldValue);
+        }
+
 
         $this->form['_relation_field'] = $this->relation_field;
         $this->form['_relation_mode'] = 'form';
@@ -460,6 +466,7 @@ class RelationForm extends Component
         // dd($c->widget);
         // $c->widget->form->render();
 
+        $widgetName = $this->getFieldWidgetName($keyStr);
 
         if (is_array($uplodaFiles)) {//多文件
             // $this->form['fileList'][$arrayName[0]][$arrayName[1]] = [];
@@ -469,9 +476,11 @@ class RelationForm extends Component
                 if (!is_string($uplodaFile)) {
                     request()->files->set('file_data', $uplodaFile);
                     request()->setConvertedFiles(request()->files->all());
-                   $file = $c->widget->{$formPrefix.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
-
-                   array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+                   $file = $c->widget->{$widgetName}->onUpload();
+                   $files = \Arr::get($this->form['fileList'], $keyStr,[]);
+                   array_push($files,$file);
+                   \Arr::set($this->form['fileList'], $keyStr, $files);
+                //    array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
 
                 }
             }
@@ -479,9 +488,13 @@ class RelationForm extends Component
 
             request()->files->set('file_data', $uplodaFiles);
             request()->setConvertedFiles(request()->files->all());
-            $file = $c->widget->{$formPrefix.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
-            $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
-            array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+            // $file = $c->widget->{$formPrefix.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
+            // $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
+            // array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+
+            $file = $c->widget->{$widgetName}->onUpload();
+            // $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
+            \Arr::set($this->form['fileList'], $keyStr, [$file]);
 
             // dd(request()->hasFile('file_data'),3213);
         }
@@ -515,19 +528,62 @@ class RelationForm extends Component
         request()->merge([
             'file_id' => $id
         ]);
+        $keyStr = '';
+        foreach ($arrayName as $a) {
+            if (\Str::startsWith($a, '[')) {
+                $keyStr .='.'. str_replace(['[',']'], '', $a);
+            } else {
+                if (!$keyStr) {
+                    $keyStr .= $a;
+                } else {
+                    $keyStr .='.'. $a;
+                }
+            }
+        }
+        $widgetName = $this->getFieldWidgetName($keyStr);
 
-       $c->widget->{$formPrefix.ucfirst(\Str::camel($arrayName[1]))}->onRemoveAttachment();
-        $files = $this->form['fileList'][$arrayName[0]][$arrayName[1]];
+        $c->widget->{$widgetName}->onRemoveAttachment();
+        // $files = $this->form['fileList'][$arrayName[0]][$arrayName[1]];
+        // $this->form['fileList'][$arrayName[0]][$arrayName[1]] = array_filter($files,function($file)use($id){
+        //     return $file['id']!=$id;
+        // });
 
-        $this->form['fileList'][$arrayName[0]][$arrayName[1]] = array_filter($files,function($file)use($id){
+        $files = \Arr::get($this->form['fileList'],$keyStr,[]);
+
+        \Arr::set($this->form['fileList'] ,$keyStr, array_filter($files,function($file)use($id){
             return $file['id']!=$id;
-        });
+        }));
 
 
         $this->trigger();
 
 
+    }
 
+    protected function getFieldWidgetName($modelNameNotFirst)
+    {
+        foreach ($this->fields as $field){
+            if($field['modelNameNotFirst']==$modelNameNotFirst){
+                return $field['alias']??$field['fieldName'];
+            }
+        }
+
+        foreach ($this->tabs as $tab=>$fields)
+        {
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['alias']??$field['fieldName'];
+                }
+            }
+        }
+        foreach ($this->secondTabs as $secondTab=>$fields)
+        {
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['alias']??$field['fieldName'];
+                }
+            }
+        }
     }
     public function updatedmodal($value)
     {

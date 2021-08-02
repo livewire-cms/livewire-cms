@@ -27,7 +27,7 @@
 
     id="{{$field['id']}}"
     wire:model="{{$field['modelName']}}"
-    type="file" image-multi>
+    type="file" multiple="multiple">
         @foreach (\Arr::get($form['fileList'],$field['modelNameNotFirst'],[]) as $v)
 
          <img src="{{$v['path']}}" style="{{$field['vars']['cssDimensions']}}">

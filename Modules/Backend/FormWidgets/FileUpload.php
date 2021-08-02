@@ -164,20 +164,20 @@ class FileUpload extends FormWidgetBase
         $this->vars['useCaption'] = $this->useCaption;
         $this->vars['prompt'] = $this->getPromptText();
 
-        if($this->vars['fileList']->isEmpty()){
-            $this->formField->value=[];
-        }
-        // if($this->vars['displayMode']=='image-multi'){
-        //     if($this->vars['fileList']->isEmpty()){
-        //         $this->formField->value=[];
-        //     }else{
-        //         $this->formField->value = $this->vars['fileList']->map(function($file){
-        //             // return $file->thumbUrl;
-        //             return $file->path;
-        //         })->toArray();
-        //     }
 
-        // }
+        if($this->vars['displayMode']=='image-multi'){
+            if($this->vars['fileList']->isEmpty()){
+                $this->formField->value=[];
+            }else{
+                $this->formField->value = $this->vars['fileList']->map(function($file){
+                    // return $file->thumbUrl;
+                    return $file->path;
+                })->toArray();
+            }
+
+        }
+
+        $this->formField->alias = $this->alias;
         $this->formField->vars = $this->vars;
 
         // $this->formField->component = 'back-form-fileupload';
