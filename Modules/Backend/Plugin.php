@@ -17,11 +17,11 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-            'backend.manage_users' => [
-                'label' => 'system::lang.permissions.manage_other_administrators',
-                'tab'   => 'system::lang.permissions.name',
-                'roles' => UserRole::CODE_DEVELOPER,
-            ],
+            // 'backend.manage_users' => [
+            //     'label' => 'system::lang.permissions.manage_other_administrators',
+            //     'tab'   => 'system::lang.permissions.name',
+            //     'roles' => UserRole::CODE_DEVELOPER,
+            // ],
         ];
     }
 
