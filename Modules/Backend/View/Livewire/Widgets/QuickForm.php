@@ -128,7 +128,7 @@ class QuickForm extends Component
             // dd($widget->form,$primaryTabField->valueFrom);
             // dd($widget->form->getFormWidgets()[$field->valueFrom]->render());
 
-            $field = $widget->form->getFormWidgets()[$field->valueFrom]->render()->vars['field'];
+            $field = $widget->form->getFormWidgets()[$field->fieldName]->render()->vars['field'];
 
             // dd($primaryTabField);
             // $primaryTabs[$tab][$tabField] = $primaryTabField;
