@@ -74,10 +74,12 @@ class Foo extends Model
     public $morphOne = [];
     public $morphMany = [];
     public $attachOne = [
-        'avatar' => \Modules\System\Models\File::class
+        'avatar' => \Modules\System\Models\File::class,
+        'seat_image' => \Modules\System\Models\File::class
     ];
     public $attachMany = [
-        'avatars' => \Modules\System\Models\File::class
+        'avatars' => \Modules\System\Models\File::class,
+        'seat_images' => \Modules\System\Models\File::class,
 
     ];
 

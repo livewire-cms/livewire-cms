@@ -31,6 +31,7 @@ class FormField
         'password',
         'email',
         'fileupload',
+        'fieldfileupload',
         'markdown',
         'codemirror',
 

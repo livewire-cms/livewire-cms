@@ -12,6 +12,8 @@ fields:
         span: auto
         comment: hello comment
         # cssClass: p-4
+        type: fieldfileupload
+        valueFrom: seat_images
         attributes:
             prefix: $
             icon: user

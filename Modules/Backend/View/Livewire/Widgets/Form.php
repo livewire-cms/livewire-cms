@@ -115,7 +115,7 @@ class Form extends Component
         }
         $this->trigger();
 
-        // dd($this->form,$this->fields);
+        // dd($this,$this->form,$this->fields);
         // dd($this->form,$this->fields,$this->tabs,$this->secondTabs);
     }
 
@@ -133,9 +133,7 @@ class Form extends Component
             // dd($widget->form->getFormWidgets()['avatars']->render());
             // dd($widget->form,$primaryTabField->valueFrom);
             // dd($widget->form->getFormWidgets()[$field->valueFrom]->render());
-
-            $field = $widget->form->getFormWidgets()[$field->valueFrom]->render()->vars['field'];
-
+            $field = $widget->form->getFormWidgets()[$field->fieldName]->render()->vars['field'];
             // dd($primaryTabField);
             // $primaryTabs[$tab][$tabField] = $primaryTabField;
             // dd($primaryTabField->getId());
@@ -164,16 +162,25 @@ class Form extends Component
         //设置options
         $field->options = $field->options();
 
-        if (\Arr::get($field->config,'type')=='fileupload') {
+        if ( in_array(\Arr::get($field->config,'type'),['fileupload','fieldfileupload'])) {
 
-            //todo 过滤$field->vars['fileList']
-            $this->form['fileList'][$field->arrayName][$field->fieldName] = $field->vars['fileList']->map(function ($file) {
+            // todo 过滤$field->vars['fileList']
+            // dd($field);
+
+            \Arr::set($this->form['fileList'], $field->modelNameNotFirst,$field->vars['fileList']->map(function ($file) {
                 return [
                     'id' => $file->id,
                     'thumb' => $file->thumbUrl,
                     'path' => $file->pathUrl
                 ];
-            })->toArray();
+            })->toArray());
+            // $this->form['fileList'][$field->arrayName][$field->fieldName] = $field->vars['fileList']->map(function ($file) {
+            //     return [
+            //         'id' => $file->id,
+            //         'thumb' => $file->thumbUrl,
+            //         'path' => $file->pathUrl
+            //     ];
+            // })->toArray();
         }
 
 
@@ -291,9 +298,14 @@ class Form extends Component
                 if (!is_string($uplodaFile)) {
                     request()->files->set('file_data', $uplodaFile);
                     request()->setConvertedFiles(request()->files->all());
+                    $widgetName = $this->getFieldWidgetName();
                    $file = $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
 
-                   array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+                //    array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+
+                    $files = \Arr::get($this->form['fileList'], $keyStr,[]);
+                    array_push($files,$file);
+                    \Arr::set($this->form['fileList'], $keyStr, $files);
 
                 }
             }
@@ -302,10 +314,37 @@ class Form extends Component
             request()->files->set('file_data', $uplodaFiles);
             request()->setConvertedFiles(request()->files->all());
             $file = $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
-            $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
-            array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+            // $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
+            \Arr::set($this->form['fileList'], $keyStr, [$file]);
+            // array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
 
             // dd(request()->hasFile('file_data'),3213);
+        }
+    }
+
+    protected function getFieldWidgetName($modelNameNotFirst)
+    {
+        foreach ($this->fields as $field){
+            if($field['modelNameNotFirst']==$modelNameNotFirst){
+                return $field['fieldName'];
+            }
+        }
+
+        foreach ($this->tabs as $tab=>$fields)
+        {
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['fieldName'];
+                }
+            }
+        }
+        foreach ($this->secondTabs as $secondTab=>$fields)
+        {
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['fieldName'];
+                }
+            }
         }
     }
 
@@ -420,7 +459,7 @@ class Form extends Component
 
     }
 
-    public function onRefresh($data)
+    public function onRefresh($data=[])
     {
         request()->merge($data)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
@@ -432,8 +471,6 @@ class Form extends Component
             $c->asExtension('FormController')->create($this->context);
 
         } else {
-            // dd($this->form);
-            // dd($c);
             $c->asExtension('FormController')->update($this->modelId,$this->context);
         }
 
@@ -544,7 +581,7 @@ class Form extends Component
 
 
         if(!empty(post('refresh_fields'))){
-            // $this->onRefresh([]);//todo onRefresh
+            $this->onRefresh([]);
         }
 
     }

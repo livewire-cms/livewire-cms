@@ -285,6 +285,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         WidgetManager::instance()->registerFormWidgets(function ($manager) {
             $manager->registerFormWidget(\Modules\Backend\FormWidgets\Relation::class, 'relation');
+            $manager->registerFormWidget(\Modules\Backend\FormWidgets\FieldFileUpload::class, 'fieldfileupload');
             $manager->registerFormWidget(\Modules\Backend\FormWidgets\FileUpload::class, 'fileupload');
             $manager->registerFormWidget(\Modules\Backend\FormWidgets\Repeater::class, 'repeater');
 
@@ -377,6 +378,7 @@ class ServiceProvider extends BaseServiceProvider
             $this->registerFormComponent('inputs.password');
             $this->registerFormComponent('inputs.email');
             $this->registerFormComponent('inputs.fileupload');
+            $this->registerFormComponent('inputs.fieldfileupload');
             $this->registerFormComponent('inputs.codemirror');
             $this->registerFormComponent('inputs.markdown');
             $this->registerFormComponent('relation_lists');
