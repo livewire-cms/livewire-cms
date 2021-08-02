@@ -19,11 +19,8 @@
         "livewire/livewire": "^2.5",
         "nwidart/laravel-modules": "^8.2",
         "ph7jack/wireui": "^0.10.0",
-        "symfony/yaml": "^5.3",
-        "wpjscc/backend-module": "dev-master",
-        "wpjscc/livewire-core-module": "dev-master",
-        "wpjscc/system-module": "dev-master",
-        "wpjscc/test-module": "dev-master"
+        "symfony/yaml": "^5.3"
+
     },
     "require-dev": {
         "facade/ignition": "^2.5",
