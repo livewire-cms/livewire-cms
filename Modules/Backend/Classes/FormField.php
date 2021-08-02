@@ -822,7 +822,13 @@ class FormField
      */
     public function getValueFromData($data, $default = null)
     {
-        $fieldName = $this->valueFrom ?: $this->fieldName;
+        $type = \Arr::get($this->config,'type');
+        if($type=='fieldfileupload'){
+            $fieldName = $this->fieldName;
+
+        }else{
+            $fieldName = $this->valueFrom ?: $this->fieldName;
+        }
         return $this->getFieldNameFromData($fieldName, $data, $default);
     }
 

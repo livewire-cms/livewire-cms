@@ -36,6 +36,7 @@ class QuickForm extends Component
 
     public $modal;
 
+    public $needSetFields = [];
 
     protected $widget;
     public $alias;
@@ -180,18 +181,19 @@ class QuickForm extends Component
         // if(!isset($field->config['type'])){
         //     dd($field);
         // }
-        if (\Arr::get($field->config,'type')=='fileupload') {
+        if ( in_array(\Arr::get($field->config,'type'),['fileupload','fieldfileupload'])) {
 
-            //todo 过滤$field->vars['fileList']
-            $this->form['fileList'][$field->arrayName][$field->fieldName] = $field->vars['fileList']->map(function ($file) {
+            \Arr::set($this->form['fileList'], $field->modelNameNotFirst,$field->vars['fileList']->map(function ($file) {
                 return [
                     'id' => $file->id,
                     'thumb' => $file->thumbUrl,
-                    'path' => $file->pathUrl
+                    'path' => $file->pathUrl,
+                    'relative_path' => $file->getRelativePath()
                 ];
-            })->toArray();
-            // dd($widget->form->getFormWidgets());
-            // $field = $widget->form->getFormWidgets()[$field->valueFrom]->render();
+            })->toArray());
+            if(\Arr::get($field->config,'type')=='fieldfileupload'){
+                $this->needSetFields[]=$field->modelNameNotFirst;
+            }
         }
 
 
@@ -242,6 +244,12 @@ class QuickForm extends Component
         // dd($this->form['User']['avatar']);
 
         // dd($this->form);
+
+        foreach($this->needSetFields as $modelNameNotFirst){
+            $fieldValue = \Arr::get($this->form['fileList'], $modelNameNotFirst);
+            \Arr::set($this->form, $modelNameNotFirst,$fieldValue);
+        }
+
         request()->merge($data)->merge($this->customData)->merge($this->form);
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
@@ -268,7 +276,7 @@ class QuickForm extends Component
 
     public function uploadFinished()
     {
-
+        // $this->update = !$this->update;
 
 
         $params = func_get_args();
@@ -296,22 +304,20 @@ class QuickForm extends Component
                 }
             }
         }
-
         $uplodaFiles = \Arr::get($this->form, $keyStr);
+
+
 
         $c = find_controller_by_url(request()->input('fingerprint.path'));
         if (!$c) {
             throw new \RuntimeException('Could not find controller');
         }
 
-        $c->asExtension('FormController')->create();
 
-        if (!$this->modelId) {
-
-            $c->asExtension('FormController')->create();
-
+        if(!$this->modelId){
+            $c->asExtension('FormController')->create($this->context);
         }else{
-            $c->asExtension('FormController')->update($this->modelId);
+            $c->asExtension('FormController')->update($this->modelId,$this->context);
 
         }
 
@@ -322,9 +328,15 @@ class QuickForm extends Component
                 if (!is_string($uplodaFile)) {
                     request()->files->set('file_data', $uplodaFile);
                     request()->setConvertedFiles(request()->files->all());
-                   $file = $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
+                    $widgetName = $this->getFieldWidgetName($keyStr);
+                    // dd($c->widget);
+                    $file = $c->widget->{$widgetName}->onUpload();
+                //    array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
 
-                   array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+                    $files = \Arr::get($this->form['fileList'], $keyStr,[]);
+                    array_push($files,$file);
+                    \Arr::set($this->form['fileList'], $keyStr, $files);
+                    // \Arr::set($this->form, $keyStr, $files);
 
                 }
             }
@@ -332,14 +344,42 @@ class QuickForm extends Component
 
             request()->files->set('file_data', $uplodaFiles);
             request()->setConvertedFiles(request()->files->all());
-            $file = $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onUpload();
-            $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
-            array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
+            $widgetName = $this->getFieldWidgetName($keyStr);
+
+            $file = $c->widget->{$widgetName}->onUpload();
+            // $this->form['fileList'][$arrayName[0]][$arrayName[1]]=[];
+            \Arr::set($this->form['fileList'], $keyStr, [$file]);
+            // \Arr::set($this->form, $keyStr, [$file]);
+            // array_push($this->form['fileList'][$arrayName[0]][$arrayName[1]],$file);
 
             // dd(request()->hasFile('file_data'),3213);
         }
-        $this->trigger();
+    }
 
+    protected function getFieldWidgetName($modelNameNotFirst)
+    {
+        foreach ($this->fields as $field){
+            if($field['modelNameNotFirst']==$modelNameNotFirst){
+                return $field['alias']??$field['fieldName'];
+            }
+        }
+
+        foreach ($this->tabs as $tab=>$fields)
+        {
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['alias']??$field['fieldName'];
+                }
+            }
+        }
+        foreach ($this->secondTabs as $secondTab=>$fields)
+        {
+            foreach ($fields as $field){
+                if($field['modelNameNotFirst']==$modelNameNotFirst){
+                    return $field['alias']??$field['fieldName'];
+                }
+            }
+        }
     }
 
     //删除文件
@@ -359,20 +399,34 @@ class QuickForm extends Component
             'file_id' => $id,
             '_session_key' => $this->form['_session_key']??'',
         ]);
+        $keyStr = '';
+        foreach ($arrayName as $a) {
+            if (\Str::startsWith($a, '[')) {
+                $keyStr .='.'. str_replace(['[',']'], '', $a);
+            } else {
+                if (!$keyStr) {
+                    $keyStr .= $a;
+                } else {
+                    $keyStr .='.'. $a;
+                }
+            }
+        }
+        $widgetName = $this->getFieldWidgetName($keyStr);
+
         $c->asExtension('FormController')->create($this->context);
         // $c->asExtension('FormController')->update($this->modelId);
 
         // dd($this->form);
 
 
-       $c->widget->{'form'.ucfirst(\Str::camel($arrayName[1]))}->onRemoveAttachment();
-        $files = $this->form['fileList'][$arrayName[0]][$arrayName[1]];
+        $c->widget->{$widgetName}->onRemoveAttachment();
 
-        $this->form['fileList'][$arrayName[0]][$arrayName[1]] = array_filter($files,function($file)use($id){
+        $files = \Arr::get($this->form['fileList'],$keyStr,[]);
+
+        \Arr::set($this->form['fileList'] ,$keyStr, array_filter($files,function($file)use($id){
             return $file['id']!=$id;
-        });
+        }));
 
-        $this->trigger();
 
     }
 

@@ -14,7 +14,7 @@
     wire:model="{{$field['modelName']}}"
     type="file">
 
-        @foreach ($form['fileList'][$field['arrayName']][$field['fieldName']] as $v)
+        @foreach (\Arr::get($form['fileList'],$field['modelNameNotFirst'],[]) as $v)
 
          <img src="{{$v['path']}}" style="{{$field['vars']['cssDimensions']}}">
          <button wire:click.stop.prevent="onRemoveAttachment('{{$field['modelName']}}','{{$v['id']}}')">删除</button>
@@ -28,7 +28,7 @@
     id="{{$field['id']}}"
     wire:model="{{$field['modelName']}}"
     type="file" image-multi>
-        @foreach ($form['fileList'][$field['arrayName']][$field['fieldName']] as $v)
+        @foreach (\Arr::get($form['fileList'],$field['modelNameNotFirst'],[]) as $v)
 
          <img src="{{$v['path']}}" style="{{$field['vars']['cssDimensions']}}">
 

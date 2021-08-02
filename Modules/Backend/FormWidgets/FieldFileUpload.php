@@ -164,18 +164,23 @@ class FieldFileUpload extends FormWidgetBase
         $this->vars['useCaption'] = $this->useCaption;
         $this->vars['prompt'] = $this->getPromptText();
 
-        if(\Str::contains($this->vars['displayMode'],'multi')){
-            if($this->vars['fileList']->isEmpty()){
-                $this->formField->value=[];
-            }else{
-                $this->formField->value = $this->vars['fileList']->map(function($file){
-                    // return $file->thumbUrl;
-                    return $file->path;
-                })->toArray();
-            }
-
+        if($this->vars['fileList']->isEmpty()){
+            $this->formField->value=[];
         }
+        // if(\Str::contains($this->vars['displayMode'],'multi')){
+        //     if($this->vars['fileList']->isEmpty()){
+        //         $this->formField->value=[];
+        //     }else{
+        //         $this->formField->value = $this->vars['fileList']->map(function($file){
+        //             // return $file->thumbUrl;
+        //             return $file->path;
+        //         })->toArray();
+        //     }
+
+        // }
+        $this->formField->alias = $this->alias;
         $this->formField->vars = $this->vars;
+
 
         // $this->formField->component = 'back-form-fileupload';
 
@@ -454,6 +459,8 @@ class FieldFileUpload extends FormWidgetBase
      */
     public function getSaveValue($value)
     {
+        // dd(post($this->formField->getName()));
+        return post($this->formField->getName());
         return FormField::NO_SAVE_DATA;
     }
 
