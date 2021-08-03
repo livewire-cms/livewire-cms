@@ -6,3 +6,9 @@ columns:
     id:
         label: ID
         searchable: true
+    action:
+        label: 操作
+        searchable: false
+        sortable: false
+        type: partial
+        cssClass: flex border-dashed  border-gray-200

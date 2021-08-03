@@ -1,0 +1,16 @@
+
+<span class="text-gray-700 px-6 py-3 flex items-center text-xs">
+    <a class="p-1 border rounded-md border-blue-600 text-blue-600 cursor-pointer uppercase text-sm font-bold hover:bg-blue-500 hover:text-white hover:shadow" href="<?= $list->getRecordUrl($record) ?>">编辑</a>
+ </span>
+
+ <span class="cursor-pointer text-gray-700 px-6 py-3 flex items-center text-xs">
+
+ <svg  class="w-5 h-5"
+
+    x-on:click="$wire.onAction('onConfirm',{icon:'warning',title:'请确认？',description:'您确认删除吗?',confirm_label:'是的，确认',cancel_label:'不，取消',agree_method:'onDelete',params:{checked:['<?=$record->id?>']}})"
+
+    :class="{'text-blue-600':true}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+    </svg>
+</span>
+

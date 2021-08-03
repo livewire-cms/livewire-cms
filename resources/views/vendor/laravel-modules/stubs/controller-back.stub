@@ -47,4 +47,36 @@ class $CLASS$ extends Controller
         return view('$LOWER_NAME$::$CLASSNOCONTROLLERL$.update', ['widget'=>$this->widget]);
 
     }
+
+    public function onDelete($component,$params)
+    {
+        $checked = \Arr::get($params,'checked');
+
+        foreach($checked as $checkedId)
+        {
+            ModelsFoo::find($checkedId)->delete();
+        }
+        $component->notification()->info(
+            $title = 'Info',
+            $description = '删除成功'
+        );
+        $component->refresh();
+
+
+    }
+
+    public function formExtendFields($formWidget,$fields)
+    {
+
+        $fieldNames =  array_keys($fields);
+        if(($editFields = post('edit_fields'))&&is_array($editFields)&&!empty($editFields)){
+            foreach($fieldNames as $fieldName){
+                if(!in_array($fieldName,$editFields)){
+                    $formWidget->removeField($fieldName);
+                }
+            }
+        }
+
+
+    }
 }
