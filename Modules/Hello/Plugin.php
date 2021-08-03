@@ -83,10 +83,11 @@ class Plugin extends PluginBase
                     }
 
                     // Add an extra birthday field
-                    $formWidget->addFields([
-                        'extra[pics]' => [
-                            'label'   => '单图片上传 扩展',
-                            'comment' => 'Select the users birthday',
+                    $formWidget->addTabFields([
+                        'extra[extend_from_hello]' => [
+                            'tab' =>'扩展字段',
+                            'label'   => '我是扩展字段',
+                            'comment' => '',
                             'span'    => 'auto',
                             'mode'    => 'image',
                             'type'    => 'fieldfileupload',

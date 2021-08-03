@@ -17,18 +17,7 @@ fields:
             icon: user
             # right-icon: pencil
             suffix: '@email'
-    extra[image]:
-        label: 单图片上传
-        span: auto
-        type: fieldfileupload
-        mode: image
-        valueFrom: seat_image
-    extra[images]:
-        label: 多图片上传
-        span: auto
-        type: fieldfileupload
-        mode: image
-        valueFrom: seat_images
+
 
     desc:
         label: 描述
@@ -68,21 +57,36 @@ tabs:
                   action: show
                   field: published
                   condition: checked
+
         avatar:
-            label: 图片上传
+            label: 图片上传(保存在关联关系中)
             tab: 图片
             type: fileupload
             mode: image
             span: auto
             imageHeight: 250
             imageWidth: 250
+
         avatars:
-            label: 多图上传
+            label: 多图上传(保存在关联关系中)
             tab: 图片
             type: fileupload
             mode: image
             span: auto
             imageHeight: 250
+        extra[image]:
+            label: 单图片上传(保存在字段中)
+            span: auto
+            type: fieldfileupload
+            mode: image
+            valueFrom: seat_image
+        extra[images]:
+            label: 多图片上传(保存在字段中)
+            span: auto
+            type: fieldfileupload
+            mode: image
+            valueFrom: seat_images
+
             imageWidth: 250
         extra[partial]:
             tab: 自定义内容区
