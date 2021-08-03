@@ -25,7 +25,7 @@ php artisan serve
 ## visit 127.0.0.1:8000
 
 
-## learn more
+## learn more 
 
 
 
