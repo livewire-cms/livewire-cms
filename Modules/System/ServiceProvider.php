@@ -214,6 +214,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         //
         // dd(Arr::class);
+
+        PluginManager::instance()->bootAll();
+
     }
 
     public function pluginsPath()

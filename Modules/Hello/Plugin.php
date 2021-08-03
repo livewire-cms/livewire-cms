@@ -6,9 +6,7 @@ use Backend;
 use Modules\System\Classes\PluginBase;
 use BackendMenu;
 
-/**
- * Test Plugin Information File
- */
+
 class Plugin extends PluginBase
 {
 
@@ -72,12 +70,40 @@ class Plugin extends PluginBase
     public function register()
     {
 
+
+            \Event::listen('backend.form.extendFields', function ($formWidget) {
+                    // Only for the User controller
+                    if (!$formWidget->getController() instanceof \Modules\Test\Http\Controllers\Foo) {
+                        return;
+                    }
+
+                    // Only for the User model
+                    if (!$formWidget->model instanceof \Modules\Test\Models\Foo) {
+                        return;
+                    }
+
+                    // Add an extra birthday field
+                    $formWidget->addFields([
+                        'extra[pics]' => [
+                            'label'   => '单图片上传 扩展',
+                            'comment' => 'Select the users birthday',
+                            'span'    => 'auto',
+                            'mode'    => 'image',
+                            'type'    => 'fieldfileupload',
+                            'valueFrom'    => 'seat_image',
+                        ]
+                    ]);
+
+            });
+
         // dd(3213);
         // BackendMenu::registerContextSidenavPartial(
         //     'Modules.Hello',
         //     'Hello',
         //     '~/modules/system/partials/_system_sidebar.htm'
         // );
+
+
 
     }
 

@@ -460,7 +460,7 @@ class FieldFileUpload extends FormWidgetBase
     public function getSaveValue($value)
     {
         // dd(post($this->formField->getName()));
-        return post($this->formField->getName());
+        return $value;
         return FormField::NO_SAVE_DATA;
     }
 
