@@ -216,9 +216,9 @@ window.marked = require("marked");
 
 
 import CodeMirror from 'codemirror/lib/codemirror.js'
+import 'codemirror/mode/yaml/yaml'
 import 'codemirror/mode/php/php'
 import 'codemirror/mode/markdown/markdown'
-
 window.codemirror = CodeMirror
 
 

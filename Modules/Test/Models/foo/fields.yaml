@@ -187,12 +187,20 @@ tabs:
             span: full
             tab: 编辑器
         extra[Codemirror]:
-            label: Codemirror
+            label: Codemirror-php
             type: codemirror
             span: full
             tab: Codemirror
             config:
                 mode: php
+                theme: material-darker
+        extra[yaml]:
+            label: codemirror-yaml
+            type: codemirror
+            span: full
+            tab: Codemirror
+            config:
+                mode: yaml
                 theme: material-darker
         extra[markdown]:
             label: markdown

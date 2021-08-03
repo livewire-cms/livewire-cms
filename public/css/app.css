@@ -2011,16 +2011,16 @@ select {
 	cursor: pointer;
 }
 
+.cursor-move {
+	cursor: move;
+}
+
 .cursor-default {
 	cursor: default;
 }
 
 .cursor-not-allowed {
 	cursor: not-allowed;
-}
-
-.cursor-move {
-	cursor: move;
 }
 
 .select-none {
