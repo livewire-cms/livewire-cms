@@ -27,5 +27,7 @@ php artisan serve
 
 ## learn more 
 
+[wiki](https://github.com/livewire-cms/livewire-cms/wiki)
+
 
 
