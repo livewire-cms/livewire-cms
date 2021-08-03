@@ -30,4 +30,6 @@ php artisan serve
 [wiki](https://github.com/livewire-cms/livewire-cms/wiki)
 
 
+## other
 
+thanks for [octobercms](https://github.com/octobercms),[wintercms](https://github.com/wintercms)
