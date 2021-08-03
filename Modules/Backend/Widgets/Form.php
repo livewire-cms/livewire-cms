@@ -11,7 +11,7 @@ use Modules\LivewireCore\Database\Model;
 use Modules\LivewireCore\Html\Helper as HtmlHelper;
 use Modules\LivewireCore\Exception\ApplicationException;
 use Exception;
-// use BackendAuth;
+use BackendAuth;
 
 /**
  * Form Widget
@@ -546,7 +546,6 @@ class Form extends WidgetBase
          *
          */
         $this->fireSystemEvent('backend.form.extendFieldsBefore');
-
         /*
          * Outside fields
          */
@@ -556,6 +555,8 @@ class Form extends WidgetBase
 
         $this->allTabs->outside = new FormTabs(FormTabs::SECTION_OUTSIDE, (array) $this->config);
         $this->addFields($this->fields);
+        // dd($this);
+
 
         /*
          * Primary Tabs + Fields
@@ -722,7 +723,7 @@ class Form extends WidgetBase
         foreach ($fields as $name => $config) {
             // Check if user has permissions to show this field
             $permissions = \Arr::get($config, 'permissions');
-            if (!empty($permissions) && !post()->user()->hasAccess($permissions, false)) {
+            if (!empty($permissions) && !BackendAuth::getUser()->hasAccess($permissions, false)) {
                 continue;
             }
 
