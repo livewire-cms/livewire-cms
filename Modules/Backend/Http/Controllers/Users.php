@@ -112,7 +112,7 @@ class Users extends Controller
                 $groupField->value = $defaultGroupIds;
             }
         }
-
+        // dd(post('edit_fields'));
 
         $fieldNames =  array_keys($fields);
         if(($editFields = post('edit_fields'))&&is_array($editFields)&&!empty($editFields)){
@@ -120,6 +120,10 @@ class Users extends Controller
                 if(!in_array($fieldName,$editFields)){
                     $form->removeField($fieldName);
                 }
+            }
+
+            if(!in_array('permissions',$editFields)){
+                $form->removeField('permissions');
             }
         }
     }

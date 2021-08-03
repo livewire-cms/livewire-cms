@@ -78,3 +78,9 @@ columns:
         label: backend::lang.user.superuser
         invisible: true
         type: switch
+    action:
+        label: 操作
+        searchable: false
+        sortable: false
+        type: partial
+        cssClass: flex border-dashed  border-gray-200
